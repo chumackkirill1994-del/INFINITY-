@@ -568,7 +568,7 @@
             const selectEl = document.getElementById('modalDirectionSelect');
             if(direction) {
                 modalTitle.innerText = `Запись на ${direction}`;
-                modalSubtitle.innerText = 'Оставьте телефон, и мы подберём удобное время.';
+                modalSubtitle.innerText = ' ';
                 for(let i = 0; i < selectEl.options.length; i++) {
                     if(selectEl.options[i].text.toLowerCase().includes(direction.toLowerCase())) {
                         selectEl.selectedIndex = i;
