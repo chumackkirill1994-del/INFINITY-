@@ -6,10 +6,10 @@
     <meta name="description" content="Премиальная фитнес-студия INFINITY в Шушарах: йога, пилон, растяжка, Zumba. Абонементы от 500 ₽, пробное занятие. ЖК Пушкинский район, ул. Пушкинская 34Б.">
     <meta name="keywords" content="фитнес Шушары, растяжка Шушары, пилон спб, йога для беременных Шушары, студия растяжки, фитнес Пушкинский район">
     <title>INFINITY | Премиальная фитнес-студия в Шушарах</title>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,7 +28,7 @@
       "priceRange": "500₽ - 20000₽"
     }
     </script>
-    
+
     <style>
         :root {
             --bg-primary: #F2F3F5;
@@ -76,10 +76,39 @@
             border-radius: var(--border-radius-btn); font-weight: 600; font-size: 0.95rem;
             border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
             transition: var(--transition); box-shadow: 0 8px 20px rgba(139, 155, 180, 0.2);
+            text-decoration: none;
         }
         .btn:hover { background: var(--accent-hover); transform: translateY(-3px); }
         .btn-outline { background: transparent; border: 1.5px solid var(--text-primary); color: var(--text-primary); box-shadow: none; }
         .btn-outline:hover { background: var(--text-primary); color: #fff; }
+
+        /* Accessible focus styles — visible only for keyboard navigation */
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible,
+        [tabindex]:focus-visible {
+            outline: 3px solid var(--accent-primary);
+            outline-offset: 3px;
+            box-shadow: 0 0 0 4px rgba(139, 155, 180, 0.4);
+            border-radius: 4px;
+        }
+        a:focus:not(:focus-visible),
+        button:focus:not(:focus-visible),
+        input:focus:not(:focus-visible),
+        select:focus:not(:focus-visible),
+        textarea:focus:not(:focus-visible),
+        [tabindex]:focus:not(:focus-visible) {
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Screen reader only utility */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+        }
 
         .card { background: var(--bg-card); padding: 32px 28px; border-radius: var(--border-radius-card); box-shadow: var(--shadow-sm); transition: var(--transition); border: 1px solid rgba(255,255,255,0.5); }
         .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--accent-warm); }
@@ -95,7 +124,8 @@
         nav a { font-weight: 600; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; text-transform: uppercase; border-bottom: 2px solid transparent; transition: var(--transition); }
         nav a:hover { border-bottom-color: var(--accent-primary); color: var(--accent-primary); }
         .header-phone { font-weight: 700; color: var(--text-primary); font-size: 1.1rem; text-decoration: none; }
-        .mobile-toggle { display: none; font-size: 28px; cursor: pointer; background: none; border: none; }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .mobile-toggle { display: none; font-size: 28px; cursor: pointer; background: none; border: none; color: var(--text-primary); }
         .mobile-menu {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); z-index: 2000;
@@ -104,7 +134,7 @@
         }
         .mobile-menu.active { transform: translateX(0); }
         .mobile-menu a { font-size: 2rem; font-weight: 700; color: var(--text-primary); text-decoration: none; }
-        .close-menu { position: absolute; top: 30px; right: 30px; font-size: 36px; background: none; border: none; cursor: pointer; }
+        .close-menu { position: absolute; top: 30px; right: 30px; font-size: 36px; background: none; border: none; cursor: pointer; color: var(--text-primary); }
         @media (max-width: 900px) { nav ul, .header-right .btn { display: none; } .mobile-toggle { display: block; } }
         @media (max-width: 480px) { .header-phone span { display: none; } .header-phone i { font-size: 24px; } }
 
@@ -164,94 +194,30 @@
         .price-list { list-style: none; margin: 28px 0; text-align: left; }
         .price-list li { padding: 10px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; }
 
-        /* Галерея интерьера */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 20px;
-        }
-        .gallery-item {
-            border-radius: var(--border-radius-card);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            aspect-ratio: 4 / 3;
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 20px; }
+        .gallery-item { border-radius: var(--border-radius-card); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); aspect-ratio: 4 / 3; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
         .gallery-item:hover img { transform: scale(1.05); }
         @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .gallery-grid { grid-template-columns: 1fr; } }
 
-        /* Стили для контейнера карты */
-        .map-container {
-            width: 100%;
-            height: 450px;
-            border-radius: var(--border-radius-card);
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            margin-top: 30px;
-        }
-        /* ID элемента, в котором будет отрисована карта */
-        #yandexMap {
-            width: 100%;
-            height: 100%;
-        }
-        .address-block {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .address-block p {
-            font-size: 1.2rem;
-            margin: 10px 0;
-        }
-        .address-block i {
-            color: var(--accent-primary);
-            margin-right: 10px;
-        }
+        .map-container { width: 100%; height: 450px; border-radius: var(--border-radius-card); overflow: hidden; box-shadow: var(--shadow-lg); margin-top: 30px; }
+        #yandexMap { width: 100%; height: 100%; }
+        .address-block { text-align: center; margin-bottom: 30px; }
+        .address-block p { font-size: 1.2rem; margin: 10px 0; }
+        .address-block i { color: var(--accent-primary); margin-right: 10px; }
 
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(6,1fr);
-            gap: 25px;
-        }
+        .team-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 25px; }
         .team-member { text-align: center; transition: var(--transition); }
         .team-photo { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 20px; overflow: hidden; box-shadow: var(--shadow-md); border: 3px solid white; }
         .team-photo img { width: 100%; height: 100%; object-fit: cover; }
         .team-member:hover .team-photo { transform: scale(1.05) rotate(1deg); }
 
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-        .review-card {
-            background: var(--bg-card);
-            border-radius: var(--border-radius-card);
-            padding: 32px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
+        .reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 40px; }
+        .review-card { background: var(--bg-card); border-radius: var(--border-radius-card); padding: 32px; box-shadow: var(--shadow-sm); transition: var(--transition); }
         .review-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
-        .review-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-        .review-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            overflow: hidden;
-            background: var(--accent-warm);
-        }
+        .review-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+        .review-avatar { width: 60px; height: 60px; border-radius: 50%; overflow: hidden; background: var(--accent-warm); }
         .review-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .review-name { font-weight: 700; color: var(--text-primary); }
         .review-text { font-style: italic; color: var(--text-secondary); line-height: 1.5; }
@@ -266,12 +232,12 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; }
         .modal-content { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 48px 40px; border-radius: 48px; max-width: 480px; width: 90%; position: relative; animation: modalFade 0.4s; }
         @keyframes modalFade { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        .close-modal { position: absolute; top: 20px; right: 25px; font-size: 28px; cursor: pointer; }
+        .close-modal { position: absolute; top: 20px; right: 25px; font-size: 28px; cursor: pointer; background: none; border: none; color: var(--text-primary); }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
         .form-group select, .form-group input { width: 100%; padding: 12px; border-radius: 20px; border: 1px solid var(--border-light); font-family: inherit; }
 
-        .scroll-top { position: fixed; bottom: 30px; right: 30px; background: var(--text-primary); color: white; width: 50px; height: 50px; border-radius: 30px; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: var(--transition); cursor: pointer; z-index: 99; }
+        .scroll-top { position: fixed; bottom: 30px; right: 30px; background: var(--text-primary); color: white; width: 50px; height: 50px; border-radius: 30px; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: var(--transition); cursor: pointer; z-index: 99; border: none; }
         .scroll-top.show { opacity: 1; visibility: visible; }
         .scroll-top:hover { background: var(--accent-primary); }
 
@@ -285,8 +251,8 @@
 
 <header>
     <div class="container header-inner">
-        <div class="logo"><i class="fas fa-infinity"></i> INFINITY</div>
-        <nav>
+        <div class="logo"><i class="fas fa-infinity" aria-hidden="true"></i> INFINITY</div>
+        <nav aria-label="Основная навигация">
             <ul>
                 <li><a href="#interior">Интерьер</a></li>
                 <li><a href="#directions">Направления</a></li>
@@ -298,15 +264,19 @@
             </ul>
         </nav>
         <div class="header-right">
-            <a href="tel:+79697324841" class="header-phone"><i class="fas fa-phone-alt"></i> <span>+7 (969) 732-48-41</span></a>
-            <button class="btn" onclick="openModal()"><i class="fas fa-calendar-check"></i> Записаться</button>
+            <a href="tel:+79697324841" class="header-phone" aria-label="Позвонить по телефону +7 969 732 48 41">
+                <i class="fas fa-phone-alt" aria-hidden="true"></i> <span>+7 (969) 732-48-41</span>
+            </a>
+            <button class="btn" data-open-modal=""><i class="fas fa-calendar-check" aria-hidden="true"></i> Записаться</button>
         </div>
-        <button class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+        <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Открыть меню">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
     </div>
 </header>
 
-<div class="mobile-menu" id="mobileMenu">
-    <button class="close-menu" id="closeMenuBtn"><i class="fas fa-times"></i></button>
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true" aria-label="Мобильное меню">
+    <button class="close-menu" id="closeMenuBtn" aria-label="Закрыть меню"><i class="fas fa-times" aria-hidden="true"></i></button>
     <a href="#interior">Интерьер</a>
     <a href="#directions">Направления</a>
     <a href="#schedule">Расписание</a>
@@ -315,237 +285,595 @@
     <a href="#reviews">Отзывы</a>
     <a href="#map">Контакты</a>
     <a href="tel:+79697324841">+7 (969) 732-48-41</a>
-    <button class="btn" onclick="openModal(); document.getElementById('mobileMenu').classList.remove('active')">Запись</button>
+    <button class="btn" data-open-modal="">Запись</button>
 </div>
 
-<section class="hero">
-    <div class="container">
-        <h1>Фитнес-студия INFINITY<br>в Шушарах</h1>
-        <p>Премиальный фитнес-опыт без переплат. Топовые тренеры, современное оборудование и атмосфера, в которую хочется возвращаться. Йога, пилон, растяжка в Шушарах — ваш идеальный баланс тела и духа.</p>
-        <button class="btn" onclick="openModal()"><i class="fas fa-ticket-alt"></i> Пробное за 500 ₽</button>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container">
-        <h2 class="reveal">Почему выбирают Infinity</h2>
-        <div class="features-grid">
-            <div class="card reveal"><i class="fas fa-dumbbell feature-icon"></i><h3>Премиум оборудование</h3><p>Technogym & Life Fitness, премиальные коврики и зоны растяжки.</p></div>
-            <div class="card reveal"><i class="fas fa-brain feature-icon"></i><h3>Умные программы</h3><p>Индивидуальный подбор нагрузки с учетом целей и уровня подготовки.</p></div>
-            <div class="card reveal"><i class="fas fa-map-pin feature-icon"></i><h3>Рядом с домом</h3><p>5 минут от метро, просторная парковка и комфортный зал без очередей.</p></div>
-            <div class="card reveal"><i class="fas fa-chart-line feature-icon"></i><h3>Гарантия результата</h3><p>Фиксация прогресса, DEXA-сканирование и персональный куратор.</p></div>
+<main>
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+            <h1 id="hero-title">Фитнес-студия INFINITY<br>в Шушарах</h1>
+            <p>Премиальный фитнес-опыт без переплат. Топовые тренеры, современное оборудование и атмосфера, в которую хочется возвращаться. Йога, пилон, растяжка в Шушарах — ваш идеальный баланс тела и духа.</p>
+            <button class="btn" data-open-modal=""><i class="fas fa-ticket-alt" aria-hidden="true"></i> Пробное за 500 ₽</button>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- НОВЫЙ БЛОК: ИНТЕРЬЕР СТУДИИ -->
-<section class="section" id="interior" style="background: #fff;">
-    <div class="container">
-        <h2 class="reveal" style="text-align:center;">Интерьер студии</h2>
-        <p class="reveal" style="text-align:center; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">Просторный зал, современное оборудование, зона отдыха и раздевалки — всё для вашего комфорта.</p>
-        <div class="gallery-grid">
-            <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал для групповых занятий"></div>
-            <div class="gallery-item reveal"><img src="hal_2.webp" alt="Пилон и фотозона"></div>
-            <div class="gallery-item reveal"><img src="hal_3.webp" alt="Pole Dance тренировка"></div>
-            <div class="gallery-item reveal"><img src="hal_4.webp" alt="Акробатические занятия"></div>
-            <div class="gallery-item reveal"><img src="razdevalka.webp" alt="Уютная раздевалка"></div>
-            <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал INFINITY" style="filter:brightness(0.92) saturate(1.1)"></div>
-        </div>
-    </div>
-</section>
-
-<!-- Directions -->
-<section class="section" id="directions" style="background: var(--bg-primary);">
-    <div class="container">
-        <h2 class="reveal" style="text-align:center;">Направления тренировок</h2>
-        <div class="directions-grid">
-            <div class="direction-card reveal"><i class="fas fa-music direction-icon"></i><div class="direction-title">Zumba</div><span class="direction-level">Оздоровительный</span><div class="direction-desc">Танцевальная форма на основе латиноамериканских ритмов.</div><div class="direction-price">от 500 ₽</div><button class="btn" onclick="openModal('Zumba')">Записаться</button></div>
-            <div class="direction-card reveal"><i class="fas fa-spa direction-icon"></i><div class="direction-title">МФР</div><span class="direction-level">Базовый</span><div class="direction-desc">Миофасциальный релиз — расслабление и гибкость суставов.</div><div class="direction-price">от 500 ₽</div><button class="btn" onclick="openModal('МФР')">Записаться</button></div>
-            <div class="direction-card reveal"><i class="fas fa-person-walking direction-icon"></i><div class="direction-title">Растяжка</div><span class="direction-level">Базовый</span><div class="direction-desc">Акробатические и дыхательные упражнения для гибкости.</div><div class="direction-price">от 500 ₽</div><button class="btn" onclick="openModal('Растяжка')">Записаться</button></div>
-            <div class="direction-card reveal"><i class="fas fa-female direction-icon"></i><div class="direction-title">Йога для беременных</div><span class="direction-level">Базовый</span><div class="direction-desc">Деликатные занятия для эмоционального равновесия.</div><div class="direction-price">900 ₽</div><button class="btn" onclick="openModal('Йога для беременных')">Записаться</button></div>
-            <div class="direction-card reveal"><i class="fas fa-hands direction-icon"></i><div class="direction-title">Йогатерапия</div><span class="direction-level">Базовый</span><div class="direction-desc">Восстановление после травм и улучшение работы организма.</div><div class="direction-price">от 500 ₽</div><button class="btn" onclick="openModal('Йогатерапия')">Записаться</button></div>
-            <div class="direction-card reveal"><i class="fas fa-dumbbell direction-icon"></i><div class="direction-title">Body Sculpt</div><span class="direction-level">Базовый</span><div class="direction-desc">Эффективные упражнения для улучшения форм тела.</div><div class="direction-price">от 500 ₽</div><button class="btn" onclick="openModal('Body Sculpt')">Записаться</button></div>
-            <div class="direction-card reveal"><i class="fas fa-spine direction-icon"></i><div class="direction-title">Здоровая спина</div><span class="direction-level">Базовый</span><div class="direction-desc">Укрепление мышц спины и формирование правильной осанки.</div><div class="direction-price">от 500 ₽</div><button class="btn" onclick="openModal('Здоровая спина')">Записаться</button></div>
-            <div class="direction-card reveal"><i class="fas fa-fan direction-icon"></i><div class="direction-title">Pole Dance / Exotic</div><span class="direction-level">Базовый</span><div class="direction-desc">Упражнения на пилоне для силы, грации и уверенности.</div><div class="direction-price">от 1 000 ₽</div><button class="btn" onclick="openModal('Pole Dance')">Записаться</button></div>
-        </div>
-    </div>
-</section>
-
-<!-- Schedule -->
-<section class="section" id="schedule" style="background: #fff;">
-    <div class="container">
-        <h2 class="reveal" style="text-align:center;">Расписание недели</h2>
-        <div class="directions-tabs reveal" id="scheduleTabs" style="display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
-            <div class="tab active" data-day="all">Вся неделя</div>
-            <div class="tab" data-day="mon">Пн</div><div class="tab" data-day="tue">Вт</div><div class="tab" data-day="wed">Ср</div>
-            <div class="tab" data-day="thu">Чт</div><div class="tab" data-day="fri">Пт</div><div class="tab" data-day="sat">Сб</div><div class="tab" data-day="sun">Вс</div>
-        </div>
-        <div class="schedule-wrapper reveal">
-            <div id="selectedDayLabel" style="text-align: center; margin-bottom: 15px; font-weight: 600; color: var(--accent-primary);"></div>
-            <table id="scheduleTable">
-                <thead><tr><th>Время</th><th>Пн 20.04</th><th>Вт 21.04</th><th>Ср 22.04</th><th>Чт 23.04</th><th>Пт 24.04</th><th>Сб 25.04</th><th>Вс 26.04</th></tr></thead>
-                <tbody id="scheduleBody"></tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-<!-- Prices (исправленный блок: безлимит в виде списка) -->
-<section class="section" id="prices" style="background: var(--bg-primary);">
-    <div class="container">
-        <h2 class="reveal" style="text-align:center;">Тарифы абонементов</h2>
-        <div class="price-grid">
-            <div class="price-card reveal">
-                <h3>«Без Пилона»</h3>
-                <ul class="price-list">
-                    <li>4 занятия <span>3 200 ₽</span></li>
-                    <li>8 занятий <span>5 500 ₽</span></li>
-                    <li>12 занятий <span>6 600 ₽</span></li>
-                    <li>Разовое <span>850 ₽</span></li>
-                </ul>
-                <button class="btn btn-outline" onclick="openModal()">Выбрать</button>
-            </div>
-            <div class="price-card featured reveal">
-                <div class="badge">Популярное</div>
-                <h3 style="margin-top:20px;">«С Пилоном»</h3>
-                <ul class="price-list">
-                    <li>4 занятия <span>3 600 ₽</span></li>
-                    <li>8 занятий <span>6 300 ₽</span></li>
-                    <li>12 занятий <span>8 200 ₽</span></li>
-                    <li>Разовое <span>1 000 ₽</span></li>
-                </ul>
-                <button class="btn" onclick="openModal()">Выбрать</button>
-            </div>
-            <div class="price-card reveal">
-                <h3>Безлимит</h3>
-                <ul class="price-list">
-                    <li>Без пилона / 3 мес <span>16 000 ₽</span></li>
-                    <li>С пилоном / 3 мес <span>20 000 ₽</span></li>
-                    <li>Без пилона / 6 мес <span>30 000 ₽</span></li>
-                    <li>С пилоном / 6 мес <span>39 000 ₽</span></li>
-                </ul>
-                <button class="btn btn-outline" onclick="openModal()">Выбрать</button>
+    <section aria-labelledby="features-title">
+        <div class="container">
+            <h2 id="features-title" class="reveal">Почему выбирают Infinity</h2>
+            <div class="features-grid">
+                <div class="card reveal"><i class="fas fa-dumbbell feature-icon" aria-hidden="true"></i><h3>Премиум оборудование</h3><p>Technogym & Life Fitness, премиальные коврики и зоны растяжки.</p></div>
+                <div class="card reveal"><i class="fas fa-brain feature-icon" aria-hidden="true"></i><h3>Умные программы</h3><p>Индивидуальный подбор нагрузки с учетом целей и уровня подготовки.</p></div>
+                <div class="card reveal"><i class="fas fa-map-pin feature-icon" aria-hidden="true"></i><h3>Рядом с домом</h3><p>5 минут от метро, просторная парковка и комфортный зал без очередей.</p></div>
+                <div class="card reveal"><i class="fas fa-chart-line feature-icon" aria-hidden="true"></i><h3>Гарантия результата</h3><p>Фиксация прогресса, DEXA-сканирование и персональный куратор.</p></div>
             </div>
         </div>
-        <div class="reveal" style="margin-top:40px; text-align:center;">
-            <p><strong>Индивидуальное:</strong> 1 чел — 1800 ₽ | 2 чел — 2400 ₽ &nbsp;&nbsp; <strong>Йога для беременных:</strong> 900 ₽</p>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- Team -->
-<section class="section" id="team" style="background: #fff;">
-    <div class="container">
-        <h2 class="reveal" style="text-align:center;">Команда Infinity</h2>
-        <div class="team-grid">
-            <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Светлана" alt="Светлана"></div><h4>Светлана</h4><p>Йога, спина</p></div>
-            <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Оксана" alt="Оксана"></div><h4>Оксана</h4><p>Фитнес</p></div>
-            <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Надежда" alt="Надежда"></div><h4>Надежда</h4><p>Pole, Exotic</p></div>
-            <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Валерия" alt="Валерия"></div><h4>Валерия</h4><p>Растяжка, ЛФК</p></div>
-            <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Юлия" alt="Юлия"></div><h4>Юлия</h4><p>Фитнес, Растяжка</p></div>
-            <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Ксения" alt="Ксения"></div><h4>Ксения</h4><p>Zumba</p></div>
+    <section id="interior" aria-labelledby="interior-title" style="background: #fff;">
+        <div class="container">
+            <h2 id="interior-title" class="reveal" style="text-align:center;">Интерьер студии</h2>
+            <p class="reveal" style="text-align:center; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">Просторный зал, современное оборудование, зона отдыха и раздевалки — всё для вашего комфорта.</p>
+            <div class="gallery-grid">
+                <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал для групповых занятий с панорамными окнами" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_2.webp" alt="Пилон и фотозона в студии INFINITY" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_3.webp" alt="Pole Dance тренировка с инструктором" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_4.webp" alt="Акробатические занятия в светлом зале" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="razdevalka.webp" alt="Уютная раздевалка с индивидуальными шкафчиками" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал INFINITY с современным оборудованием" style="filter:brightness(0.92) saturate(1.1)" loading="lazy"></div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Reviews -->
-<section class="section" id="reviews" style="background: var(--bg-primary);">
-    <div class="container">
-        <h2 class="reveal" style="text-align:center;">Наши клиенты говорят</h2>
-        <div class="reviews-grid">
-            <div class="review-card reveal">
-                <div class="review-header">
-                    <div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Анна" alt="Анна"></div>
-                    <div class="review-name">Анна, 34 года</div>
+    <section id="directions" aria-labelledby="directions-title" style="background: var(--bg-primary);">
+        <div class="container">
+            <h2 id="directions-title" class="reveal" style="text-align:center;">Направления тренировок</h2>
+            <div class="directions-grid">
+                <div class="direction-card reveal"><i class="fas fa-music direction-icon" aria-hidden="true"></i><div class="direction-title">Zumba</div><span class="direction-level">Оздоровительный</span><div class="direction-desc">Танцевальная форма на основе латиноамериканских ритмов.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Zumba">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-spa direction-icon" aria-hidden="true"></i><div class="direction-title">МФР</div><span class="direction-level">Базовый</span><div class="direction-desc">Миофасциальный релиз — расслабление и гибкость суставов.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="МФР">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-person-walking direction-icon" aria-hidden="true"></i><div class="direction-title">Растяжка</div><span class="direction-level">Базовый</span><div class="direction-desc">Акробатические и дыхательные упражнения для гибкости.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Растяжка">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-female direction-icon" aria-hidden="true"></i><div class="direction-title">Йога для беременных</div><span class="direction-level">Базовый</span><div class="direction-desc">Деликатные занятия для эмоционального равновесия.</div><div class="direction-price">900 ₽</div><button class="btn" data-open-modal="Йога для беременных">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-hands direction-icon" aria-hidden="true"></i><div class="direction-title">Йогатерапия</div><span class="direction-level">Базовый</span><div class="direction-desc">Восстановление после травм и улучшение работы организма.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Йогатерапия">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-dumbbell direction-icon" aria-hidden="true"></i><div class="direction-title">Body Sculpt</div><span class="direction-level">Базовый</span><div class="direction-desc">Эффективные упражнения для улучшения форм тела.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Body Sculpt">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-spine direction-icon" aria-hidden="true"></i><div class="direction-title">Здоровая спина</div><span class="direction-level">Базовый</span><div class="direction-desc">Укрепление мышц спины и формирование правильной осанки.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Здоровая спина">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-fan direction-icon" aria-hidden="true"></i><div class="direction-title">Pole Dance / Exotic</div><span class="direction-level">Базовый</span><div class="direction-desc">Упражнения на пилоне для силы, грации и уверенности.</div><div class="direction-price">от 1 000 ₽</div><button class="btn" data-open-modal="Pole Dance">Записаться</button></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="schedule" aria-labelledby="schedule-title" style="background: #fff;">
+        <div class="container">
+            <h2 id="schedule-title" class="reveal" style="text-align:center;">Расписание недели</h2>
+            <div class="directions-tabs reveal" id="scheduleTabs" style="display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;" role="tablist" aria-label="Фильтр расписания по дням">
+                <button class="tab active" role="tab" aria-selected="true" data-day="all">Вся неделя</button>
+                <button class="tab" role="tab" aria-selected="false" data-day="mon">Пн</button>
+                <button class="tab" role="tab" aria-selected="false" data-day="tue">Вт</button>
+                <button class="tab" role="tab" aria-selected="false" data-day="wed">Ср</button>
+                <button class="tab" role="tab" aria-selected="false" data-day="thu">Чт</button>
+                <button class="tab" role="tab" aria-selected="false" data-day="fri">Пт</button>
+                <button class="tab" role="tab" aria-selected="false" data-day="sat">Сб</button>
+                <button class="tab" role="tab" aria-selected="false" data-day="sun">Вс</button>
+            </div>
+            <div class="schedule-wrapper reveal">
+                <div id="selectedDayLabel" style="text-align: center; margin-bottom: 15px; font-weight: 600; color: var(--accent-primary);" aria-live="polite"></div>
+                <table id="scheduleTable" aria-label="Расписание занятий">
+                    <thead><tr><th scope="col">Время</th><th scope="col">Пн 20.04</th><th scope="col">Вт 21.04</th><th scope="col">Ср 22.04</th><th scope="col">Чт 23.04</th><th scope="col">Пт 24.04</th><th scope="col">Сб 25.04</th><th scope="col">Вс 26.04</th></tr></thead>
+                    <tbody id="scheduleBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="prices" aria-labelledby="prices-title" style="background: var(--bg-primary);">
+        <div class="container">
+            <h2 id="prices-title" class="reveal" style="text-align:center;">Тарифы абонементов</h2>
+            <div class="price-grid">
+                <div class="price-card reveal">
+                    <h3>«Без Пилона»</h3>
+                    <ul class="price-list" aria-label="Тарифы без пилона">
+                        <li>4 занятия <span>3 200 ₽</span></li>
+                        <li>8 занятий <span>5 500 ₽</span></li>
+                        <li>12 занятий <span>6 600 ₽</span></li>
+                        <li>Разовое <span>850 ₽</span></li>
+                    </ul>
+                    <button class="btn btn-outline" data-open-modal="">Выбрать</button>
                 </div>
-                <div class="review-text">«Хожу на растяжку и пилон уже полгода. Очень довольна! Тренеры внимательные, зал чистый и стильный. INFINITY — лучшее, что случилось с моим телом за последние годы. Рекомендую всем в Шушарах!»</div>
-            </div>
-            <div class="review-card reveal">
-                <div class="review-header">
-                    <div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Екатерина" alt="Екатерина"></div>
-                    <div class="review-name">Екатерина, 29 лет</div>
+                <div class="price-card featured reveal">
+                    <div class="badge">Популярное</div>
+                    <h3 style="margin-top:20px;">«С Пилоном»</h3>
+                    <ul class="price-list" aria-label="Тарифы с пилоном">
+                        <li>4 занятия <span>3 600 ₽</span></li>
+                        <li>8 занятий <span>6 300 ₽</span></li>
+                        <li>12 занятий <span>8 200 ₽</span></li>
+                        <li>Разовое <span>1 000 ₽</span></li>
+                    </ul>
+                    <button class="btn" data-open-modal="">Выбрать</button>
                 </div>
-                <div class="review-text">«Записывалась на пробное по акции 500₽, теперь хожу постоянно. Очень нравится йога для беременных — бережно и эффективно. Спасибо студии за заботу!»</div>
+                <div class="price-card reveal">
+                    <h3>Безлимит</h3>
+                    <ul class="price-list" aria-label="Безлимитные тарифы">
+                        <li>Без пилона / 3 мес <span>16 000 ₽</span></li>
+                        <li>С пилоном / 3 мес <span>20 000 ₽</span></li>
+                        <li>Без пилона / 6 мес <span>30 000 ₽</span></li>
+                        <li>С пилоном / 6 мес <span>39 000 ₽</span></li>
+                    </ul>
+                    <button class="btn btn-outline" data-open-modal="">Выбрать</button>
+                </div>
+            </div>
+            <div class="reveal" style="margin-top:40px; text-align:center;">
+                <p><strong>Индивидуальное:</strong> 1 чел — 1800 ₽ | 2 чел — 2400 ₽ &nbsp;&nbsp; <strong>Йога для беременных:</strong> 900 ₽</p>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- НОВЫЙ БЛОК: КАРТА И АДРЕС (исправлены координаты) -->
-<section class="section" id="map" style="background: #fff;">
-    <div class="container">
-        <h2 class="reveal" style="text-align:center;">Как нас найти</h2>
-        <div class="address-block reveal">
-            <p><i class="fas fa-map-marker-alt"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
-            <p><i class="fas fa-clock"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
-            <p><i class="fas fa-phone"></i> +7 (969) 732-48-41</p>
-            <p><i class="fas fa-parking"></i> Бесплатная парковка для клиентов</p>
+    <section id="team" aria-labelledby="team-title" style="background: #fff;">
+        <div class="container">
+            <h2 id="team-title" class="reveal" style="text-align:center;">Команда Infinity</h2>
+            <div class="team-grid">
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Светлана" alt="Светлана — инструктор по йоге и здоровой спине" loading="lazy"></div><h4>Светлана</h4><p>Йога, спина</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Оксана" alt="Оксана — фитнес-тренер" loading="lazy"></div><h4>Оксана</h4><p>Фитнес</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Надежда" alt="Надежда — инструктор по Pole Dance и Exotic" loading="lazy"></div><h4>Надежда</h4><p>Pole, Exotic</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Валерия" alt="Валерия — тренер по растяжке и ЛФК" loading="lazy"></div><h4>Валерия</h4><p>Растяжка, ЛФК</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Юлия" alt="Юлия — фитнес и растяжка" loading="lazy"></div><h4>Юлия</h4><p>Фитнес, Растяжка</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Ксения" alt="Ксения — инструктор Zumba" loading="lazy"></div><h4>Ксения</h4><p>Zumba</p></div>
+            </div>
         </div>
-        <div class="map-container reveal">
-            <div id="yandexMap"></div>
-        </div>
-    </div>
-</section>
+    </section>
 
-<footer>
+    <section id="reviews" aria-labelledby="reviews-title" style="background: var(--bg-primary);">
+        <div class="container">
+            <h2 id="reviews-title" class="reveal" style="text-align:center;">Наши клиенты говорят</h2>
+            <div class="reviews-grid">
+                <div class="review-card reveal">
+                    <div class="review-header">
+                        <div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Анна" alt="Анна, клиент студии" loading="lazy"></div>
+                        <div class="review-name">Анна, 34 года</div>
+                    </div>
+                    <div class="review-text">«Хожу на растяжку и пилон уже полгода. Очень довольна! Тренеры внимательные, зал чистый и стильный. INFINITY — лучшее, что случилось с моим телом за последние годы. Рекомендую всем в Шушарах!»</div>
+                </div>
+                <div class="review-card reveal">
+                    <div class="review-header">
+                        <div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Екатерина" alt="Екатерина, клиент студии" loading="lazy"></div>
+                        <div class="review-name">Екатерина, 29 лет</div>
+                    </div>
+                    <div class="review-text">«Записывалась на пробное по акции 500₽, теперь хожу постоянно. Очень нравится йога для беременных — бережно и эффективно. Спасибо студии за заботу!»</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="map" aria-labelledby="map-title" style="background: #fff;">
+        <div class="container">
+            <h2 id="map-title" class="reveal" style="text-align:center;">Как нас найти</h2>
+            <div class="address-block reveal">
+                <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
+                <p><i class="fas fa-clock" aria-hidden="true"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
+                <p><i class="fas fa-phone" aria-hidden="true"></i> +7 (969) 732-48-41</p>
+                <p><i class="fas fa-parking" aria-hidden="true"></i> Бесплатная парковка для клиентов</p>
+            </div>
+            <div class="map-container reveal">
+                <div id="yandexMap"></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer role="contentinfo">
     <div class="container">
         <div class="footer-grid">
-            <div><h3><i class="fas fa-infinity"></i> INFINITY</h3><p>Шушары, ул. Пушкинская, 34Б, этаж 3</p><p><i class="fas fa-phone"></i> +7 (969) 732-48-41</p><div class="social-icons"><a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="#" aria-label="VK"><i class="fab fa-vk"></i></a></div></div>
-            <div><h3>Навигация</h3><a href="#hero" style="color:#ccc; display:block; margin-bottom:10px; text-decoration:none;">Главная</a><a href="#directions" style="color:#ccc; display:block; margin-bottom:10px; text-decoration:none;">Направления</a><a href="#prices" style="color:#ccc; display:block; text-decoration:none;">Цены</a></div>
+            <div><h3><i class="fas fa-infinity" aria-hidden="true"></i> INFINITY</h3><p>Шушары, ул. Пушкинская, 34Б, этаж 3</p><p><i class="fas fa-phone" aria-hidden="true"></i> +7 (969) 732-48-41</p><div class="social-icons"><a href="#" aria-label="Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a><a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a><a href="#" aria-label="VK"><i class="fab fa-vk" aria-hidden="true"></i></a></div></div>
+            <div><h3>Навигация</h3><a href="#" style="color:#ccc; display:block; margin-bottom:10px; text-decoration:none;">Главная</a><a href="#directions" style="color:#ccc; display:block; margin-bottom:10px; text-decoration:none;">Направления</a><a href="#prices" style="color:#ccc; display:block; text-decoration:none;">Цены</a></div>
             <div><h3>Режим работы</h3><p>Пн-Пт: 09:00 - 22:00</p><p>Сб-Вс: 10:00 - 20:00</p></div>
         </div>
         <div class="footer-bottom">© 2026 INFINITY Fitness Studio. Все права защищены.</div>
     </div>
 </footer>
 
-<div class="modal" id="signupModal" role="dialog" aria-modal="true">
+<!-- Accessible Modal Dialog -->
+<div class="modal" id="signupModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
     <div class="modal-content">
-        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <button class="close-modal" aria-label="Закрыть окно записи">&times;</button>
         <h2 id="modalTitle">Запишись на пробный урок</h2>
         <p id="modalSubtitle" style="margin-bottom:24px;">Начни менять свою жизнь прямо сейчас!</p>
-        <div id="formSuccess" style="display:none; text-align:center; padding: 20px 0;">
+        <div id="formSuccess" style="display:none; text-align:center; padding: 20px 0;" role="status">
             <div style="font-size:3rem; margin-bottom:12px;">✅</div>
             <h3 style="color:#1A1A1A; margin-bottom:8px;">Заявка принята!</h3>
             <p>Мы перезвоним вам в ближайшее время.<br>Если срочно — <a href="tel:+79697324841" style="color:var(--accent-primary);">+7 (969) 732-48-41</a></p>
         </div>
-        <form id="signupForm" onsubmit="handleFormSubmit(event)">
+        <form id="signupForm" novalidate>
             <div class="form-group">
                 <label for="modalName">Ваше имя*</label>
-                <input type="text" id="modalName" placeholder="Имя" required>
+                <input type="text" id="modalName" name="name" placeholder="Имя" required autocomplete="name">
             </div>
             <div class="form-group">
                 <label for="modalDirectionSelect">Направление*</label>
-                <select id="modalDirectionSelect">
+                <select id="modalDirectionSelect" name="direction">
                     <option>Body sculpt</option><option>Pole dance</option><option>Exotic</option><option>Растяжка</option><option>Йога</option><option>Zumba</option><option>МФР</option><option>Йога для беременных</option><option>Фитнес</option><option>Здоровая спина</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="modalPhone">Телефон*</label>
-                <input type="tel" id="modalPhone" placeholder="+7 (999) 000-00-00" required>
+                <input type="tel" id="modalPhone" name="phone" placeholder="+7 (999) 000-00-00" required autocomplete="tel">
             </div>
             <button type="submit" class="btn" id="submitBtn" style="width:100%;">
-                <i class="fas fa-paper-plane"></i> Отправить заявку
+                <i class="fas fa-paper-plane" aria-hidden="true"></i> Отправить заявку
             </button>
         </form>
     </div>
 </div>
 
-<button class="scroll-top" id="scrollTop" aria-label="Наверх"><i class="fas fa-arrow-up"></i></button>
+<button class="scroll-top" id="scrollTop" aria-label="Прокрутить страницу наверх">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+</button>
 
-<!-- JavaScript API Яндекс.Карт с корректными координатами -->
+<!-- Yandex Maps API (замените YOUR_API_KEY на ваш реальный ключ) -->
 <script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU" type="text/javascript"></script>
+
+<script>
+    /**
+     * INFINITY Fitness Studio — Main Application Script
+     * (c) 2026. All rights reserved.
+     * Production-ready with full accessibility support.
+     */
+    (function() {
+        'use strict';
+
+        // ============================================
+        // 1. ACCESSIBLE MOBILE MENU COMPONENT
+        // ============================================
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            mobileToggle.setAttribute('aria-expanded', 'true');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            // Move focus to close button for better UX
+            closeMenuBtn.focus();
+        }
+        
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            // Return focus to toggle button
+            mobileToggle.focus();
+        }
+        
+        mobileToggle.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            isExpanded ? closeMobileMenu() : openMobileMenu();
+        });
+        
+        closeMenuBtn.addEventListener('click', closeMobileMenu);
+        
+        // Close menu when any link inside is clicked
+        mobileMenu.querySelectorAll('a, button').forEach(function(el) {
+            el.addEventListener('click', function() {
+                if (mobileMenu.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        // ============================================
+        // 2. ACCESSIBLE MODAL DIALOG COMPONENT
+        // ============================================
+        const signupModal = document.getElementById('signupModal');
+        const modalCloseBtn = signupModal.querySelector('.close-modal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSubtitle = document.getElementById('modalSubtitle');
+        const directionSelect = document.getElementById('modalDirectionSelect');
+        let lastFocusedElement = null;
+        
+        function openModal(direction) {
+            lastFocusedElement = document.activeElement;
+            
+            if (direction) {
+                modalTitle.innerText = 'Запись на ' + direction;
+                modalSubtitle.innerText = ' ';
+                // Select matching option
+                for (let i = 0; i < directionSelect.options.length; i++) {
+                    if (directionSelect.options[i].text.toLowerCase().includes(direction.toLowerCase())) {
+                        directionSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            } else {
+                modalTitle.innerText = 'Запишись на пробный урок';
+                modalSubtitle.innerText = 'Начни менять свою жизнь прямо сейчас!';
+                directionSelect.selectedIndex = 0;
+            }
+            
+            // Reset form state
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('formSuccess').style.display = 'none';
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Отправить заявку';
+            
+            signupModal.style.display = 'flex';
+            signupModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus first input
+            document.getElementById('modalName').focus();
+        }
+        
+        function closeModal() {
+            signupModal.style.display = 'none';
+            signupModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            
+            // Return focus
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+                lastFocusedElement = null;
+            }
+        }
+        
+        modalCloseBtn.addEventListener('click', closeModal);
+        
+        // Close on backdrop click
+        signupModal.addEventListener('click', function(e) {
+            if (e.target === signupModal) closeModal();
+        });
+        
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && signupModal.getAttribute('aria-hidden') === 'false') {
+                closeModal();
+            }
+        });
+        
+        // Trap focus inside modal
+        signupModal.addEventListener('keydown', function(e) {
+            if (e.key !== 'Tab') return;
+            
+            const focusableElements = signupModal.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+            
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    lastElement.focus();
+                    e.preventDefault();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    firstElement.focus();
+                    e.preventDefault();
+                }
+            }
+        });
+        
+        // Delegate click events for all modal open buttons
+        document.body.addEventListener('click', function(e) {
+            const target = e.target.closest('[data-open-modal]');
+            if (!target) return;
+            
+            e.preventDefault();
+            const direction = target.getAttribute('data-open-modal') || '';
+            openModal(direction);
+        });
+        
+        // Expose for inline onclick compatibility (backward compat)
+        window.openModal = function(direction) {
+            openModal(direction || '');
+        };
+        window.closeModal = closeModal;
+
+        // ============================================
+        // 3. SCHEDULE RENDERING & FILTERING
+        // ============================================
+        const scheduleData = [
+            ['09:00', '','','','','','Йога<span>Светлана</span>',''],
+            ['10:00', '','','Фитнес<span>Оксана</span>','','Фитнес<span>Оксана</span>','','Фитнес<span>Оксана</span>'],
+            ['11:00', '','Йога<span>Светлана</span>','','Йога<span>Светлана</span>','','Фитнес<span>Юлия Е</span>',''],
+            ['12:00', '','Йога бер.<span>Светлана</span>','','Йога бер.<span>Светлана</span>','','Растяжка<span>Юлия Е</span>','Здор. спина<span>Валерия</span>'],
+            ['17:00', 'Гимн. дети<span>Валерия</span>','','','','','Zumba<span>Ксения</span>',''],
+            ['18:00', 'Exotic PD<span>Надежда</span>','','Exotic PD<span>Надежда</span>','Фитнес+ЛФК<span>Валерия</span>','','',''],
+            ['19:00', 'Pole Sport<span>Надежда</span>','Фитнес<span>Юлия Л</span>','Pole Sport<span>Надежда</span>','Фитнес<span>Юлия Л</span>','Йога<span>Светлана</span>','',''],
+            ['20:00', 'Zumba<span>Ксения</span>','Растяжка<span>Юлия Л</span>','','Растяжка<span>Юлия Л</span>','Индив<span>Светлана</span>','','']
+        ];
+        
+        const classMap = {
+            'Йога':'evt-yoga','Фитнес':'evt-fitness','Pole':'evt-pole','Растяжка':'evt-stretch',
+            'Zumba':'evt-kids','Гимн':'evt-kids','Exotic':'evt-exotic','Йога бер':'evt-exotic',
+            'Индив':'evt-yoga','Здор':'evt-stretch'
+        };
+        
+        function getEventClass(text) {
+            for (let k in classMap) {
+                if (text.includes(k)) return classMap[k];
+            }
+            return 'evt-fitness';
+        }
+        
+        function renderSchedule() {
+            const tbody = document.getElementById('scheduleBody');
+            let html = '';
+            scheduleData.forEach(function(row) {
+                html += '<tr><th scope="row">' + row[0] + '</th>';
+                for (let i = 1; i <= 7; i++) {
+                    let cell = row[i] || '';
+                    if (cell) {
+                        let cls = getEventClass(cell);
+                        html += '<td><div class="event ' + cls + '">' + cell + '</div></td>';
+                    } else {
+                        html += '<td></td>';
+                    }
+                }
+                html += '</tr>';
+            });
+            tbody.innerHTML = html;
+        }
+        
+        renderSchedule();
+        
+        // Schedule tab filtering
+        const scheduleTabs = document.querySelectorAll('#scheduleTabs .tab');
+        const table = document.getElementById('scheduleTable');
+        const selectedDayLabel = document.getElementById('selectedDayLabel');
+        
+        function filterSchedule(day) {
+            const rows = table.querySelectorAll('tbody tr');
+            const headerCells = table.querySelectorAll('thead th');
+            
+            // Update tab ARIA states
+            scheduleTabs.forEach(function(tab) {
+                const isSelected = tab.dataset.day === day;
+                tab.setAttribute('aria-selected', isSelected);
+                if (isSelected) tab.classList.add('active');
+                else tab.classList.remove('active');
+            });
+            
+            if (day === 'all') {
+                selectedDayLabel.innerHTML = '';
+                headerCells.forEach(function(th, idx) {
+                    if (idx > 0) th.style.display = '';
+                });
+                rows.forEach(function(tr) {
+                    tr.querySelectorAll('td').forEach(function(td, idx) {
+                        if (idx > 0) td.style.display = '';
+                    });
+                });
+            } else {
+                const dayIndex = {mon:1, tue:2, wed:3, thu:4, fri:5, sat:6, sun:7}[day];
+                const dayNames = {mon:'Понедельник', tue:'Вторник', wed:'Среда', thu:'Четверг', fri:'Пятница', sat:'Суббота', sun:'Воскресенье'};
+                selectedDayLabel.innerHTML = 'Расписание на ' + dayNames[day];
+                headerCells.forEach(function(th, idx) {
+                    if (idx > 0) th.style.display = (idx === dayIndex) ? '' : 'none';
+                });
+                rows.forEach(function(tr) {
+                    tr.querySelectorAll('td').forEach(function(td, idx) {
+                        if (idx === 0) return;
+                        td.style.display = (idx === dayIndex) ? '' : 'none';
+                    });
+                });
+            }
+        }
+        
+        scheduleTabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                filterSchedule(this.dataset.day);
+            });
+        });
+        
+        // Initial state
+        filterSchedule('all');
+
+        // ============================================
+        // 4. SCROLL OBSERVER FOR REVEAL ANIMATIONS
+        // ============================================
+        const revealElements = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+            revealElements.forEach(function(el) { observer.observe(el); });
+        } else {
+            // Fallback for older browsers
+            revealElements.forEach(function(el) { el.classList.add('visible'); });
+        }
+
+        // ============================================
+        // 5. SCROLL TO TOP BUTTON
+        // ============================================
+        const scrollBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 400) {
+                scrollBtn.classList.add('show');
+            } else {
+                scrollBtn.classList.remove('show');
+            }
+        });
+        scrollBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ============================================
+        // 6. SMOOTH SCROLL FOR ANCHOR LINKS
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href === '') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+                    window.scrollTo({ top: elementPosition - headerOffset, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ============================================
+        // 7. FORM SUBMISSION TO GOOGLE APPS SCRIPT
+        // ============================================
+        // IMPORTANT: Replace with your actual Google Apps Script URL
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0XSI05cJ5yMBOb82R4E47UAoh3Uf6Bv7aWJ4y6qEc33RQKnS2rR2-866PVPsOwhEG/exec';
+        
+        const signupForm = document.getElementById('signupForm');
+        signupForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Отправляем...';
+            
+            const params = new URLSearchParams({
+                name: document.getElementById('modalName').value,
+                phone: document.getElementById('modalPhone').value,
+                direction: document.getElementById('modalDirectionSelect').value
+            });
+            
+            try {
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: params
+                });
+            } catch (err) {
+                // no-cors mode: request always appears to fail, but data is sent
+                console.log('Form submitted (no-cors mode)');
+            }
+            
+            // Show success regardless
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+            
+            setTimeout(function() {
+                closeModal();
+                document.getElementById('signupForm').style.display = 'block';
+                document.getElementById('formSuccess').style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Отправить заявку';
+            }, 4000);
+        });
+
+    })();
+</script>
+
+<!-- Yandex Maps Initialization -->
 <script>
     function initMap() {
-        // Правильные координаты студии INFINITY (Шушары, ул. Пушкинская, 34Б)
-        var studioCoordinates = [59.804423, 30.380969];
+        const studioCoordinates = [59.804423, 30.380969];
         
-        var myMap = new ymaps.Map("yandexMap", {
+        const myMap = new ymaps.Map("yandexMap", {
             center: studioCoordinates,
             zoom: 17,
             controls: ['zoomControl', 'fullscreenControl']
         });
         
-        var myPlacemark = new ymaps.Placemark(studioCoordinates, {
+        const myPlacemark = new ymaps.Placemark(studioCoordinates, {
             hintContent: 'INFINITY Фитнес-студия',
             balloonContent: '<strong>INFINITY Фитнес-студия</strong><br/>Шушары, ул. Пушкинская, 34Б, этаж 3<br/><a href="tel:+79697324841">+7 (969) 732-48-41</a>'
         }, {
@@ -559,175 +887,5 @@
     ymaps.ready(initMap);
 </script>
 
-<script>
-    (function(){
-        window.openModal = function(direction = '') {
-            const modal = document.getElementById('signupModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalSubtitle = document.getElementById('modalSubtitle');
-            const selectEl = document.getElementById('modalDirectionSelect');
-            if(direction) {
-                modalTitle.innerText = `Запись на ${direction}`;
-                modalSubtitle.innerText = ' ';
-                for(let i = 0; i < selectEl.options.length; i++) {
-                    if(selectEl.options[i].text.toLowerCase().includes(direction.toLowerCase())) {
-                        selectEl.selectedIndex = i;
-                        break;
-                    }
-                }
-            } else {
-                modalTitle.innerText = 'Запишись на пробный урок';
-                modalSubtitle.innerText = 'Начни менять свою жизнь прямо сейчас!';
-                selectEl.selectedIndex = 0;
-            }
-            modal.style.display = 'flex';
-        };
-        window.closeModal = function() { document.getElementById('signupModal').style.display = 'none'; };
-        window.onclick = (e) => { if(e.target === document.getElementById('signupModal')) closeModal(); };
-
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        function closeMenu() { mobileMenu.classList.remove('active'); document.body.style.overflow = ''; }
-        mobileToggle.addEventListener('click', () => { mobileMenu.classList.add('active'); document.body.style.overflow = 'hidden'; });
-        closeMenuBtn.addEventListener('click', closeMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
-
-        const scheduleData = [
-            ['09:00', '','','','','','Йога<span>Светлана</span>',''],
-            ['10:00', '','','Фитнес<span>Оксана</span>','','Фитнес<span>Оксана</span>','','Фитнес<span>Оксана</span>'],
-            ['11:00', '','Йога<span>Светлана</span>','','Йога<span>Светлана</span>','','Фитнес<span>Юлия Е</span>',''],
-            ['12:00', '','Йога бер.<span>Светлана</span>','','Йога бер.<span>Светлана</span>','','Растяжка<span>Юлия Е</span>','Здор. спина<span>Валерия</span>'],
-            ['17:00', 'Гимн. дети<span>Валерия</span>','','','','','Zumba<span>Ксения</span>',''],
-            ['18:00', 'Exotic PD<span>Надежда</span>','','Exotic PD<span>Надежда</span>','Фитнес+ЛФК<span>Валерия</span>','','',''],
-            ['19:00', 'Pole Sport<span>Надежда</span>','Фитнес<span>Юлия Л</span>','Pole Sport<span>Надежда</span>','Фитнес<span>Юлия Л</span>','Йога<span>Светлана</span>','',''],
-            ['20:00', 'Zumba<span>Ксения</span>','Растяжка<span>Юлия Л</span>','','Растяжка<span>Юлия Л</span>','Индив<span>Светлана</span>','','']
-        ];
-
-        const classMap = {
-            'Йога':'evt-yoga','Фитнес':'evt-fitness','Pole':'evt-pole','Растяжка':'evt-stretch','Zumba':'evt-kids','Гимн':'evt-kids','Exotic':'evt-exotic','Йога бер':'evt-exotic','Индив':'evt-yoga','Здор':'evt-stretch'
-        };
-        function getEventClass(text) {
-            for(let k in classMap) if(text.includes(k)) return classMap[k];
-            return 'evt-fitness';
-        }
-
-        const tbody = document.getElementById('scheduleBody');
-        function renderSchedule() {
-            let html = '';
-            scheduleData.forEach(row => {
-                html += '<tr><td>'+row[0]+'</td>';
-                for(let i=1; i<=7; i++) {
-                    let cell = row[i] || '';
-                    if(cell) {
-                        let cls = getEventClass(cell);
-                        html += `<td><div class="event ${cls}">${cell}</div></td>`;
-                    } else html += '<td></td>';
-                }
-                html += '</tr>';
-            });
-            tbody.innerHTML = html;
-        }
-        renderSchedule();
-
-        const scheduleTabs = document.querySelectorAll('#scheduleTabs .tab');
-        const table = document.getElementById('scheduleTable');
-        const selectedDayLabel = document.getElementById('selectedDayLabel');
-        function filterSchedule(day) {
-            const rows = table.querySelectorAll('tbody tr');
-            const headerCells = table.querySelectorAll('thead th');
-            if(day === 'all') {
-                selectedDayLabel.innerHTML = '';
-                headerCells.forEach((th,idx) => { if(idx>0) th.style.display = ''; });
-                rows.forEach(tr => { tr.querySelectorAll('td').forEach((td,idx) => { if(idx>0) td.style.display = ''; }); });
-            } else {
-                const dayIndex = {mon:1, tue:2, wed:3, thu:4, fri:5, sat:6, sun:7}[day];
-                const dayNames = {mon:'Понедельник', tue:'Вторник', wed:'Среда', thu:'Четверг', fri:'Пятница', sat:'Суббота', sun:'Воскресенье'};
-                selectedDayLabel.innerHTML = `Расписание на ${dayNames[day]}`;
-                headerCells.forEach((th,idx) => { if(idx>0) th.style.display = (idx === dayIndex) ? '' : 'none'; });
-                rows.forEach(tr => {
-                    tr.querySelectorAll('td').forEach((td,idx) => {
-                        if(idx === 0) return;
-                        td.style.display = (idx === dayIndex) ? '' : 'none';
-                    });
-                });
-            }
-        }
-        scheduleTabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                scheduleTabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                filterSchedule(this.dataset.day);
-            });
-        });
-        filterSchedule('all');
-
-        const revealElements = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.15 });
-        revealElements.forEach(el => observer.observe(el));
-
-        const scrollBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 400); });
-        scrollBtn.addEventListener('click', () => { window.scrollTo({top:0, behavior:'smooth'}); });
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if(href === "#" || href === "") return;
-                const target = document.querySelector(href);
-                if(target) {
-                    e.preventDefault();
-                    const headerOffset = 80;
-                    const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-                    window.scrollTo({ top: elementPosition - headerOffset, behavior: 'smooth' });
-                }
-            });
-        });
-    })();
-</script>
-<script>
-    // ====================================================
-    // GOOGLE APPS SCRIPT URL — вставьте сюда свой URL
-    // После настройки (см. README) замените строку ниже:
-    // ====================================================
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0XSI05cJ5yMBOb82R4E47UAoh3Uf6Bv7aWJ4y6qEc33RQKnS2rR2-866PVPsOwhEG/exec';
-
-    async function handleFormSubmit(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
-
-        const params = new URLSearchParams({
-            name: document.getElementById('modalName').value,
-            phone: document.getElementById('modalPhone').value,
-            direction: document.getElementById('modalDirectionSelect').value
-        });
-
-        try {
-            await fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: params
-            });
-        } catch(err) {
-            // no-cors: всегда выглядит как ошибка, но запрос уходит
-        }
-        // Показываем успех в любом случае
-        document.getElementById('signupForm').style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
-        setTimeout(() => {
-            closeModal();
-            document.getElementById('signupForm').style.display = 'block';
-            document.getElementById('formSuccess').style.display = 'none';
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
-        }, 4000);
-    }
-</script>
-<style>.reveal.visible { opacity: 1 !important; transform: translateY(0) !important; }</style>
 </body>
 </html>
