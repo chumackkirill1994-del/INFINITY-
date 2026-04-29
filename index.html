@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Премиальная фитнес-студия INFINITY в Шушарах: йога, пилон, растяжка, Zumba. Абонементы от 500 ₽, пробное занятие. ЖК Пушкинский район, ул. Пушкинская 34Б.">
     <meta name="keywords" content="фитнес Шушары, растяжка Шушары, пилон спб, йога для беременных Шушары, студия растяжки, фитнес Пушкинский район">
-    <title>INFINITY | Премиальная фитнес-студия в Шушарах</title>
+    <title>INFINITY | Онлайн-запись в фитнес-студию</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -30,6 +30,9 @@
     </script>
 
     <style>
+        /* =========================================
+           DESIGN TOKENS (единые значения)
+           ========================================= */
         :root {
             --bg-primary: #F2F3F5;
             --bg-card: #FFFFFF;
@@ -46,12 +49,15 @@
             --sched-stretch: #D0F0E5;
             --sched-kids: #FFF5D9;
             --sched-exotic: #F5D5E0;
-            --shadow-sm: 0 10px 25px -5px rgba(0,0,0,0.03), 0 8px 10px -6px rgba(0,0,0,0.02);
-            --shadow-md: 0 20px 30px -10px rgba(0,0,0,0.05), 0 10px 20px -5px rgba(0,0,0,0.02);
-            --shadow-lg: 0 30px 40px -15px rgba(0,0,0,0.08);
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            --border-radius-card: 24px;
-            --border-radius-btn: 40px;
+            /* Упрощённая тень и скругление */
+            --shadow: 0 8px 20px rgba(0,0,0,.06);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -62,189 +68,325 @@
             color: var(--text-secondary);
             line-height: 1.6;
             font-weight: 400;
+            font-size: 16px; /* базовый текст 16px */
         }
-        h1, h2, h3, h4 { color: var(--text-primary); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
-        h2 { font-size: 2.5rem; margin-bottom: 1.5rem; text-transform: uppercase; }
-        @media (max-width: 768px) { h2 { font-size: 2rem; } }
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-        section { padding: 100px 0; }
-        @media (max-width: 768px) { section { padding: 70px 0; } }
+        h1 {
+            font-size: 32px; /* был 4rem */
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            /* убрали uppercase */
+        }
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+        h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        p { font-weight: 400; }
 
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 12px 28px; background: var(--accent-primary); color: #fff;
-            border-radius: var(--border-radius-btn); font-weight: 600; font-size: 0.95rem;
-            border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
-            transition: var(--transition); box-shadow: 0 8px 20px rgba(139, 155, 180, 0.2);
-            text-decoration: none;
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 var(--spacing-md); }
+
+        section { padding: var(--spacing-xl) 0; }
+        @media (max-width: 768px) {
+            section { padding: var(--spacing-lg) 0; }
+            h1 { font-size: 28px; }
+            h2 { font-size: 22px; }
         }
-        .btn:hover { background: var(--accent-hover); transform: translateY(-3px); }
-        .btn-outline { background: transparent; border: 1.5px solid var(--text-primary); color: var(--text-primary); box-shadow: none; }
+
+        /* =========================================
+           BUTTONS (единый стиль, без сильного hover)
+           ========================================= */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-xs);
+            padding: 12px 24px;
+            background: var(--accent-primary); color: #fff;
+            border-radius: var(--radius); font-weight: 600; font-size: 1rem;
+            border: none; cursor: pointer;
+            letter-spacing: 0.3px;
+            transition: background 0.2s ease, transform 0.1s ease;
+            text-decoration: none;
+            box-shadow: none; /* убрали тень */
+            min-height: 44px; /* tap area */
+        }
+        .btn:hover { background: var(--accent-hover); }
+        .btn-outline { background: transparent; border: 1.5px solid var(--text-primary); color: var(--text-primary); }
         .btn-outline:hover { background: var(--text-primary); color: #fff; }
 
-        /* Accessible focus styles — visible only for keyboard navigation */
-        a:focus-visible,
-        button:focus-visible,
-        input:focus-visible,
-        select:focus-visible,
-        textarea:focus-visible,
-        [tabindex]:focus-visible {
+        /* Accessibility focus */
+        :focus-visible {
             outline: 3px solid var(--accent-primary);
-            outline-offset: 3px;
-            box-shadow: 0 0 0 4px rgba(139, 155, 180, 0.4);
+            outline-offset: 2px;
             border-radius: 4px;
         }
-        a:focus:not(:focus-visible),
-        button:focus:not(:focus-visible),
-        input:focus:not(:focus-visible),
-        select:focus:not(:focus-visible),
-        textarea:focus:not(:focus-visible),
-        [tabindex]:focus:not(:focus-visible) {
-            outline: none;
-            box-shadow: none;
-        }
-
-        /* Screen reader only utility */
-        .sr-only {
+        .sr-only:not(:focus):not(:active) {
             position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+            overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;
         }
 
-        .card { background: var(--bg-card); padding: 32px 28px; border-radius: var(--border-radius-card); box-shadow: var(--shadow-sm); transition: var(--transition); border: 1px solid rgba(255,255,255,0.5); }
-        .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--accent-warm); }
-
+        /* =========================================
+           HEADER & NAVIGATION
+           ========================================= */
         header {
-            background: rgba(255,255,255,0.75); backdrop-filter: blur(12px); padding: 16px 0;
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(8px);
+            padding: var(--spacing-sm) 0;
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         .header-inner { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 28px; font-weight: 800; color: var(--text-primary); }
+        .logo { font-size: 24px; font-weight: 800; color: var(--text-primary); }
         .logo i { color: var(--accent-primary); margin-right: 4px; }
-        nav ul { display: flex; list-style: none; gap: 36px; }
-        nav a { font-weight: 600; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; text-transform: uppercase; border-bottom: 2px solid transparent; transition: var(--transition); }
+        nav ul { display: flex; list-style: none; gap: var(--spacing-md); }
+        nav a {
+            font-weight: 600; color: var(--text-primary); text-decoration: none;
+            font-size: 0.9rem; border-bottom: 2px solid transparent; transition: var(--transition);
+        }
         nav a:hover { border-bottom-color: var(--accent-primary); color: var(--accent-primary); }
-        .header-phone { font-weight: 700; color: var(--text-primary); font-size: 1.1rem; text-decoration: none; }
-        .header-right { display: flex; align-items: center; gap: 20px; }
-        .mobile-toggle { display: none; font-size: 28px; cursor: pointer; background: none; border: none; color: var(--text-primary); }
+        .header-phone { font-weight: 700; color: var(--text-primary); font-size: 1rem; text-decoration: none; }
+        .header-right { display: flex; align-items: center; gap: var(--spacing-md); }
+        .mobile-toggle { display: none; font-size: 24px; background: none; border: none; cursor: pointer; color: var(--text-primary); }
+
+        /* Bottom sheet mobile menu (вместо fullscreen overlay) */
         .mobile-menu {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); z-index: 2000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px;
-            transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 70vh;
+            background: #fff; z-index: 2000;
+            border-radius: var(--radius) var(--radius) 0 0;
+            box-shadow: 0 -8px 30px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+            padding: var(--spacing-lg) var(--spacing-md);
+            gap: var(--spacing-md);
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto; /* если меню высокое */
         }
-        .mobile-menu.active { transform: translateX(0); }
-        .mobile-menu a { font-size: 2rem; font-weight: 700; color: var(--text-primary); text-decoration: none; }
-        .close-menu { position: absolute; top: 30px; right: 30px; font-size: 36px; background: none; border: none; cursor: pointer; color: var(--text-primary); }
-        @media (max-width: 900px) { nav ul, .header-right .btn { display: none; } .mobile-toggle { display: block; } }
-        @media (max-width: 480px) { .header-phone span { display: none; } .header-phone i { font-size: 24px; } }
+        .mobile-menu.active { transform: translateY(0); }
+        .mobile-menu a { font-size: 1.2rem; font-weight: 600; color: var(--text-primary); text-decoration: none; }
+        .close-menu { position: absolute; top: var(--spacing-md); right: var(--spacing-md); font-size: 24px; background: none; border: none; cursor: pointer; color: var(--text-primary); }
 
+        @media (max-width: 900px) {
+            nav ul, .header-right .btn { display: none; }
+            .mobile-toggle { display: block; }
+        }
+        @media (max-width: 480px) {
+            .header-phone span { display: none; }
+            .header-phone i { font-size: 20px; }
+        }
+
+        /* =========================================
+           HERO (уменьшен на мобильных)
+           ========================================= */
         .hero {
-            background: linear-gradient(125deg, rgba(242,243,245,0.85) 0%, rgba(226,216,200,0.5) 100%), url('https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background: linear-gradient(125deg, rgba(242,243,245,0.9) 0%, rgba(226,216,200,0.6) 100%), url('https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1600');
             background-size: cover; background-position: center 30%; background-attachment: fixed;
-            text-align: center; padding: 160px 0; position: relative;
+            text-align: center; padding: 140px 0;
         }
-        @media (max-width: 768px) { .hero { background-attachment: scroll; } }
-        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 24px; animation: fadeUp 0.8s ease-out; }
-        .hero p { font-size: 1.3rem; max-width: 700px; margin: 0 auto 40px; animation: fadeUp 0.8s 0.15s both; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) {
+            .hero { background-attachment: scroll; padding: 100px 0 70px; }
+            .hero h1 { font-size: 28px; }
+        }
+        .hero h1 { margin-bottom: var(--spacing-md); animation: fadeUp 0.6s ease-out; }
+        .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto var(--spacing-lg); animation: fadeUp 0.6s 0.1s both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .features-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 30px; }
-        .feature-icon { font-size: 2.8rem; margin-bottom: 20px; color: var(--accent-primary); transition: var(--transition); }
-        .card:hover .feature-icon { transform: scale(1.1); }
+        /* =========================================
+           FEATURES (пример единого стиля)
+           ========================================= */
+        .features-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--spacing-md); }
+        .card {
+            background: var(--bg-card); padding: var(--spacing-lg) var(--spacing-md);
+            border-radius: var(--radius); box-shadow: var(--shadow); transition: var(--transition);
+            border: 1px solid transparent; /* без теней при hover */
+        }
+        .card:hover { border-color: var(--accent-warm); }
+        .feature-icon { font-size: 2rem; margin-bottom: var(--spacing-sm); color: var(--accent-primary); }
+        @media (max-width: 1100px) { .features-grid { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 640px) { .features-grid { grid-template-columns: 1fr; } }
 
+        /* =========================================
+           DIRECTIONS (3 колонки, горизонтальный скролл на мобильных)
+           ========================================= */
         .directions-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            margin-top: 20px;
+            grid-template-columns: repeat(3, 1fr); /* 3 колонки на десктопе */
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
         }
         .direction-card {
-            background: var(--bg-card); border-radius: 28px; padding: 32px 24px 28px;
-            box-shadow: var(--shadow-sm); transition: var(--transition); border: 1px solid rgba(255,255,255,0.5);
+            background: var(--bg-card); border-radius: var(--radius); padding: var(--spacing-lg) var(--spacing-md);
+            box-shadow: var(--shadow); transition: var(--transition);
             display: flex; flex-direction: column; height: 100%;
+            border: 1px solid transparent;
         }
-        .direction-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--accent-warm); }
-        .direction-icon { font-size: 2.8rem; color: var(--accent-primary); margin-bottom: 20px; }
-        .direction-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
-        .direction-level { display: inline-block; background: var(--accent-warm); padding: 5px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; margin-bottom: 18px; align-self: flex-start; }
-        .direction-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; flex: 1; }
-        .direction-price { font-size: 1.8rem; font-weight: 800; color: var(--accent-primary); margin-bottom: 20px; }
+        .direction-card:hover { border-color: var(--accent-warm); }
+        .direction-icon { font-size: 2.2rem; color: var(--accent-primary); margin-bottom: var(--spacing-sm); }
+        .direction-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+        .direction-level { display: inline-block; background: var(--accent-warm); padding: 4px 12px; border-radius: 40px; font-size: 0.7rem; font-weight: 700; margin-bottom: var(--spacing-sm); align-self: flex-start; }
+        .direction-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: var(--spacing-md); flex: 1; }
+        .direction-price { font-size: 1.5rem; font-weight: 800; color: var(--accent-primary); margin-bottom: var(--spacing-sm); }
         .direction-card .btn { width: 100%; justify-content: center; margin-top: auto; }
 
-        @media (max-width: 1100px) { .features-grid, .directions-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 640px) { .features-grid, .directions-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) {
+            .directions-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: var(--spacing-md);
+                padding-bottom: var(--spacing-sm);
+                /* скрываем скроллбар, но оставляем возможность свайпа */
+                -webkit-overflow-scrolling: touch;
+            }
+            .directions-grid::-webkit-scrollbar { display: none; }
+            .direction-card {
+                flex: 0 0 280px; /* min-width 260px, слегка больше для воздуха */
+                scroll-snap-align: start;
+            }
+        }
+        @media (max-width: 640px) {
+            .direction-card { flex: 0 0 260px; }
+        }
 
-        .schedule-wrapper { overflow-x: auto; }
-        table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
-        th { background: var(--text-primary); color: white; padding: 18px 12px; border-radius: 16px 16px 8px 8px; }
-        td { background: var(--bg-card); padding: 12px; text-align: center; border-radius: 16px; box-shadow: var(--shadow-sm); }
-        .event { padding: 8px 6px; border-radius: 14px; font-weight: 700; font-size: 0.8rem; }
-        .event span { display: block; font-weight: 400; font-size: 0.7rem; }
-        .evt-yoga { background: var(--sched-yoga); }
-        .evt-fitness { background: var(--sched-fitness); }
-        .evt-pole { background: var(--sched-pole); }
-        .evt-stretch { background: var(--sched-stretch); }
-        .evt-kids { background: var(--sched-kids); }
-        .evt-exotic { background: var(--sched-exotic); }
+        /* =========================================
+           SCHEDULE (новый карточный формат)
+           ========================================= */
+        .schedule-section { background: #fff; }
+        .schedule-days {
+            display: flex; gap: var(--spacing-xs); flex-wrap: wrap;
+            margin-bottom: var(--spacing-lg);
+            justify-content: center;
+        }
+        .tab {
+            padding: 10px 20px; background: var(--bg-card); border: 1px solid var(--border-light);
+            border-radius: 40px; font-weight: 600; font-size: 0.9rem;
+            cursor: pointer; transition: var(--transition);
+            background: #fff;
+        }
+        .tab.active { background: var(--accent-warm); border-color: var(--accent-warm); color: var(--text-primary); }
+        .schedule-list { display: flex; flex-direction: column; gap: var(--spacing-md); }
+        .schedule-card {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--bg-card); border-radius: var(--radius);
+            padding: var(--spacing-md); box-shadow: var(--shadow);
+            gap: var(--spacing-md);
+            transition: var(--transition);
+            border: 1px solid transparent;
+            flex-wrap: wrap;
+        }
+        .schedule-card:hover { border-color: var(--accent-warm); }
+        .schedule-info { display: flex; flex-direction: column; gap: 4px; min-width: 120px; }
+        .time { font-weight: 800; font-size: 1.2rem; color: var(--accent-primary); }
+        .title { font-weight: 700; font-size: 1rem; color: var(--text-primary); }
+        .trainer { font-weight: 400; font-size: 0.85rem; color: var(--text-secondary); }
+        .schedule-card .btn { flex-shrink: 0; }
 
-        .price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 30px; }
-        .price-card { text-align: center; background: var(--bg-card); border-radius: 32px; padding: 36px 24px; border: 1px solid var(--border-light); position: relative; }
+        @media (max-width: 500px) {
+            .schedule-card { flex-direction: column; align-items: flex-start; }
+            .schedule-card .btn { width: 100%; justify-content: center; }
+        }
+
+        /* =========================================
+           PRICING (единый радиус и тень)
+           ========================================= */
+        .price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--spacing-md); }
+        .price-card {
+            text-align: center; background: var(--bg-card);
+            border-radius: var(--radius); padding: var(--spacing-lg) var(--spacing-md);
+            box-shadow: var(--shadow); border: 1px solid var(--border-light); position: relative;
+            transition: var(--transition);
+        }
         .price-card.featured { border: 2px solid var(--accent-primary); }
-        .badge { position: absolute; top: 0; left: 20px; right: 20px; transform: translateY(-50%); background: var(--accent-primary); color: white; padding: 8px; border-radius: 40px; }
-        .price-list { list-style: none; margin: 28px 0; text-align: left; }
-        .price-list li { padding: 10px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; }
+        .badge { position: absolute; top: -14px; left: 20px; right: 20px; background: var(--accent-primary); color: white; padding: 6px; border-radius: 40px; font-weight: 600; font-size: 0.8rem; }
+        .price-list { list-style: none; margin: var(--spacing-md) 0; text-align: left; }
+        .price-list li { padding: 8px 0; border-bottom: 1px dashed var(--border-light); display: flex; justify-content: space-between; }
+        @media (max-width: 800px) { .price-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; } }
 
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 20px; }
-        .gallery-item { border-radius: var(--border-radius-card); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); aspect-ratio: 4 / 3; }
-        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
-        .gallery-item:hover img { transform: scale(1.05); }
-        @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+        /* =========================================
+           GALLERY, TEAM, REVIEWS (общие grid)
+           ========================================= */
+        .gallery-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--spacing-md); margin-top: var(--spacing-md); }
+        .gallery-item { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 4/3; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .gallery-item:hover img { transform: scale(1.03); }
+        @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2,1fr); } }
         @media (max-width: 480px) { .gallery-grid { grid-template-columns: 1fr; } }
 
-        .map-container { width: 100%; height: 450px; border-radius: var(--border-radius-card); overflow: hidden; box-shadow: var(--shadow-lg); margin-top: 30px; }
-        #yandexMap { width: 100%; height: 100%; }
-        .address-block { text-align: center; margin-bottom: 30px; }
-        .address-block p { font-size: 1.2rem; margin: 10px 0; }
-        .address-block i { color: var(--accent-primary); margin-right: 10px; }
-
-        .team-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 25px; }
-        .team-member { text-align: center; transition: var(--transition); }
-        .team-photo { width: 130px; height: 130px; border-radius: 50%; margin: 0 auto 20px; overflow: hidden; box-shadow: var(--shadow-md); border: 3px solid white; }
+        .team-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: var(--spacing-md); }
+        .team-member { text-align: center; }
+        .team-photo { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto var(--spacing-sm); overflow: hidden; box-shadow: var(--shadow); border: 2px solid white; }
         .team-photo img { width: 100%; height: 100%; object-fit: cover; }
-        .team-member:hover .team-photo { transform: scale(1.05) rotate(1deg); }
+        @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(3,1fr); } }
+        @media (max-width: 500px) { .team-grid { grid-template-columns: repeat(2,1fr); } }
 
-        .reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 40px; }
-        .review-card { background: var(--bg-card); border-radius: var(--border-radius-card); padding: 32px; box-shadow: var(--shadow-sm); transition: var(--transition); }
-        .review-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
-        .review-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-        .review-avatar { width: 60px; height: 60px; border-radius: 50%; overflow: hidden; background: var(--accent-warm); }
+        .reviews-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--spacing-md); margin-top: var(--spacing-md); }
+        .review-card { background: var(--bg-card); border-radius: var(--radius); padding: var(--spacing-md); box-shadow: var(--shadow); }
+        .review-header { display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); }
+        .review-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: var(--accent-warm); }
         .review-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .review-name { font-weight: 700; color: var(--text-primary); }
-        .review-text { font-style: italic; color: var(--text-secondary); line-height: 1.5; }
-        @media (max-width: 768px) { .team-grid { grid-template-columns: repeat(3,1fr); } .reviews-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 600px) { .team-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 700px) { .reviews-grid { grid-template-columns: 1fr; } }
 
-        footer { background: var(--footer-bg); color: #eee; padding: 60px 0 20px; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 50px; }
-        .social-icons a { display: inline-block; margin-right: 20px; font-size: 22px; color: #ccc; transition: var(--transition); }
-        .social-icons a:hover { color: white; transform: translateY(-3px); }
+        .map-container { width: 100%; height: 400px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-top: var(--spacing-md); }
+        #yandexMap { width: 100%; height: 100%; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; }
-        .modal-content { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 48px 40px; border-radius: 48px; max-width: 480px; width: 90%; position: relative; animation: modalFade 0.4s; }
-        @keyframes modalFade { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        .close-modal { position: absolute; top: 20px; right: 25px; font-size: 28px; cursor: pointer; background: none; border: none; color: var(--text-primary); }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
-        .form-group select, .form-group input { width: 100%; padding: 12px; border-radius: 20px; border: 1px solid var(--border-light); font-family: inherit; }
+        /* =========================================
+           STICKY MOBILE CTA (фиксированная кнопка записи)
+           ========================================= */
+        .mobile-cta {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: #fff; padding: var(--spacing-sm); z-index: 999;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.06);
+            display: none; /* показываем только на мобильных */
+            justify-content: center;
+        }
+        .mobile-cta .btn { width: 90%; max-width: 400px; }
+        @media (max-width: 900px) {
+            .mobile-cta { display: flex; }
+            body { padding-bottom: 70px; } /* чтобы контент не перекрывался кнопкой */
+        }
 
-        .scroll-top { position: fixed; bottom: 30px; right: 30px; background: var(--text-primary); color: white; width: 50px; height: 50px; border-radius: 30px; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: var(--transition); cursor: pointer; z-index: 99; border: none; }
+        /* =========================================
+           FOOTER
+           ========================================= */
+        footer { background: var(--footer-bg); color: #eee; padding: var(--spacing-xl) 0 var(--spacing-md); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+        .social-icons a { display: inline-block; margin-right: 12px; font-size: 20px; color: #ccc; transition: var(--transition); }
+        .social-icons a:hover { color: #fff; }
+
+        /* =========================================
+           MODAL (уже доступный, с сохранением функционала)
+           ========================================= */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(6px); z-index: 3000; align-items: center; justify-content: center; }
+        .modal-content { background: #fff; padding: var(--spacing-xl) var(--spacing-lg); border-radius: var(--radius); max-width: 440px; width: 90%; position: relative; animation: modalFade 0.2s ease; }
+        @keyframes modalFade { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .close-modal { position: absolute; top: var(--spacing-md); right: var(--spacing-md); font-size: 24px; cursor: pointer; background: none; border: none; color: var(--text-primary); }
+        .form-group { margin-bottom: var(--spacing-md); }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: 600; }
+        .form-group select, .form-group input { width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid var(--border-light); font-family: inherit; }
+
+        /* =========================================
+           UTILITIES
+           ========================================= */
+        .scroll-top { position: fixed; bottom: 80px; right: 20px; background: var(--text-primary); color: white; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: var(--transition); cursor: pointer; z-index: 99; border: none; }
         .scroll-top.show { opacity: 1; visibility: visible; }
         .scroll-top:hover { background: var(--accent-primary); }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.7s ease; }
+        /* reveal animation */
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
-        .tab { padding: 12px 28px; background: var(--bg-card); border: 1px solid var(--border-light); cursor: pointer; border-radius: 40px; font-weight: 600; transition: var(--transition); }
-        .tab.active { background: var(--accent-warm); border-color: var(--accent-warm); color: var(--text-primary); }
     </style>
 </head>
 <body>
@@ -264,19 +406,16 @@
             </ul>
         </nav>
         <div class="header-right">
-            <a href="tel:+79697324841" class="header-phone" aria-label="Позвонить по телефону +7 969 732 48 41">
-                <i class="fas fa-phone-alt" aria-hidden="true"></i> <span>+7 (969) 732-48-41</span>
-            </a>
-            <button class="btn" data-open-modal=""><i class="fas fa-calendar-check" aria-hidden="true"></i> Записаться</button>
+            <a href="tel:+79697324841" class="header-phone" aria-label="Позвонить +7 969 732 48 41"><i class="fas fa-phone-alt"></i> <span>+7 (969) 732-48-41</span></a>
+            <button class="btn" data-open-modal>Записаться</button>
         </div>
-        <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Открыть меню">
-            <i class="fas fa-bars" aria-hidden="true"></i>
-        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Открыть меню"><i class="fas fa-bars"></i></button>
     </div>
 </header>
 
+<!-- Bottom sheet mobile menu -->
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true" aria-label="Мобильное меню">
-    <button class="close-menu" id="closeMenuBtn" aria-label="Закрыть меню"><i class="fas fa-times" aria-hidden="true"></i></button>
+    <button class="close-menu" id="closeMenuBtn" aria-label="Закрыть меню"><i class="fas fa-times"></i></button>
     <a href="#interior">Интерьер</a>
     <a href="#directions">Направления</a>
     <a href="#schedule">Расписание</a>
@@ -285,605 +424,422 @@
     <a href="#reviews">Отзывы</a>
     <a href="#map">Контакты</a>
     <a href="tel:+79697324841">+7 (969) 732-48-41</a>
-    <button class="btn" data-open-modal="">Запись</button>
+    <button class="btn" data-open-modal style="width:80%;">Записаться</button>
 </div>
 
 <main>
+    <!-- Hero -->
     <section class="hero" aria-labelledby="hero-title">
         <div class="container">
             <h1 id="hero-title">Фитнес-студия INFINITY<br>в Шушарах</h1>
-            <p>Премиальный фитнес-опыт без переплат. Топовые тренеры, современное оборудование и атмосфера, в которую хочется возвращаться. Йога, пилон, растяжка в Шушарах — ваш идеальный баланс тела и духа.</p>
-            <button class="btn" data-open-modal=""><i class="fas fa-ticket-alt" aria-hidden="true"></i> Пробное за 500 ₽</button>
+            <p>Запишитесь на пробное занятие за 500 ₽. Йога, пилон, растяжка, фитнес — всё рядом с домом.</p>
+            <button class="btn" data-open-modal style="padding: 14px 32px; font-size: 1.1rem;">Пробное за 500 ₽</button>
         </div>
     </section>
 
+    <!-- Почему выбирают -->
     <section aria-labelledby="features-title">
         <div class="container">
             <h2 id="features-title" class="reveal">Почему выбирают Infinity</h2>
             <div class="features-grid">
-                <div class="card reveal"><i class="fas fa-dumbbell feature-icon" aria-hidden="true"></i><h3>Премиум оборудование</h3><p>Technogym & Life Fitness, премиальные коврики и зоны растяжки.</p></div>
-                <div class="card reveal"><i class="fas fa-brain feature-icon" aria-hidden="true"></i><h3>Умные программы</h3><p>Индивидуальный подбор нагрузки с учетом целей и уровня подготовки.</p></div>
-                <div class="card reveal"><i class="fas fa-map-pin feature-icon" aria-hidden="true"></i><h3>Рядом с домом</h3><p>5 минут от метро, просторная парковка и комфортный зал без очередей.</p></div>
-                <div class="card reveal"><i class="fas fa-chart-line feature-icon" aria-hidden="true"></i><h3>Гарантия результата</h3><p>Фиксация прогресса, DEXA-сканирование и персональный куратор.</p></div>
+                <div class="card reveal"><i class="fas fa-dumbbell feature-icon" aria-hidden="true"></i><h3>Премиум оборудование</h3><p>Technogym & Life Fitness, зоны растяжки.</p></div>
+                <div class="card reveal"><i class="fas fa-brain feature-icon" aria-hidden="true"></i><h3>Умные программы</h3><p>Подбор нагрузки под ваши цели.</p></div>
+                <div class="card reveal"><i class="fas fa-map-pin feature-icon" aria-hidden="true"></i><h3>Рядом с домом</h3><p>5 минут от метро, парковка.</p></div>
+                <div class="card reveal"><i class="fas fa-chart-line feature-icon" aria-hidden="true"></i><h3>Гарантия результата</h3><p>Фиксация прогресса и куратор.</p></div>
             </div>
         </div>
     </section>
 
-    <section id="interior" aria-labelledby="interior-title" style="background: #fff;">
+    <!-- Интерьер -->
+    <section id="interior" aria-labelledby="interior-title" style="background:#fff;">
         <div class="container">
             <h2 id="interior-title" class="reveal" style="text-align:center;">Интерьер студии</h2>
-            <p class="reveal" style="text-align:center; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">Просторный зал, современное оборудование, зона отдыха и раздевалки — всё для вашего комфорта.</p>
+            <p class="reveal" style="text-align:center; margin-bottom:24px;">Просторный зал, раздевалки, зона отдыха.</p>
             <div class="gallery-grid">
-                <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал для групповых занятий с панорамными окнами" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="hal_2.webp" alt="Пилон и фотозона в студии INFINITY" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="hal_3.webp" alt="Pole Dance тренировка с инструктором" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="hal_4.webp" alt="Акробатические занятия в светлом зале" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="razdevalka.webp" alt="Уютная раздевалка с индивидуальными шкафчиками" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал INFINITY с современным оборудованием" style="filter:brightness(0.92) saturate(1.1)" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал для групповых занятий" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_2.webp" alt="Пилон и фотозона" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_3.webp" alt="Pole Dance тренировка" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_4.webp" alt="Акробатические занятия" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="razdevalka.webp" alt="Раздевалка" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал INFINITY" loading="lazy"></div>
             </div>
         </div>
     </section>
 
-    <section id="directions" aria-labelledby="directions-title" style="background: var(--bg-primary);">
+    <!-- Направления (3 колонки, горизонтальный скролл на мобильных) -->
+    <section id="directions" aria-labelledby="directions-title" style="background:var(--bg-primary);">
         <div class="container">
             <h2 id="directions-title" class="reveal" style="text-align:center;">Направления тренировок</h2>
             <div class="directions-grid">
-                <div class="direction-card reveal"><i class="fas fa-music direction-icon" aria-hidden="true"></i><div class="direction-title">Zumba</div><span class="direction-level">Оздоровительный</span><div class="direction-desc">Танцевальная форма на основе латиноамериканских ритмов.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Zumba">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-spa direction-icon" aria-hidden="true"></i><div class="direction-title">МФР</div><span class="direction-level">Базовый</span><div class="direction-desc">Миофасциальный релиз — расслабление и гибкость суставов.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="МФР">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-person-walking direction-icon" aria-hidden="true"></i><div class="direction-title">Растяжка</div><span class="direction-level">Базовый</span><div class="direction-desc">Акробатические и дыхательные упражнения для гибкости.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Растяжка">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-female direction-icon" aria-hidden="true"></i><div class="direction-title">Йога для беременных</div><span class="direction-level">Базовый</span><div class="direction-desc">Деликатные занятия для эмоционального равновесия.</div><div class="direction-price">900 ₽</div><button class="btn" data-open-modal="Йога для беременных">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-hands direction-icon" aria-hidden="true"></i><div class="direction-title">Йогатерапия</div><span class="direction-level">Базовый</span><div class="direction-desc">Восстановление после травм и улучшение работы организма.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Йогатерапия">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-dumbbell direction-icon" aria-hidden="true"></i><div class="direction-title">Body Sculpt</div><span class="direction-level">Базовый</span><div class="direction-desc">Эффективные упражнения для улучшения форм тела.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Body Sculpt">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-spine direction-icon" aria-hidden="true"></i><div class="direction-title">Здоровая спина</div><span class="direction-level">Базовый</span><div class="direction-desc">Укрепление мышц спины и формирование правильной осанки.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Здоровая спина">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-fan direction-icon" aria-hidden="true"></i><div class="direction-title">Pole Dance / Exotic</div><span class="direction-level">Базовый</span><div class="direction-desc">Упражнения на пилоне для силы, грации и уверенности.</div><div class="direction-price">от 1 000 ₽</div><button class="btn" data-open-modal="Pole Dance">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-music direction-icon"></i><div class="direction-title">Zumba</div><span class="direction-level">Оздоровительный</span><div class="direction-desc">Танцевальная форма на основе латиноамериканских ритмов.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Zumba">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-spa direction-icon"></i><div class="direction-title">МФР</div><span class="direction-level">Базовый</span><div class="direction-desc">Миофасциальный релиз — расслабление и гибкость.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="МФР">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-person-walking direction-icon"></i><div class="direction-title">Растяжка</div><span class="direction-level">Базовый</span><div class="direction-desc">Упражнения для гибкости и дыхания.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Растяжка">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-female direction-icon"></i><div class="direction-title">Йога для беременных</div><span class="direction-level">Базовый</span><div class="direction-desc">Деликатные занятия для равновесия.</div><div class="direction-price">900 ₽</div><button class="btn" data-open-modal="Йога для беременных">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-hands direction-icon"></i><div class="direction-title">Йогатерапия</div><span class="direction-level">Базовый</span><div class="direction-desc">Восстановление после травм.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Йогатерапия">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-dumbbell direction-icon"></i><div class="direction-title">Body Sculpt</div><span class="direction-level">Базовый</span><div class="direction-desc">Улучшение форм тела.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Body Sculpt">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-spine direction-icon"></i><div class="direction-title">Здоровая спина</div><span class="direction-level">Базовый</span><div class="direction-desc">Укрепление мышц спины.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Здоровая спина">Записаться</button></div>
+                <div class="direction-card reveal"><i class="fas fa-fan direction-icon"></i><div class="direction-title">Pole Dance / Exotic</div><span class="direction-level">Базовый</span><div class="direction-desc">Сила, грация, уверенность.</div><div class="direction-price">от 1 000 ₽</div><button class="btn" data-open-modal="Pole Dance">Записаться</button></div>
             </div>
         </div>
     </section>
 
-    <section id="schedule" aria-labelledby="schedule-title" style="background: #fff;">
+    <!-- РАСПИСАНИЕ (новый карточный формат) -->
+    <section id="schedule" class="schedule-section" aria-labelledby="schedule-title">
         <div class="container">
-            <h2 id="schedule-title" class="reveal" style="text-align:center;">Расписание недели</h2>
-            <div class="directions-tabs reveal" id="scheduleTabs" style="display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;" role="tablist" aria-label="Фильтр расписания по дням">
-                <button class="tab active" role="tab" aria-selected="true" data-day="all">Вся неделя</button>
-                <button class="tab" role="tab" aria-selected="false" data-day="mon">Пн</button>
-                <button class="tab" role="tab" aria-selected="false" data-day="tue">Вт</button>
-                <button class="tab" role="tab" aria-selected="false" data-day="wed">Ср</button>
-                <button class="tab" role="tab" aria-selected="false" data-day="thu">Чт</button>
-                <button class="tab" role="tab" aria-selected="false" data-day="fri">Пт</button>
-                <button class="tab" role="tab" aria-selected="false" data-day="sat">Сб</button>
-                <button class="tab" role="tab" aria-selected="false" data-day="sun">Вс</button>
-            </div>
-            <div class="schedule-wrapper reveal">
-                <div id="selectedDayLabel" style="text-align: center; margin-bottom: 15px; font-weight: 600; color: var(--accent-primary);" aria-live="polite"></div>
-                <table id="scheduleTable" aria-label="Расписание занятий">
-                    <thead><tr><th scope="col">Время</th><th scope="col">Пн 20.04</th><th scope="col">Вт 21.04</th><th scope="col">Ср 22.04</th><th scope="col">Чт 23.04</th><th scope="col">Пт 24.04</th><th scope="col">Сб 25.04</th><th scope="col">Вс 26.04</th></tr></thead>
-                    <tbody id="scheduleBody"></tbody>
-                </table>
-            </div>
+            <h2 id="schedule-title" class="reveal" style="text-align:center;">Расписание</h2>
+            <div class="schedule-days reveal" id="scheduleTabs" role="tablist" aria-label="Выбор дня"></div>
+            <div class="schedule-list reveal" id="scheduleList" aria-live="polite"></div>
         </div>
     </section>
 
-    <section id="prices" aria-labelledby="prices-title" style="background: var(--bg-primary);">
+    <!-- Цены -->
+    <section id="prices" aria-labelledby="prices-title" style="background:var(--bg-primary);">
         <div class="container">
-            <h2 id="prices-title" class="reveal" style="text-align:center;">Тарифы абонементов</h2>
+            <h2 id="prices-title" class="reveal" style="text-align:center;">Тарифы</h2>
             <div class="price-grid">
                 <div class="price-card reveal">
                     <h3>«Без Пилона»</h3>
-                    <ul class="price-list" aria-label="Тарифы без пилона">
-                        <li>4 занятия <span>3 200 ₽</span></li>
-                        <li>8 занятий <span>5 500 ₽</span></li>
-                        <li>12 занятий <span>6 600 ₽</span></li>
-                        <li>Разовое <span>850 ₽</span></li>
+                    <ul class="price-list">
+                        <li>4 занятия <span>3 200 ₽</span></li><li>8 занятий <span>5 500 ₽</span></li><li>12 занятий <span>6 600 ₽</span></li><li>Разовое <span>850 ₽</span></li>
                     </ul>
-                    <button class="btn btn-outline" data-open-modal="">Выбрать</button>
+                    <button class="btn btn-outline" data-open-modal>Выбрать</button>
                 </div>
                 <div class="price-card featured reveal">
                     <div class="badge">Популярное</div>
-                    <h3 style="margin-top:20px;">«С Пилоном»</h3>
-                    <ul class="price-list" aria-label="Тарифы с пилоном">
-                        <li>4 занятия <span>3 600 ₽</span></li>
-                        <li>8 занятий <span>6 300 ₽</span></li>
-                        <li>12 занятий <span>8 200 ₽</span></li>
-                        <li>Разовое <span>1 000 ₽</span></li>
+                    <h3 style="margin-top:16px;">«С Пилоном»</h3>
+                    <ul class="price-list">
+                        <li>4 занятия <span>3 600 ₽</span></li><li>8 занятий <span>6 300 ₽</span></li><li>12 занятий <span>8 200 ₽</span></li><li>Разовое <span>1 000 ₽</span></li>
                     </ul>
-                    <button class="btn" data-open-modal="">Выбрать</button>
+                    <button class="btn" data-open-modal>Выбрать</button>
                 </div>
                 <div class="price-card reveal">
                     <h3>Безлимит</h3>
-                    <ul class="price-list" aria-label="Безлимитные тарифы">
-                        <li>Без пилона / 3 мес <span>16 000 ₽</span></li>
-                        <li>С пилоном / 3 мес <span>20 000 ₽</span></li>
-                        <li>Без пилона / 6 мес <span>30 000 ₽</span></li>
-                        <li>С пилоном / 6 мес <span>39 000 ₽</span></li>
+                    <ul class="price-list">
+                        <li>Без пилона / 3 мес <span>16 000 ₽</span></li><li>С пилоном / 3 мес <span>20 000 ₽</span></li><li>Без пилона / 6 мес <span>30 000 ₽</span></li><li>С пилоном / 6 мес <span>39 000 ₽</span></li>
                     </ul>
-                    <button class="btn btn-outline" data-open-modal="">Выбрать</button>
+                    <button class="btn btn-outline" data-open-modal>Выбрать</button>
                 </div>
-            </div>
-            <div class="reveal" style="margin-top:40px; text-align:center;">
-                <p><strong>Индивидуальное:</strong> 1 чел — 1800 ₽ | 2 чел — 2400 ₽ &nbsp;&nbsp; <strong>Йога для беременных:</strong> 900 ₽</p>
             </div>
         </div>
     </section>
 
-    <section id="team" aria-labelledby="team-title" style="background: #fff;">
+    <!-- Команда -->
+    <section id="team" aria-labelledby="team-title" style="background:#fff;">
         <div class="container">
             <h2 id="team-title" class="reveal" style="text-align:center;">Команда Infinity</h2>
             <div class="team-grid">
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Светлана" alt="Светлана — инструктор по йоге и здоровой спине" loading="lazy"></div><h4>Светлана</h4><p>Йога, спина</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Оксана" alt="Оксана — фитнес-тренер" loading="lazy"></div><h4>Оксана</h4><p>Фитнес</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Надежда" alt="Надежда — инструктор по Pole Dance и Exotic" loading="lazy"></div><h4>Надежда</h4><p>Pole, Exotic</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Валерия" alt="Валерия — тренер по растяжке и ЛФК" loading="lazy"></div><h4>Валерия</h4><p>Растяжка, ЛФК</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Юлия" alt="Юлия — фитнес и растяжка" loading="lazy"></div><h4>Юлия</h4><p>Фитнес, Растяжка</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Ксения" alt="Ксения — инструктор Zumba" loading="lazy"></div><h4>Ксения</h4><p>Zumba</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Светлана" alt="Светлана" loading="lazy"></div><h4>Светлана</h4><p>Йога, спина</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Оксана" alt="Оксана" loading="lazy"></div><h4>Оксана</h4><p>Фитнес</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Надежда" alt="Надежда" loading="lazy"></div><h4>Надежда</h4><p>Pole, Exotic</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Валерия" alt="Валерия" loading="lazy"></div><h4>Валерия</h4><p>Растяжка, ЛФК</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Юлия" alt="Юлия" loading="lazy"></div><h4>Юлия</h4><p>Фитнес, Растяжка</p></div>
+                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Ксения" alt="Ксения" loading="lazy"></div><h4>Ксения</h4><p>Zumba</p></div>
             </div>
         </div>
     </section>
 
-    <section id="reviews" aria-labelledby="reviews-title" style="background: var(--bg-primary);">
+    <!-- Отзывы -->
+    <section id="reviews" aria-labelledby="reviews-title" style="background:var(--bg-primary);">
         <div class="container">
-            <h2 id="reviews-title" class="reveal" style="text-align:center;">Наши клиенты говорят</h2>
+            <h2 id="reviews-title" class="reveal" style="text-align:center;">Отзывы</h2>
             <div class="reviews-grid">
                 <div class="review-card reveal">
-                    <div class="review-header">
-                        <div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Анна" alt="Анна, клиент студии" loading="lazy"></div>
-                        <div class="review-name">Анна, 34 года</div>
-                    </div>
-                    <div class="review-text">«Хожу на растяжку и пилон уже полгода. Очень довольна! Тренеры внимательные, зал чистый и стильный. INFINITY — лучшее, что случилось с моим телом за последние годы. Рекомендую всем в Шушарах!»</div>
+                    <div class="review-header"><div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Анна" alt="Анна" loading="lazy"></div><div class="review-name">Анна, 34 года</div></div>
+                    <div class="review-text">«Хожу на растяжку и пилон. Тренеры внимательные, зал стильный. INFINITY — лучшее, что случилось с моим телом!»</div>
                 </div>
                 <div class="review-card reveal">
-                    <div class="review-header">
-                        <div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Екатерина" alt="Екатерина, клиент студии" loading="lazy"></div>
-                        <div class="review-name">Екатерина, 29 лет</div>
-                    </div>
-                    <div class="review-text">«Записывалась на пробное по акции 500₽, теперь хожу постоянно. Очень нравится йога для беременных — бережно и эффективно. Спасибо студии за заботу!»</div>
+                    <div class="review-header"><div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Екатерина" alt="Екатерина" loading="lazy"></div><div class="review-name">Екатерина, 29 лет</div></div>
+                    <div class="review-text">«Записалась по акции 500₽, теперь хожу постоянно. Очень нравится йога для беременных — бережно и эффективно.»</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="map" aria-labelledby="map-title" style="background: #fff;">
+    <!-- Контакты и карта -->
+    <section id="map" aria-labelledby="map-title" style="background:#fff;">
         <div class="container">
             <h2 id="map-title" class="reveal" style="text-align:center;">Как нас найти</h2>
             <div class="address-block reveal">
-                <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
-                <p><i class="fas fa-clock" aria-hidden="true"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
-                <p><i class="fas fa-phone" aria-hidden="true"></i> +7 (969) 732-48-41</p>
-                <p><i class="fas fa-parking" aria-hidden="true"></i> Бесплатная парковка для клиентов</p>
+                <p><i class="fas fa-map-marker-alt"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
+                <p><i class="fas fa-clock"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
+                <p><i class="fas fa-phone"></i> +7 (969) 732-48-41</p>
             </div>
-            <div class="map-container reveal">
-                <div id="yandexMap"></div>
-            </div>
+            <div class="map-container reveal"><div id="yandexMap"></div></div>
         </div>
     </section>
 </main>
 
-<footer role="contentinfo">
+<!-- Sticky mobile CTA -->
+<div class="mobile-cta">
+    <button class="btn" data-open-modal>Записаться на занятие</button>
+</div>
+
+<footer>
     <div class="container">
         <div class="footer-grid">
-            <div><h3><i class="fas fa-infinity" aria-hidden="true"></i> INFINITY</h3><p>Шушары, ул. Пушкинская, 34Б, этаж 3</p><p><i class="fas fa-phone" aria-hidden="true"></i> +7 (969) 732-48-41</p><div class="social-icons"><a href="#" aria-label="Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a><a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a><a href="#" aria-label="VK"><i class="fab fa-vk" aria-hidden="true"></i></a></div></div>
-            <div><h3>Навигация</h3><a href="#" style="color:#ccc; display:block; margin-bottom:10px; text-decoration:none;">Главная</a><a href="#directions" style="color:#ccc; display:block; margin-bottom:10px; text-decoration:none;">Направления</a><a href="#prices" style="color:#ccc; display:block; text-decoration:none;">Цены</a></div>
-            <div><h3>Режим работы</h3><p>Пн-Пт: 09:00 - 22:00</p><p>Сб-Вс: 10:00 - 20:00</p></div>
+            <div><h3>INFINITY</h3><p>Шушары, ул. Пушкинская, 34Б</p><p>+7 (969) 732-48-41</p><div class="social-icons"><a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="#" aria-label="VK"><i class="fab fa-vk"></i></a></div></div>
+            <div><h3>Навигация</h3><a href="#" style="color:#ccc;display:block;margin-bottom:8px;">Главная</a><a href="#directions" style="color:#ccc;display:block;">Направления</a></div>
+            <div><h3>Режим работы</h3><p>Пн-Пт: 09:00-22:00</p><p>Сб-Вс: 10:00-20:00</p></div>
         </div>
-        <div class="footer-bottom">© 2026 INFINITY Fitness Studio. Все права защищены.</div>
     </div>
 </footer>
 
-<!-- Accessible Modal Dialog -->
+<!-- Модальное окно записи -->
 <div class="modal" id="signupModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
     <div class="modal-content">
-        <button class="close-modal" aria-label="Закрыть окно записи">&times;</button>
+        <button class="close-modal" aria-label="Закрыть">&times;</button>
         <h2 id="modalTitle">Запишись на пробный урок</h2>
-        <p id="modalSubtitle" style="margin-bottom:24px;">Начни менять свою жизнь прямо сейчас!</p>
-        <div id="formSuccess" style="display:none; text-align:center; padding: 20px 0;" role="status">
-            <div style="font-size:3rem; margin-bottom:12px;">✅</div>
-            <h3 style="color:#1A1A1A; margin-bottom:8px;">Заявка принята!</h3>
-            <p>Мы перезвоним вам в ближайшее время.<br>Если срочно — <a href="tel:+79697324841" style="color:var(--accent-primary);">+7 (969) 732-48-41</a></p>
+        <p id="modalSubtitle" style="margin-bottom:16px;">Начни менять свою жизнь прямо сейчас!</p>
+        <div id="formSuccess" style="display:none;text-align:center;padding:20px 0;">
+            <div style="font-size:2.5rem;">✅</div>
+            <h3>Заявка принята!</h3>
+            <p>Мы перезвоним вам в ближайшее время.</p>
         </div>
-        <form id="signupForm" novalidate>
-            <div class="form-group">
-                <label for="modalName">Ваше имя*</label>
-                <input type="text" id="modalName" name="name" placeholder="Имя" required autocomplete="name">
-            </div>
-            <div class="form-group">
-                <label for="modalDirectionSelect">Направление*</label>
-                <select id="modalDirectionSelect" name="direction">
+        <form id="signupForm">
+            <div class="form-group"><label for="modalName">Имя*</label><input type="text" id="modalName" placeholder="Имя" required></div>
+            <div class="form-group"><label for="modalDirectionSelect">Направление*</label>
+                <select id="modalDirectionSelect">
                     <option>Body sculpt</option><option>Pole dance</option><option>Exotic</option><option>Растяжка</option><option>Йога</option><option>Zumba</option><option>МФР</option><option>Йога для беременных</option><option>Фитнес</option><option>Здоровая спина</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="modalPhone">Телефон*</label>
-                <input type="tel" id="modalPhone" name="phone" placeholder="+7 (999) 000-00-00" required autocomplete="tel">
-            </div>
-            <button type="submit" class="btn" id="submitBtn" style="width:100%;">
-                <i class="fas fa-paper-plane" aria-hidden="true"></i> Отправить заявку
-            </button>
+            <div class="form-group"><label for="modalPhone">Телефон*</label><input type="tel" id="modalPhone" placeholder="+7 999 000-00-00" required></div>
+            <button type="submit" class="btn" id="submitBtn" style="width:100%;">Отправить заявку</button>
         </form>
     </div>
 </div>
 
-<button class="scroll-top" id="scrollTop" aria-label="Прокрутить страницу наверх">
-    <i class="fas fa-arrow-up" aria-hidden="true"></i>
-</button>
+<button class="scroll-top" id="scrollTop" aria-label="Наверх"><i class="fas fa-arrow-up"></i></button>
 
-<!-- Yandex Maps API (замените YOUR_API_KEY на ваш реальный ключ) -->
-<script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU" type="text/javascript"></script>
+<!-- API Яндекс.Карт -->
+<script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU"></script>
 
 <script>
-    /**
-     * INFINITY Fitness Studio — Main Application Script
-     * (c) 2026. All rights reserved.
-     * Production-ready with full accessibility support.
-     */
     (function() {
         'use strict';
 
-        // ============================================
-        // 1. ACCESSIBLE MOBILE MENU COMPONENT
-        // ============================================
+        // ================== MOBILE MENU ==================
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
-        
-        function openMobileMenu() {
+
+        function openMenu() {
             mobileMenu.classList.add('active');
             mobileToggle.setAttribute('aria-expanded', 'true');
             mobileMenu.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
-            // Move focus to close button for better UX
             closeMenuBtn.focus();
         }
-        
-        function closeMobileMenu() {
+        function closeMenu() {
             mobileMenu.classList.remove('active');
             mobileToggle.setAttribute('aria-expanded', 'false');
             mobileMenu.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
-            // Return focus to toggle button
             mobileToggle.focus();
         }
-        
-        mobileToggle.addEventListener('click', function() {
-            const isExpanded = this.getAttribute('aria-expanded') === 'true';
-            isExpanded ? closeMobileMenu() : openMobileMenu();
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
         });
-        
-        closeMenuBtn.addEventListener('click', closeMobileMenu);
-        
-        // Close menu when any link inside is clicked
-        mobileMenu.querySelectorAll('a, button').forEach(function(el) {
-            el.addEventListener('click', function() {
-                if (mobileMenu.classList.contains('active')) {
-                    closeMobileMenu();
-                }
-            });
-        });
+        closeMenuBtn.addEventListener('click', closeMenu);
+        mobileMenu.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('active')) closeMenu();
+        }));
 
-        // ============================================
-        // 2. ACCESSIBLE MODAL DIALOG COMPONENT
-        // ============================================
-        const signupModal = document.getElementById('signupModal');
-        const modalCloseBtn = signupModal.querySelector('.close-modal');
+        // ================== MODAL ==================
+        const modal = document.getElementById('signupModal');
+        const modalCloseBtn = modal.querySelector('.close-modal');
         const modalTitle = document.getElementById('modalTitle');
         const modalSubtitle = document.getElementById('modalSubtitle');
         const directionSelect = document.getElementById('modalDirectionSelect');
-        let lastFocusedElement = null;
-        
-        function openModal(direction) {
-            lastFocusedElement = document.activeElement;
-            
+        let lastFocused = null;
+
+        function openModal(direction = '') {
+            lastFocused = document.activeElement;
             if (direction) {
-                modalTitle.innerText = 'Запись на ' + direction;
-                modalSubtitle.innerText = ' ';
-                // Select matching option
-                for (let i = 0; i < directionSelect.options.length; i++) {
-                    if (directionSelect.options[i].text.toLowerCase().includes(direction.toLowerCase())) {
-                        directionSelect.selectedIndex = i;
-                        break;
-                    }
-                }
+                modalTitle.textContent = 'Запись на ' + direction;
+                modalSubtitle.textContent = 'Выберите удобное время';
+                Array.from(directionSelect.options).forEach(opt => {
+                    if (opt.text.toLowerCase().includes(direction.toLowerCase())) directionSelect.value = opt.value;
+                });
             } else {
-                modalTitle.innerText = 'Запишись на пробный урок';
-                modalSubtitle.innerText = 'Начни менять свою жизнь прямо сейчас!';
+                modalTitle.textContent = 'Запишись на пробный урок';
+                modalSubtitle.textContent = 'Начни менять свою жизнь прямо сейчас!';
                 directionSelect.selectedIndex = 0;
             }
-            
-            // Reset form state
             document.getElementById('signupForm').style.display = 'block';
             document.getElementById('formSuccess').style.display = 'none';
             document.getElementById('submitBtn').disabled = false;
-            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Отправить заявку';
-            
-            signupModal.style.display = 'flex';
-            signupModal.setAttribute('aria-hidden', 'false');
+            document.getElementById('submitBtn').innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
-            
-            // Focus first input
             document.getElementById('modalName').focus();
         }
-        
+
         function closeModal() {
-            signupModal.style.display = 'none';
-            signupModal.setAttribute('aria-hidden', 'true');
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
-            
-            // Return focus
-            if (lastFocusedElement) {
-                lastFocusedElement.focus();
-                lastFocusedElement = null;
-            }
+            if (lastFocused) lastFocused.focus();
         }
-        
+
         modalCloseBtn.addEventListener('click', closeModal);
-        
-        // Close on backdrop click
-        signupModal.addEventListener('click', function(e) {
-            if (e.target === signupModal) closeModal();
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
         });
-        
-        // Close on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && signupModal.getAttribute('aria-hidden') === 'false') {
-                closeModal();
-            }
-        });
-        
-        // Trap focus inside modal
-        signupModal.addEventListener('keydown', function(e) {
+
+        // Focus trap
+        modal.addEventListener('keydown', function(e) {
             if (e.key !== 'Tab') return;
-            
-            const focusableElements = signupModal.querySelectorAll(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            );
-            const firstElement = focusableElements[0];
-            const lastElement = focusableElements[focusableElements.length - 1];
-            
-            if (e.shiftKey) {
-                if (document.activeElement === firstElement) {
-                    lastElement.focus();
-                    e.preventDefault();
-                }
-            } else {
-                if (document.activeElement === lastElement) {
-                    firstElement.focus();
-                    e.preventDefault();
-                }
-            }
+            const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const first = focusable[0];
+            const last = focusable[focusable.length-1];
+            if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+            else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
         });
-        
-        // Delegate click events for all modal open buttons
-        document.body.addEventListener('click', function(e) {
-            const target = e.target.closest('[data-open-modal]');
-            if (!target) return;
-            
+
+        document.body.addEventListener('click', e => {
+            const btn = e.target.closest('[data-open-modal]');
+            if (!btn) return;
             e.preventDefault();
-            const direction = target.getAttribute('data-open-modal') || '';
-            openModal(direction);
+            const dir = btn.getAttribute('data-open-modal') || '';
+            openModal(dir);
         });
-        
-        // Expose for inline onclick compatibility (backward compat)
-        window.openModal = function(direction) {
-            openModal(direction || '');
-        };
-        window.closeModal = closeModal;
 
-        // ============================================
-        // 3. SCHEDULE RENDERING & FILTERING
-        // ============================================
-        const scheduleData = [
-            ['09:00', '','','','','','Йога<span>Светлана</span>',''],
-            ['10:00', '','','Фитнес<span>Оксана</span>','','Фитнес<span>Оксана</span>','','Фитнес<span>Оксана</span>'],
-            ['11:00', '','Йога<span>Светлана</span>','','Йога<span>Светлана</span>','','Фитнес<span>Юлия Е</span>',''],
-            ['12:00', '','Йога бер.<span>Светлана</span>','','Йога бер.<span>Светлана</span>','','Растяжка<span>Юлия Е</span>','Здор. спина<span>Валерия</span>'],
-            ['17:00', 'Гимн. дети<span>Валерия</span>','','','','','Zumba<span>Ксения</span>',''],
-            ['18:00', 'Exotic PD<span>Надежда</span>','','Exotic PD<span>Надежда</span>','Фитнес+ЛФК<span>Валерия</span>','','',''],
-            ['19:00', 'Pole Sport<span>Надежда</span>','Фитнес<span>Юлия Л</span>','Pole Sport<span>Надежда</span>','Фитнес<span>Юлия Л</span>','Йога<span>Светлана</span>','',''],
-            ['20:00', 'Zumba<span>Ксения</span>','Растяжка<span>Юлия Л</span>','','Растяжка<span>Юлия Л</span>','Индив<span>Светлана</span>','','']
+        // ================== SCHEDULE ==================
+        const scheduleData = {
+            'today': [ {time:'18:00', title:'Exotic PD', trainer:'Надежда'}, {time:'19:00', title:'Pole Sport', trainer:'Надежда'}, {time:'20:00', title:'Zumba', trainer:'Ксения'} ],
+            'tomorrow': [ {time:'11:00', title:'Йога', trainer:'Светлана'}, {time:'19:00', title:'Фитнес', trainer:'Юлия Л'}, {time:'20:00', title:'Растяжка', trainer:'Юлия Л'} ],
+            'mon': [ {time:'17:00', title:'Гимн. дети', trainer:'Валерия'}, {time:'18:00', title:'Exotic PD', trainer:'Надежда'}, {time:'19:00', title:'Pole Sport', trainer:'Надежда'}, {time:'20:00', title:'Zumba', trainer:'Ксения'} ],
+            'tue': [ {time:'11:00', title:'Йога', trainer:'Светлана'}, {time:'12:00', title:'Йога бер.', trainer:'Светлана'}, {time:'19:00', title:'Фитнес', trainer:'Юлия Л'}, {time:'20:00', title:'Растяжка', trainer:'Юлия Л'} ],
+            'wed': [ {time:'10:00', title:'Фитнес', trainer:'Оксана'}, {time:'18:00', title:'Exotic PD', trainer:'Надежда'}, {time:'19:00', title:'Pole Sport', trainer:'Надежда'} ],
+            'thu': [ {time:'11:00', title:'Йога', trainer:'Светлана'}, {time:'12:00', title:'Йога бер.', trainer:'Светлана'}, {time:'18:00', title:'Фитнес+ЛФК', trainer:'Валерия'}, {time:'19:00', title:'Фитнес', trainer:'Юлия Л'}, {time:'20:00', title:'Растяжка', trainer:'Юлия Л'} ],
+            'fri': [ {time:'10:00', title:'Фитнес', trainer:'Оксана'}, {time:'11:00', title:'Йога', trainer:'Светлана'}, {time:'19:00', title:'Йога', trainer:'Светлана'}, {time:'20:00', title:'Индив', trainer:'Светлана'} ],
+            'sat': [ {time:'09:00', title:'Йога', trainer:'Светлана'}, {time:'10:00', title:'Фитнес', trainer:'Оксана'}, {time:'12:00', title:'Растяжка', trainer:'Юлия Е'}, {time:'17:00', title:'Zumba', trainer:'Ксения'} ],
+            'sun': [ {time:'12:00', title:'Здор. спина', trainer:'Валерия'}, {time:'19:00', title:'Фитнес', trainer:'Оксана'} ]
+        };
+
+        const days = [
+            { key: 'today', label: 'Сегодня' },
+            { key: 'tomorrow', label: 'Завтра' },
+            { key: 'mon', label: 'Пн' },
+            { key: 'tue', label: 'Вт' },
+            { key: 'wed', label: 'Ср' },
+            { key: 'thu', label: 'Чт' },
+            { key: 'fri', label: 'Пт' },
+            { key: 'sat', label: 'Сб' },
+            { key: 'sun', label: 'Вс' }
         ];
-        
-        const classMap = {
-            'Йога':'evt-yoga','Фитнес':'evt-fitness','Pole':'evt-pole','Растяжка':'evt-stretch',
-            'Zumba':'evt-kids','Гимн':'evt-kids','Exotic':'evt-exotic','Йога бер':'evt-exotic',
-            'Индив':'evt-yoga','Здор':'evt-stretch'
-        };
-        
-        function getEventClass(text) {
-            for (let k in classMap) {
-                if (text.includes(k)) return classMap[k];
-            }
-            return 'evt-fitness';
-        }
-        
-        function renderSchedule() {
-            const tbody = document.getElementById('scheduleBody');
-            let html = '';
-            scheduleData.forEach(function(row) {
-                html += '<tr><th scope="row">' + row[0] + '</th>';
-                for (let i = 1; i <= 7; i++) {
-                    let cell = row[i] || '';
-                    if (cell) {
-                        let cls = getEventClass(cell);
-                        html += '<td><div class="event ' + cls + '">' + cell + '</div></td>';
-                    } else {
-                        html += '<td></td>';
-                    }
-                }
-                html += '</tr>';
-            });
-            tbody.innerHTML = html;
-        }
-        
-        renderSchedule();
-        
-        // Schedule tab filtering
-        const scheduleTabs = document.querySelectorAll('#scheduleTabs .tab');
-        const table = document.getElementById('scheduleTable');
-        const selectedDayLabel = document.getElementById('selectedDayLabel');
-        
-        function filterSchedule(day) {
-            const rows = table.querySelectorAll('tbody tr');
-            const headerCells = table.querySelectorAll('thead th');
-            
-            // Update tab ARIA states
-            scheduleTabs.forEach(function(tab) {
-                const isSelected = tab.dataset.day === day;
-                tab.setAttribute('aria-selected', isSelected);
-                if (isSelected) tab.classList.add('active');
-                else tab.classList.remove('active');
-            });
-            
-            if (day === 'all') {
-                selectedDayLabel.innerHTML = '';
-                headerCells.forEach(function(th, idx) {
-                    if (idx > 0) th.style.display = '';
-                });
-                rows.forEach(function(tr) {
-                    tr.querySelectorAll('td').forEach(function(td, idx) {
-                        if (idx > 0) td.style.display = '';
-                    });
-                });
-            } else {
-                const dayIndex = {mon:1, tue:2, wed:3, thu:4, fri:5, sat:6, sun:7}[day];
-                const dayNames = {mon:'Понедельник', tue:'Вторник', wed:'Среда', thu:'Четверг', fri:'Пятница', sat:'Суббота', sun:'Воскресенье'};
-                selectedDayLabel.innerHTML = 'Расписание на ' + dayNames[day];
-                headerCells.forEach(function(th, idx) {
-                    if (idx > 0) th.style.display = (idx === dayIndex) ? '' : 'none';
-                });
-                rows.forEach(function(tr) {
-                    tr.querySelectorAll('td').forEach(function(td, idx) {
-                        if (idx === 0) return;
-                        td.style.display = (idx === dayIndex) ? '' : 'none';
-                    });
-                });
-            }
-        }
-        
-        scheduleTabs.forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                filterSchedule(this.dataset.day);
-            });
-        });
-        
-        // Initial state
-        filterSchedule('all');
 
-        // ============================================
-        // 4. SCROLL OBSERVER FOR REVEAL ANIMATIONS
-        // ============================================
-        const revealElements = document.querySelectorAll('.reveal');
+        const tabsContainer = document.getElementById('scheduleTabs');
+        const listContainer = document.getElementById('scheduleList');
+
+        function renderTabs() {
+            tabsContainer.innerHTML = days.map(d =>
+                `<button class="tab" role="tab" data-day="${d.key}">${d.label}</button>`
+            ).join('');
+            // Set first tab active
+            const firstTab = tabsContainer.querySelector('.tab');
+            if (firstTab) firstTab.classList.add('active');
+        }
+
+        function renderDay(dayKey) {
+            const classes = scheduleData[dayKey] || [];
+            if (classes.length === 0) {
+                listContainer.innerHTML = '<p style="text-align:center;color:var(--text-secondary);">В этот день занятий нет</p>';
+                return;
+            }
+            listContainer.innerHTML = classes.map(c => `
+                <div class="schedule-card">
+                    <div class="schedule-info">
+                        <div class="time">${c.time}</div>
+                        <div class="title">${c.title}</div>
+                        <div class="trainer">${c.trainer}</div>
+                    </div>
+                    <button class="btn" data-open-modal="${c.title}">Записаться</button>
+                </div>
+            `).join('');
+        }
+
+        tabsContainer.addEventListener('click', e => {
+            const tab = e.target.closest('.tab');
+            if (!tab) return;
+            tabsContainer.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            renderDay(tab.dataset.day);
+        });
+
+        renderTabs();
+        renderDay('today'); // изначально "Сегодня"
+
+        // ================== REVEAL ON SCROLL ==================
+        const reveals = document.querySelectorAll('.reveal');
         if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
             }, { threshold: 0.15 });
-            revealElements.forEach(function(el) { observer.observe(el); });
+            reveals.forEach(el => obs.observe(el));
         } else {
-            // Fallback for older browsers
-            revealElements.forEach(function(el) { el.classList.add('visible'); });
+            reveals.forEach(el => el.classList.add('visible'));
         }
 
-        // ============================================
-        // 5. SCROLL TO TOP BUTTON
-        // ============================================
+        // ================== SCROLL TOP ==================
         const scrollBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 400) {
-                scrollBtn.classList.add('show');
-            } else {
-                scrollBtn.classList.remove('show');
-            }
+        window.addEventListener('scroll', () => {
+            scrollBtn.classList.toggle('show', window.scrollY > 400);
         });
-        scrollBtn.addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        scrollBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
-        // ============================================
-        // 6. SMOOTH SCROLL FOR ANCHOR LINKS
-        // ============================================
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
+        // ================== SMOOTH SCROLL ==================
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                if (href === '#' || href === '') return;
+                if (href === '#') return;
                 const target = document.querySelector(href);
                 if (target) {
                     e.preventDefault();
-                    const headerOffset = 80;
-                    const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-                    window.scrollTo({ top: elementPosition - headerOffset, behavior: 'smooth' });
+                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
                 }
             });
         });
 
-        // ============================================
-        // 7. FORM SUBMISSION TO GOOGLE APPS SCRIPT
-        // ============================================
-        // IMPORTANT: Replace with your actual Google Apps Script URL
+        // ================== FORM SUBMIT (Google Apps Script) ==================
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0XSI05cJ5yMBOb82R4E47UAoh3Uf6Bv7aWJ4y6qEc33RQKnS2rR2-866PVPsOwhEG/exec';
-        
-        const signupForm = document.getElementById('signupForm');
-        signupForm.addEventListener('submit', async function(e) {
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Отправляем...';
-            
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
             const params = new URLSearchParams({
                 name: document.getElementById('modalName').value,
                 phone: document.getElementById('modalPhone').value,
-                direction: document.getElementById('modalDirectionSelect').value
+                direction: directionSelect.value
             });
-            
-            try {
-                await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: params
-                });
-            } catch (err) {
-                // no-cors mode: request always appears to fail, but data is sent
-                console.log('Form submitted (no-cors mode)');
-            }
-            
-            // Show success regardless
+            try { await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: params }); } catch(e){}
             document.getElementById('signupForm').style.display = 'none';
             document.getElementById('formSuccess').style.display = 'block';
-            
-            setTimeout(function() {
+            setTimeout(() => {
                 closeModal();
                 document.getElementById('signupForm').style.display = 'block';
                 document.getElementById('formSuccess').style.display = 'none';
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Отправить заявку';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
             }, 4000);
         });
 
     })();
 </script>
 
-<!-- Yandex Maps Initialization -->
 <script>
     function initMap() {
-        const studioCoordinates = [59.804423, 30.380969];
-        
-        const myMap = new ymaps.Map("yandexMap", {
-            center: studioCoordinates,
-            zoom: 17,
-            controls: ['zoomControl', 'fullscreenControl']
-        });
-        
-        const myPlacemark = new ymaps.Placemark(studioCoordinates, {
+        const coords = [59.804423, 30.380969];
+        const map = new ymaps.Map("yandexMap", { center: coords, zoom: 17, controls: ['zoomControl'] });
+        map.geoObjects.add(new ymaps.Placemark(coords, {
             hintContent: 'INFINITY Фитнес-студия',
-            balloonContent: '<strong>INFINITY Фитнес-студия</strong><br/>Шушары, ул. Пушкинская, 34Б, этаж 3<br/><a href="tel:+79697324841">+7 (969) 732-48-41</a>'
-        }, {
-            preset: 'islands#redDotIconWithCaption',
-            iconCaption: 'INFINITY'
-        });
-        
-        myMap.geoObjects.add(myPlacemark);
+            balloonContent: '<strong>INFINITY</strong><br>ул. Пушкинская, 34Б, этаж 3'
+        }, { preset: 'islands#redDotIconWithCaption', iconCaption: 'INFINITY' }));
     }
-    
     ymaps.ready(initMap);
 </script>
 
