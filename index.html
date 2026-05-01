@@ -7,7 +7,7 @@
     <meta name="keywords" content="фитнес Шушары, растяжка Шушары, пилон спб, йога для беременных Шушары, студия растяжки, фитнес Пушкинский район">
     <title>INFINITY | Онлайн-запись в фитнес-студию</title>
 
-    <!-- Favicon (эмодзи бесконечности) -->
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♾️</text></svg>">
 
     <!-- Open Graph -->
@@ -292,8 +292,8 @@
             <div class="features-grid">
                 <div class="card reveal"><i class="fas fa-dumbbell feature-icon"></i><h3>Премиум оборудование</h3><p>Technogym & Life Fitness — как в элитных клубах.</p></div>
                 <div class="card reveal"><i class="fas fa-brain feature-icon"></i><h3>Умные программы</h3><p>Тренировки, адаптированные под ваш уровень.</p></div>
-                <div class="card reveal"><i class="fas fa-map-pin feature-icon"></i><h3>Рядом с домом</h3><p>5 минут от метро Шушары, внутри ЖК.</p></div>
-                <div class="card reveal"><i class="fas fa-chart-line feature-icon"></i><h3>Гарантия результата</h3><p>Отслеживаем прогресс и корректируем питание.</p></div>
+                <div class="card reveal"><i class="fas fa-map-pin feature-icon"></i><h3>Рядом с домом</h3><p>Внутри ЖК Пушкинский, 5 минут пешком.</p></div>
+                <div class="card reveal"><i class="fas fa-chart-line feature-icon"></i><h3>Гарантия результата</h3><p>Отслеживаем прогресс каждые 2 недели.</p></div>
             </div>
         </div>
     </section>
@@ -329,7 +329,7 @@
         </div>
     </section>
 
-    <!-- ===== РАСПИСАНИЕ (ДИНАМИЧЕСКАЯ ЗАГРУЗКА ИЗ GOOGLE ТАБЛИЦЫ) ===== -->
+    <!-- ===== РАСПИСАНИЕ ===== -->
     <section id="schedule" class="schedule-section" aria-labelledby="schedule-title">
         <div class="container">
             <h2 id="schedule-title" class="reveal" style="text-align:center;">Расписание</h2>
@@ -379,14 +379,26 @@
     <section id="team" aria-labelledby="team-title" style="background:#fff;">
         <div class="container">
             <h2 id="team-title" class="reveal" style="text-align:center;">Команда Infinity</h2>
-            <div class="team-grid" id="teamGrid"></div>
+            <div class="team-grid">
+                <div class="team-member reveal"><div class="team-photo">СВ</div><h4>Светлана</h4><p>Йога, спина</p></div>
+                <div class="team-member reveal"><div class="team-photo">ОК</div><h4>Оксана</h4><p>Фитнес</p></div>
+                <div class="team-member reveal"><div class="team-photo">НА</div><h4>Надежда</h4><p>Pole, Exotic</p></div>
+                <div class="team-member reveal"><div class="team-photo">ВА</div><h4>Валерия</h4><p>Растяжка, ЛФК</p></div>
+                <div class="team-member reveal"><div class="team-photo">ЮЛ</div><h4>Юлия</h4><p>Фитнес, Растяжка</p></div>
+                <div class="team-member reveal"><div class="team-photo">КС</div><h4>Ксения</h4><p>Zumba</p></div>
+            </div>
         </div>
     </section>
 
     <section id="reviews" aria-labelledby="reviews-title" style="background:var(--bg-primary);">
         <div class="container">
             <h2 id="reviews-title" class="reveal" style="text-align:center;">Отзывы</h2>
-            <div class="reviews-grid" id="reviewsGrid"></div>
+            <div class="reviews-grid">
+                <div class="review-card reveal"><div class="review-header"><div class="review-avatar">АН</div><div class="review-name">Анна</div></div><div class="review-text">«Хожу на растяжку и пилон 3 месяца — вижу прогресс!»</div></div>
+                <div class="review-card reveal"><div class="review-header"><div class="review-avatar">ЕК</div><div class="review-name">Екатерина</div></div><div class="review-text">«Записалась по акции, теперь постоянный клиент.»</div></div>
+                <div class="review-card reveal"><div class="review-header"><div class="review-avatar">МА</div><div class="review-name">Мария</div></div><div class="review-text">«Уютная студия, внимательные тренеры.»</div></div>
+                <div class="review-card reveal"><div class="review-header"><div class="review-avatar">ОЛ</div><div class="review-name">Ольга</div></div><div class="review-text">«После родов восстановила форму на йоге.»</div></div>
+            </div>
         </div>
     </section>
 
@@ -470,7 +482,6 @@
                 <label for="modalPhone">Телефон*</label>
                 <input type="tel" id="modalPhone" placeholder="+7 999 000-00-00" required autocomplete="tel">
             </div>
-            <!-- Honeypot -->
             <div style="display:none;" aria-hidden="true">
                 <input type="text" name="website" tabindex="-1" autocomplete="off">
             </div>
@@ -485,7 +496,6 @@
     </div>
 </div>
 
-<!-- Модальное окно политики -->
 <div class="modal" id="privacyModal" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-content">
         <button class="close-modal" onclick="closePrivacyModal()">&times;</button>
@@ -503,56 +513,27 @@
     (function() {
         'use strict';
 
-        // ================== НАСТРОЙКИ ==================
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQiTwRdu3RggDENywdMt3D1mBhEFMhmDRG9d-cYi8cTQHwCo5VCopqrKt-MVXJyI3b/exec';
-
         const DAYS_ORDER = [
-            { key: 'Сегодня', label: 'Сегодня' },
-            { key: 'Завтра', label: 'Завтра' },
-            { key: 'Пн', label: 'Пн' },
-            { key: 'Вт', label: 'Вт' },
-            { key: 'Ср', label: 'Ср' },
-            { key: 'Чт', label: 'Чт' },
-            { key: 'Пт', label: 'Пт' },
-            { key: 'Сб', label: 'Сб' },
-            { key: 'Вс', label: 'Вс' }
+            { key: 'Сегодня', label: 'Сегодня' }, { key: 'Завтра', label: 'Завтра' },
+            { key: 'Пн', label: 'Пн' }, { key: 'Вт', label: 'Вт' }, { key: 'Ср', label: 'Ср' },
+            { key: 'Чт', label: 'Чт' }, { key: 'Пт', label: 'Пт' }, { key: 'Сб', label: 'Сб' }, { key: 'Вс', label: 'Вс' }
         ];
+        let scheduleCache = null, currentDayKey = 'Сегодня', autoRefreshInterval;
 
-        let scheduleCache = null;
-        let currentDayKey = 'Сегодня';
-        let autoRefreshInterval;
-
-        // ================== MOBILE MENU ==================
+        // Mobile menu
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
-
-        function openMenu() {
-            mobileMenu.classList.add('active');
-            mobileToggle.setAttribute('aria-expanded', 'true');
-            mobileMenu.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-            closeMenuBtn.focus();
-        }
-        function closeMenu() {
-            mobileMenu.classList.remove('active');
-            mobileToggle.setAttribute('aria-expanded', 'false');
-            mobileMenu.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-            mobileToggle.focus();
-        }
-        mobileToggle.addEventListener('click', () => {
-            mobileToggle.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
-        });
+        function openMenu() { mobileMenu.classList.add('active'); mobileToggle.setAttribute('aria-expanded', 'true'); mobileMenu.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; closeMenuBtn.focus(); }
+        function closeMenu() { mobileMenu.classList.remove('active'); mobileToggle.setAttribute('aria-expanded', 'false'); mobileMenu.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; mobileToggle.focus(); }
+        mobileToggle.addEventListener('click', () => { mobileToggle.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu(); });
         closeMenuBtn.addEventListener('click', closeMenu);
-        mobileMenu.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => {
-            if (mobileMenu.classList.contains('active')) closeMenu();
-        }));
+        mobileMenu.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => { if (mobileMenu.classList.contains('active')) closeMenu(); }));
 
-        // ================== МОДАЛЬНЫЕ ОКНА ==================
+        // Modals
         const signupModal = document.getElementById('signupModal');
         const privacyModal = document.getElementById('privacyModal');
-        const modalCloseBtn = signupModal.querySelector('.close-modal');
         const modalTitle = document.getElementById('modalTitle');
         const modalSubtitle = document.getElementById('modalSubtitle');
         const directionSelect = document.getElementById('modalDirectionSelect');
@@ -563,33 +544,17 @@
 
         function openModal({ direction = '', date = '', time = '' } = {}) {
             lastFocused = document.activeElement;
-            if (direction) {
-                modalTitle.textContent = 'Запись на ' + direction;
-                modalSubtitle.textContent = date ? date + ', ' + time : 'Выберите удобное время';
-            } else {
-                modalTitle.textContent = 'Запишись на пробный урок';
-                modalSubtitle.textContent = 'Начни менять свою жизнь прямо сейчас!';
-            }
-            if (date && time) {
-                modalDateTimeInfo.style.display = 'block';
-                modalDateTimeInfo.textContent = date + ' в ' + time;
-            } else {
-                modalDateTimeInfo.style.display = 'none';
-                modalDateTimeInfo.textContent = '';
-            }
+            modalTitle.textContent = direction ? 'Запись на ' + direction : 'Запишись на пробный урок';
+            modalSubtitle.textContent = date ? date + ', ' + time : 'Начни менять свою жизнь прямо сейчас!';
+            modalDateTimeInfo.style.display = (date && time) ? 'block' : 'none';
+            if (date && time) modalDateTimeInfo.textContent = date + ' в ' + time;
             modalDateInput.value = date;
             modalTimeInput.value = time;
             if (direction) {
-                const options = directionSelect.options;
-                for (let i = 0; i < options.length; i++) {
-                    if (options[i].text.toLowerCase().includes(direction.toLowerCase())) {
-                        directionSelect.selectedIndex = i;
-                        break;
-                    }
+                for (let i = 0; i < directionSelect.options.length; i++) {
+                    if (directionSelect.options[i].text.toLowerCase().includes(direction.toLowerCase())) { directionSelect.selectedIndex = i; break; }
                 }
-            } else {
-                directionSelect.selectedIndex = 0;
-            }
+            } else directionSelect.selectedIndex = 0;
             document.getElementById('signupForm').style.display = 'block';
             document.getElementById('formSuccess').style.display = 'none';
             document.getElementById('submitBtn').disabled = false;
@@ -599,51 +564,29 @@
             document.body.style.overflow = 'hidden';
             document.getElementById('modalName').focus();
         }
-
         function closeSignupModal() {
-            signupModal.style.display = 'none';
-            signupModal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-            if (lastFocused) lastFocused.focus();
-            modalDateInput.value = '';
-            modalTimeInput.value = '';
-            modalDateTimeInfo.style.display = 'none';
+            signupModal.style.display = 'none'; signupModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = ''; if (lastFocused) lastFocused.focus();
         }
-
-        function openPrivacyModal() {
-            privacyModal.style.display = 'flex';
-            privacyModal.setAttribute('aria-hidden', 'false');
-        }
-
-        function closePrivacyModal() {
-            privacyModal.style.display = 'none';
-            privacyModal.setAttribute('aria-hidden', 'true');
-        }
-
-        modalCloseBtn.addEventListener('click', closeSignupModal);
+        function openPrivacyModal() { privacyModal.style.display = 'flex'; privacyModal.setAttribute('aria-hidden', 'false'); }
+        function closePrivacyModal() { privacyModal.style.display = 'none'; privacyModal.setAttribute('aria-hidden', 'true'); }
+        document.querySelector('#signupModal .close-modal').addEventListener('click', closeSignupModal);
         signupModal.addEventListener('click', e => { if (e.target === signupModal) closeSignupModal(); });
         privacyModal.addEventListener('click', e => { if (e.target === privacyModal) closePrivacyModal(); });
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape' && signupModal.getAttribute('aria-hidden') === 'false') closeSignupModal();
             if (e.key === 'Escape' && privacyModal.getAttribute('aria-hidden') === 'false') closePrivacyModal();
         });
-
         document.body.addEventListener('click', e => {
             const btn = e.target.closest('[data-open-modal]');
             if (!btn) return;
             e.preventDefault();
-            const direction = btn.getAttribute('data-open-modal') || '';
-            const date = btn.getAttribute('data-date') || '';
-            const time = btn.getAttribute('data-time') || '';
             const available = parseInt(btn.getAttribute('data-available') || '1');
-            if (available <= 0) {
-                alert('К сожалению, все места на это занятие уже заняты.');
-                return;
-            }
-            openModal({ direction, date, time });
+            if (available <= 0) { alert('К сожалению, все места на это занятие уже заняты.'); return; }
+            openModal({ direction: btn.getAttribute('data-open-modal') || '', date: btn.getAttribute('data-date') || '', time: btn.getAttribute('data-time') || '' });
         });
 
-        // ================== МАСКА ТЕЛЕФОНА ==================
+        // Phone mask
         document.getElementById('modalPhone').addEventListener('input', function(e) {
             let value = this.value.replace(/\D/g, '');
             if (value.length > 11) value = value.substr(0,11);
@@ -655,7 +598,7 @@
             this.value = formatted;
         });
 
-        // ================== ЗАГРУЗКА РАСПИСАНИЯ ==================
+        // Schedule
         const scheduleLoading = document.getElementById('scheduleLoading');
         const scheduleError = document.getElementById('scheduleError');
         const scheduleList = document.getElementById('scheduleList');
@@ -665,7 +608,6 @@
             scheduleLoading.style.display = 'block';
             scheduleError.style.display = 'none';
             scheduleList.style.display = 'none';
-
             try {
                 const response = await fetch(APPS_SCRIPT_URL + '?action=schedule');
                 if (!response.ok) throw new Error('HTTP error: ' + response.status);
@@ -677,12 +619,13 @@
                 renderTabs();
                 renderDay(currentDayKey);
             } catch (err) {
-                console.error('Schedule load error:', err);
+                console.error(err);
                 scheduleLoading.style.display = 'none';
                 scheduleError.style.display = 'block';
                 if (scheduleCache && Object.keys(scheduleCache).length > 0) {
                     scheduleError.style.display = 'none';
                     scheduleList.style.display = 'flex';
+                    renderDay(currentDayKey);
                 }
             }
         }
@@ -690,43 +633,27 @@
         function renderTabs() {
             const availableDays = scheduleCache ? Object.keys(scheduleCache) : [];
             if (availableDays.length === 0) return;
-            tabsContainer.innerHTML = DAYS_ORDER
-                .filter(d => availableDays.includes(d.key))
-                .map(d => `<button class="tab" role="tab" data-day="${d.key}">${d.label}</button>`)
-                .join('');
+            tabsContainer.innerHTML = DAYS_ORDER.filter(d => availableDays.includes(d.key)).map(d => `<button class="tab" role="tab" data-day="${d.key}">${d.label}</button>`).join('');
             if (!availableDays.includes(currentDayKey)) currentDayKey = availableDays[0];
             const activeTab = tabsContainer.querySelector(`[data-day="${currentDayKey}"]`);
             if (activeTab) activeTab.classList.add('active');
-            else {
-                const firstTab = tabsContainer.querySelector('.tab');
-                if (firstTab) { firstTab.classList.add('active'); currentDayKey = firstTab.dataset.day; }
-            }
+            else { const firstTab = tabsContainer.querySelector('.tab'); if (firstTab) { firstTab.classList.add('active'); currentDayKey = firstTab.dataset.day; } }
         }
 
         function getDateFromDayKey(dayKey) {
             const now = new Date();
             const dayMap = { 'Вс': 0, 'Пн': 1, 'Вт': 2, 'Ср': 3, 'Чт': 4, 'Пт': 5, 'Сб': 6 };
             if (dayKey === 'Сегодня') return formatDate(now);
-            if (dayKey === 'Завтра') {
-                const tomorrow = new Date(now);
-                tomorrow.setDate(now.getDate() + 1);
-                return formatDate(tomorrow);
-            }
+            if (dayKey === 'Завтра') { const tomorrow = new Date(now); tomorrow.setDate(now.getDate() + 1); return formatDate(tomorrow); }
             if (dayMap.hasOwnProperty(dayKey)) {
-                const targetDay = dayMap[dayKey];
-                const currentDay = now.getDay();
-                let diff = targetDay - currentDay;
-                if (diff <= 0) diff += 7;
-                const targetDate = new Date(now);
-                targetDate.setDate(now.getDate() + diff);
+                const targetDay = dayMap[dayKey], currentDay = now.getDay();
+                let diff = targetDay - currentDay; if (diff <= 0) diff += 7;
+                const targetDate = new Date(now); targetDate.setDate(now.getDate() + diff);
                 return formatDate(targetDate);
             }
             return '';
         }
-
-        function formatDate(date) {
-            return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', weekday: 'short' });
-        }
+        function formatDate(date) { return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', weekday: 'short' }); }
 
         function renderDay(dayKey) {
             if (!scheduleCache) return;
@@ -737,21 +664,17 @@
             }
             const dateStr = getDateFromDayKey(dayKey);
             scheduleList.innerHTML = classes.map(c => {
-                const available = c.available !== undefined ? c.available : 10; // fallback
+                const available = c.available !== undefined ? c.available : 10;
                 const isFull = available === 0;
-                const badgeText = isFull ? 'Нет мест' : (available <= 3 ? `Осталось ${available} места` : `${available} мест`);
-                const btnText = isFull ? 'Нет мест' : 'Записаться';
-                const btnDisabled = isFull ? 'disabled' : '';
-                const cardClass = isFull ? 'schedule-card full' : 'schedule-card';
                 return `
-                    <div class="${cardClass}">
+                    <div class="schedule-card${isFull ? ' full' : ''}">
                         <div class="schedule-info">
                             <div class="time">${c.time}</div>
                             <div class="title">${c.title}</div>
                             <div class="trainer">${c.trainer}</div>
-                            <div class="availability-badge ${isFull ? 'full' : 'available'}">${badgeText}</div>
+                            <div class="availability-badge ${isFull ? 'full' : 'available'}">${isFull ? 'Нет мест' : (available <= 3 ? 'Осталось ' + available + ' места' : available + ' мест')}</div>
                         </div>
-                        <button class="btn" data-open-modal="${c.title}" data-date="${dateStr}" data-time="${c.time}" data-available="${available}" ${btnDisabled}>${btnText}</button>
+                        <button class="btn" data-open-modal="${c.title}" data-date="${dateStr}" data-time="${c.time}" data-available="${available}"${isFull ? ' disabled' : ''}>${isFull ? 'Нет мест' : 'Записаться'}</button>
                     </div>
                 `;
             }).join('');
@@ -766,34 +689,12 @@
             renderDay(currentDayKey);
         });
 
-        // Автообновление
         function startAutoRefresh() {
             if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-            autoRefreshInterval = setInterval(async () => {
-                const prevCache = scheduleCache ? JSON.stringify(scheduleCache) : null;
-                await loadSchedule();
-                if (prevCache && scheduleCache) {
-                    // Проверяем, не появились ли места
-                    const currentClasses = scheduleCache[currentDayKey] || [];
-                    const prevClasses = JSON.parse(prevCache)[currentDayKey] || [];
-                    const wasFull = prevClasses.every(c => (c.available || 10) === 0);
-                    const isFullNow = currentClasses.every(c => (c.available || 10) === 0);
-                    if (wasFull && !isFullNow) {
-                        showToast('Появились свободные места! 🔔');
-                    }
-                }
-            }, 30000);
+            autoRefreshInterval = setInterval(async () => { await loadSchedule(); }, 30000);
         }
 
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
-        }
-
-        // ================== ОТПРАВКА ФОРМЫ ==================
+        // Form submit
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
@@ -806,9 +707,7 @@
                 date: document.getElementById('modalDate').value,
                 time: document.getElementById('modalTime').value
             });
-            try {
-                await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: params });
-            } catch(e) {}
+            try { await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: params }); } catch(e){}
             document.getElementById('signupForm').style.display = 'none';
             document.getElementById('formSuccess').style.display = 'block';
             setTimeout(() => {
@@ -820,79 +719,31 @@
             }, 4000);
         });
 
-        // ================== СТАТИЧЕСКИЙ КОНТЕНТ ==================
-        function renderTeam() {
-            const team = [
-                { name: 'Светлана', role: 'Йога, спина', initials: 'СВ' },
-                { name: 'Оксана', role: 'Фитнес', initials: 'ОК' },
-                { name: 'Надежда', role: 'Pole, Exotic', initials: 'НА' },
-                { name: 'Валерия', role: 'Растяжка, ЛФК', initials: 'ВА' },
-                { name: 'Юлия', role: 'Фитнес, Растяжка', initials: 'ЮЛ' },
-                { name: 'Ксения', role: 'Zumba', initials: 'КС' }
-            ];
-            document.getElementById('teamGrid').innerHTML = team.map(m => `
-                <div class="team-member reveal">
-                    <div class="team-photo">${m.initials}</div>
-                    <h4>${m.name}</h4>
-                    <p>${m.role}</p>
-                </div>
-            `).join('');
-        }
-
-        function renderReviews() {
-            const reviews = [
-                { name: 'Анна', text: '«Хожу на растяжку и пилон 3 месяца — вижу прогресс!»', initials: 'АН' },
-                { name: 'Екатерина', text: '«Записалась по акции, теперь постоянный клиент.»', initials: 'ЕК' },
-                { name: 'Мария', text: '«Очень уютная студия, тренеры внимательные.»', initials: 'МА' },
-                { name: 'Ольга', text: '«После родов восстановила форму на йоге для беременных.»', initials: 'ОЛ' }
-            ];
-            document.getElementById('reviewsGrid').innerHTML = reviews.map(r => `
-                <div class="review-card reveal">
-                    <div class="review-header">
-                        <div class="review-avatar">${r.initials}</div>
-                        <div class="review-name">${r.name}</div>
-                    </div>
-                    <div class="review-text">${r.text}</div>
-                </div>
-            `).join('');
-        }
-
-        renderTeam();
-        renderReviews();
-
-        // ================== ОСТАЛЬНОЕ ==================
+        // Reveal animations
         const reveals = document.querySelectorAll('.reveal');
         if ('IntersectionObserver' in window) {
-            const obs = new IntersectionObserver(entries => {
-                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-            }, { threshold: 0.15 });
+            const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
             reveals.forEach(el => obs.observe(el));
-        } else {
-            reveals.forEach(el => el.classList.add('visible'));
-        }
+        } else reveals.forEach(el => el.classList.add('visible'));
 
+        // Scroll top
         const scrollBtn = document.getElementById('scrollTop');
         window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 400); });
         scrollBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
                 if (href === '#') return;
                 const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-                }
+                if (target) { e.preventDefault(); window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' }); }
             });
         });
 
-        // Запуск
+        // Init
         loadSchedule();
         startAutoRefresh();
-
-        // Яндекс.Метрика (заглушка)
-        (function(m,e,t,r,i,k,a){ m[i]=m[i]||function(){ (m[i].a=m[i].a||[]).push(arguments) }; m[i].l=1*new Date(); for (var j=0;j<document.scripts.length;j++) { if (document.scripts[j].src===r) return; } k=e.createElement(t),a=e.getElementsByTagName(t)[0]; k.async=1;k.src=r;a.parentNode.insertBefore(k,a) })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym'); ym(00000000, 'init', { clickmap:true, trackLinks:true, accurateTrackBounce:true });
     })();
 </script>
 
@@ -900,10 +751,7 @@
     function initMap() {
         const coords = [59.804423, 30.380969];
         const map = new ymaps.Map("yandexMap", { center: coords, zoom: 17, controls: ['zoomControl'] });
-        map.geoObjects.add(new ymaps.Placemark(coords, {
-            hintContent: 'INFINITY Фитнес-студия',
-            balloonContent: '<strong>INFINITY</strong><br>ул. Пушкинская, 34Б, этаж 3'
-        }, { preset: 'islands#redDotIconWithCaption', iconCaption: 'INFINITY' }));
+        map.geoObjects.add(new ymaps.Placemark(coords, { hintContent: 'INFINITY Фитнес-студия', balloonContent: '<strong>INFINITY</strong><br>ул. Пушкинская, 34Б, этаж 3' }, { preset: 'islands#redDotIconWithCaption', iconCaption: 'INFINITY' }));
     }
     ymaps.ready(initMap);
 </script>
