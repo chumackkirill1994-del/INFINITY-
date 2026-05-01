@@ -695,29 +695,48 @@
         }
 
         // Form submit
-        document.getElementById('signupForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
-            const params = new URLSearchParams({
-                name: document.getElementById('modalName').value,
-                phone: document.getElementById('modalPhone').value,
-                direction: directionSelect.value,
-                date: document.getElementById('modalDate').value,
-                time: document.getElementById('modalTime').value
-            });
-            try { await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: params }); } catch(e){}
+document.getElementById('signupForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
+    
+    const formData = new URLSearchParams();
+    formData.append('name', document.getElementById('modalName').value);
+    formData.append('phone', document.getElementById('modalPhone').value);
+    formData.append('direction', directionSelect.value);
+    formData.append('date', document.getElementById('modalDate').value);
+    formData.append('time', document.getElementById('modalTime').value);
+    formData.append('action', 'book');
+    
+    try {
+        const response = await fetch(APPS_SCRIPT_URL, { 
+            method: 'POST', 
+            body: formData 
+        });
+        const result = await response.json();
+        
+        if (result.success) {
             document.getElementById('signupForm').style.display = 'none';
             document.getElementById('formSuccess').style.display = 'block';
+            
+            // Перезагружаем расписание через 2 секунды
             setTimeout(() => {
                 closeSignupModal();
-                document.getElementById('signupForm').style.display = 'block';
-                document.getElementById('formSuccess').style.display = 'none';
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
-            }, 4000);
-        });
+                loadSchedule();
+            }, 2000);
+        } else {
+            alert(result.error || 'Ошибка при записи. Попробуйте позже.');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+        }
+    } catch(err) {
+        console.error('Ошибка:', err);
+        alert('Произошла ошибка. Пожалуйста, проверьте подключение к интернету.');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+    }
+});
 
         // Reveal animations
         const reveals = document.querySelectorAll('.reveal');
