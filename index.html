@@ -7,6 +7,16 @@
     <meta name="keywords" content="фитнес Шушары, растяжка Шушары, пилон спб, йога для беременных Шушары, студия растяжки, фитнес Пушкинский район">
     <title>INFINITY | Онлайн-запись в фитнес-студию</title>
 
+    <!-- Favicon (эмодзи бесконечности) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♾️</text></svg>">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="INFINITY | Фитнес-студия в Шушарах">
+    <meta property="og:description" content="Пробное занятие за 500 ₽. Йога, пилон, растяжка, Zumba. Онлайн-запись.">
+    <meta property="og:image" content="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -78,6 +88,7 @@
             transition: background 0.2s ease; text-decoration: none; min-height: 44px;
         }
         .btn:hover { background: var(--accent-hover); }
+        .btn.disabled, .btn[disabled] { background: #bdc3c7; cursor: not-allowed; opacity: 0.7; pointer-events: none; }
         .btn-outline { background: transparent; border: 1.5px solid var(--text-primary); color: var(--text-primary); }
         .btn-outline:hover { background: var(--text-primary); color: #fff; }
 
@@ -150,14 +161,17 @@
         .schedule-list { display: flex; flex-direction: column; gap: var(--spacing-md); }
         .schedule-card { display: flex; align-items: center; justify-content: space-between; background: var(--bg-card); border-radius: var(--radius); padding: var(--spacing-md); box-shadow: var(--shadow); gap: var(--spacing-md); transition: var(--transition); border: 1px solid transparent; flex-wrap: wrap; }
         .schedule-card:hover { border-color: var(--accent-warm); }
+        .schedule-card.full { opacity: 0.8; background: #f8f9fa; }
         .schedule-info { display: flex; flex-direction: column; gap: 4px; min-width: 120px; }
         .time { font-weight: 800; font-size: 1.2rem; color: var(--accent-primary); }
         .title { font-weight: 700; font-size: 1rem; color: var(--text-primary); }
         .trainer { font-weight: 400; font-size: 0.85rem; color: var(--text-secondary); }
+        .availability-badge { font-size: 0.8rem; font-weight: 600; margin-top: 4px; }
+        .availability-badge.available { color: #27ae60; }
+        .availability-badge.full { color: #e74c3c; }
         .schedule-card .btn { flex-shrink: 0; }
         @media (max-width: 500px) { .schedule-card { flex-direction: column; align-items: flex-start; } .schedule-card .btn { width: 100%; justify-content: center; } }
 
-        /* Индикатор загрузки расписания */
         .schedule-loading { text-align: center; padding: var(--spacing-xl); color: var(--text-secondary); }
         .schedule-loading i { font-size: 2rem; color: var(--accent-primary); margin-bottom: var(--spacing-sm); }
         .schedule-error { text-align: center; padding: var(--spacing-lg); color: #c0392b; background: #fdecea; border-radius: var(--radius); margin: var(--spacing-md) 0; }
@@ -179,7 +193,7 @@
 
         .team-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: var(--spacing-md); }
         .team-member { text-align: center; }
-        .team-photo { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto var(--spacing-sm); overflow: hidden; box-shadow: var(--shadow); border: 2px solid white; }
+        .team-photo { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto var(--spacing-sm); overflow: hidden; box-shadow: var(--shadow); border: 2px solid white; background: #8B9BB4; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: white; }
         .team-photo img { width: 100%; height: 100%; object-fit: cover; }
         @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(3,1fr); } }
         @media (max-width: 500px) { .team-grid { grid-template-columns: repeat(2,1fr); } }
@@ -187,7 +201,7 @@
         .reviews-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--spacing-md); margin-top: var(--spacing-md); }
         .review-card { background: var(--bg-card); border-radius: var(--radius); padding: var(--spacing-md); box-shadow: var(--shadow); }
         .review-header { display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); }
-        .review-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: var(--accent-warm); }
+        .review-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: #E2D8C8; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--text-primary); }
         .review-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .review-name { font-weight: 700; color: var(--text-primary); }
         @media (max-width: 700px) { .reviews-grid { grid-template-columns: 1fr; } }
@@ -205,19 +219,25 @@
         .social-icons a:hover { color: #fff; }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(6px); z-index: 3000; align-items: center; justify-content: center; }
-        .modal-content { background: #fff; padding: var(--spacing-xl) var(--spacing-lg); border-radius: var(--radius); max-width: 440px; width: 90%; position: relative; animation: modalFade 0.2s ease; }
+        .modal-content { background: #fff; padding: var(--spacing-xl) var(--spacing-lg); border-radius: var(--radius); max-width: 440px; width: 90%; position: relative; animation: modalFade 0.2s ease; max-height: 90vh; overflow-y: auto; }
         @keyframes modalFade { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         .close-modal { position: absolute; top: var(--spacing-md); right: var(--spacing-md); font-size: 24px; cursor: pointer; background: none; border: none; color: var(--text-primary); }
         .form-group { margin-bottom: var(--spacing-md); }
         .form-group label { display: block; margin-bottom: 4px; font-weight: 600; }
         .form-group select, .form-group input { width: 100%; padding: 12px; border-radius: var(--radius); border: 1px solid var(--border-light); font-family: inherit; }
+        .checkbox-group { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .checkbox-group input { width: auto; }
         .selected-datetime { background: var(--accent-warm); border-radius: var(--radius); padding: var(--spacing-sm); margin-bottom: var(--spacing-md); text-align: center; font-weight: 600; color: var(--text-primary); }
+        .privacy-link { color: var(--accent-primary); text-decoration: underline; cursor: pointer; background: none; border: none; font-size: inherit; }
 
         .scroll-top { position: fixed; bottom: 80px; right: 20px; background: var(--text-primary); color: white; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: var(--transition); cursor: pointer; z-index: 99; border: none; }
         .scroll-top.show { opacity: 1; visibility: visible; }
         .scroll-top:hover { background: var(--accent-primary); }
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #27ae60; color: white; padding: 12px 24px; border-radius: 40px; z-index: 9999; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
     </style>
 </head>
 <body>
@@ -270,10 +290,10 @@
         <div class="container">
             <h2 id="features-title" class="reveal">Почему выбирают Infinity</h2>
             <div class="features-grid">
-                <div class="card reveal"><i class="fas fa-dumbbell feature-icon"></i><h3>Премиум оборудование</h3><p>Technogym & Life Fitness.</p></div>
-                <div class="card reveal"><i class="fas fa-brain feature-icon"></i><h3>Умные программы</h3><p>Подбор под ваши цели.</p></div>
-                <div class="card reveal"><i class="fas fa-map-pin feature-icon"></i><h3>Рядом с домом</h3><p>5 минут от метро.</p></div>
-                <div class="card reveal"><i class="fas fa-chart-line feature-icon"></i><h3>Гарантия результата</h3><p>Фиксация прогресса.</p></div>
+                <div class="card reveal"><i class="fas fa-dumbbell feature-icon"></i><h3>Премиум оборудование</h3><p>Technogym & Life Fitness — как в элитных клубах.</p></div>
+                <div class="card reveal"><i class="fas fa-brain feature-icon"></i><h3>Умные программы</h3><p>Тренировки, адаптированные под ваш уровень.</p></div>
+                <div class="card reveal"><i class="fas fa-map-pin feature-icon"></i><h3>Рядом с домом</h3><p>5 минут от метро Шушары, внутри ЖК.</p></div>
+                <div class="card reveal"><i class="fas fa-chart-line feature-icon"></i><h3>Гарантия результата</h3><p>Отслеживаем прогресс и корректируем питание.</p></div>
             </div>
         </div>
     </section>
@@ -314,17 +334,14 @@
         <div class="container">
             <h2 id="schedule-title" class="reveal" style="text-align:center;">Расписание</h2>
             <div class="schedule-days reveal" id="scheduleTabs" role="tablist" aria-label="Выбор дня"></div>
-            <!-- Индикатор загрузки (виден пока данные не пришли) -->
             <div class="schedule-loading reveal" id="scheduleLoading">
                 <i class="fas fa-spinner fa-spin"></i>
                 <p>Загружаем расписание...</p>
             </div>
-            <!-- Контейнер для ошибки загрузки (скрыт по умолчанию) -->
             <div class="schedule-error reveal" id="scheduleError" style="display:none;">
                 <i class="fas fa-exclamation-triangle"></i>
-                <p>Не удалось загрузить расписание. Проверьте подключение к интернету или свяжитесь с нами по телефону.</p>
+                <p>Не удалось загрузить расписание. Пожалуйста, позвоните нам: <a href="tel:+79697324841">+7 (969) 732-48-41</a></p>
             </div>
-            <!-- Список занятий (скрыт пока не загрузятся данные) -->
             <div class="schedule-list reveal" id="scheduleList" aria-live="polite" style="display:none;"></div>
         </div>
     </section>
@@ -362,24 +379,14 @@
     <section id="team" aria-labelledby="team-title" style="background:#fff;">
         <div class="container">
             <h2 id="team-title" class="reveal" style="text-align:center;">Команда Infinity</h2>
-            <div class="team-grid">
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Светлана" alt="Светлана" loading="lazy"></div><h4>Светлана</h4><p>Йога, спина</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Оксана" alt="Оксана" loading="lazy"></div><h4>Оксана</h4><p>Фитнес</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Надежда" alt="Надежда" loading="lazy"></div><h4>Надежда</h4><p>Pole, Exotic</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Валерия" alt="Валерия" loading="lazy"></div><h4>Валерия</h4><p>Растяжка, ЛФК</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Юлия" alt="Юлия" loading="lazy"></div><h4>Юлия</h4><p>Фитнес, Растяжка</p></div>
-                <div class="team-member reveal"><div class="team-photo"><img src="https://via.placeholder.com/130/8B9BB4/FFFFFF?text=Ксения" alt="Ксения" loading="lazy"></div><h4>Ксения</h4><p>Zumba</p></div>
-            </div>
+            <div class="team-grid" id="teamGrid"></div>
         </div>
     </section>
 
     <section id="reviews" aria-labelledby="reviews-title" style="background:var(--bg-primary);">
         <div class="container">
             <h2 id="reviews-title" class="reveal" style="text-align:center;">Отзывы</h2>
-            <div class="reviews-grid">
-                <div class="review-card reveal"><div class="review-header"><div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Анна" alt="Анна"></div><div class="review-name">Анна</div></div><div class="review-text">«Хожу на растяжку и пилон, очень довольна!»</div></div>
-                <div class="review-card reveal"><div class="review-header"><div class="review-avatar"><img src="https://via.placeholder.com/60/E2D8C8/1A1A1A?text=Екатерина" alt="Екатерина"></div><div class="review-name">Екатерина</div></div><div class="review-text">«Записалась по акции, теперь хожу постоянно.»</div></div>
-            </div>
+            <div class="reviews-grid" id="reviewsGrid"></div>
         </div>
     </section>
 
@@ -390,6 +397,11 @@
                 <p><i class="fas fa-map-marker-alt"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
                 <p><i class="fas fa-clock"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
                 <p><i class="fas fa-phone"></i> +7 (969) 732-48-41</p>
+                <p>
+                    <a href="https://wa.me/79697324841" target="_blank" rel="noopener" style="margin-right:10px; color:#25D366;"><i class="fab fa-whatsapp fa-2x"></i></a>
+                    <a href="https://t.me/infinityfitness" target="_blank" rel="noopener" style="margin-right:10px; color:#0088cc;"><i class="fab fa-telegram fa-2x"></i></a>
+                    <a href="viber://chat?number=%2B79697324841" style="color:#7360F2;"><i class="fab fa-viber fa-2x"></i></a>
+                </p>
             </div>
             <div class="map-container reveal"><div id="yandexMap"></div></div>
         </div>
@@ -403,9 +415,30 @@
 <footer>
     <div class="container">
         <div class="footer-grid">
-            <div><h3>INFINITY</h3><p>Шушары, ул. Пушкинская, 34Б</p><p>+7 (969) 732-48-41</p><div class="social-icons"><a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="#" aria-label="VK"><i class="fab fa-vk"></i></a></div></div>
-            <div><h3>Навигация</h3><a href="#" style="color:#ccc;display:block;margin-bottom:8px;">Главная</a><a href="#directions" style="color:#ccc;display:block;">Направления</a></div>
-            <div><h3>Режим работы</h3><p>Пн-Пт: 09:00-22:00</p><p>Сб-Вс: 10:00-20:00</p></div>
+            <div>
+                <h3>INFINITY</h3>
+                <p>Шушары, ул. Пушкинская, 34Б</p>
+                <p>+7 (969) 732-48-41</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="VK"><i class="fab fa-vk"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3>Навигация</h3>
+                <a href="#" style="color:#ccc;display:block;margin-bottom:8px;">Главная</a>
+                <a href="#directions" style="color:#ccc;display:block;">Направления</a>
+            </div>
+            <div>
+                <h3>Режим работы</h3>
+                <p>Пн-Пт: 09:00-22:00</p>
+                <p>Сб-Вс: 10:00-20:00</p>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:20px; font-size:0.8rem; color:#aaa;">
+            <button class="privacy-link" onclick="openPrivacyModal()">Политика конфиденциальности</button>
         </div>
     </div>
 </footer>
@@ -423,17 +456,41 @@
             <p>Мы перезвоним вам в ближайшее время.</p>
         </div>
         <form id="signupForm">
-            <div class="form-group"><label for="modalName">Имя*</label><input type="text" id="modalName" placeholder="Имя" required autocomplete="name"></div>
-            <div class="form-group"><label for="modalDirectionSelect">Направление*</label>
+            <div class="form-group">
+                <label for="modalName">Имя*</label>
+                <input type="text" id="modalName" placeholder="Имя" required autocomplete="name">
+            </div>
+            <div class="form-group">
+                <label for="modalDirectionSelect">Направление*</label>
                 <select id="modalDirectionSelect">
                     <option>Body sculpt</option><option>Pole dance</option><option>Exotic</option><option>Растяжка</option><option>Йога</option><option>Zumba</option><option>МФР</option><option>Йога для беременных</option><option>Фитнес</option><option>Здоровая спина</option>
                 </select>
             </div>
-            <div class="form-group"><label for="modalPhone">Телефон*</label><input type="tel" id="modalPhone" placeholder="+7 999 000-00-00" required autocomplete="tel"></div>
+            <div class="form-group">
+                <label for="modalPhone">Телефон*</label>
+                <input type="tel" id="modalPhone" placeholder="+7 999 000-00-00" required autocomplete="tel">
+            </div>
+            <!-- Honeypot -->
+            <div style="display:none;" aria-hidden="true">
+                <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="privacyAgree" required>
+                <label for="privacyAgree">Я согласен с <button type="button" class="privacy-link" onclick="openPrivacyModal()">политикой конфиденциальности</button></label>
+            </div>
             <input type="hidden" id="modalDate" name="date">
             <input type="hidden" id="modalTime" name="time">
-            <button type="submit" class="btn" id="submitBtn" style="width:100%;">Отправить заявку</button>
+            <button type="submit" class="btn" id="submitBtn" style="width:100%; margin-top:16px;">Отправить заявку</button>
         </form>
+    </div>
+</div>
+
+<!-- Модальное окно политики -->
+<div class="modal" id="privacyModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closePrivacyModal()">&times;</button>
+        <h2>Политика конфиденциальности</h2>
+        <p>Мы собираем только те данные, которые необходимы для записи на занятие: имя, телефон, направление. Данные не передаются третьим лицам и используются исключительно для связи с вами. Вы можете запросить удаление данных, позвонив нам.</p>
     </div>
 </div>
 
@@ -447,10 +504,8 @@
         'use strict';
 
         // ================== НАСТРОЙКИ ==================
-        // Замените на свой URL Google Apps Script (Web App URL)
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQiTwRdu3RggDENywdMt3D1mBhEFMhmDRG9d-cYi8cTQHwCo5VCopqrKt-MVXJyI3b/exec';
 
-        // Статичный порядок дней (используется для отрисовки табов)
         const DAYS_ORDER = [
             { key: 'Сегодня', label: 'Сегодня' },
             { key: 'Завтра', label: 'Завтра' },
@@ -463,9 +518,9 @@
             { key: 'Вс', label: 'Вс' }
         ];
 
-        // Глобальный кеш расписания
         let scheduleCache = null;
         let currentDayKey = 'Сегодня';
+        let autoRefreshInterval;
 
         // ================== MOBILE MENU ==================
         const mobileToggle = document.getElementById('mobileToggle');
@@ -494,9 +549,10 @@
             if (mobileMenu.classList.contains('active')) closeMenu();
         }));
 
-        // ================== MODAL ==================
-        const modal = document.getElementById('signupModal');
-        const modalCloseBtn = modal.querySelector('.close-modal');
+        // ================== МОДАЛЬНЫЕ ОКНА ==================
+        const signupModal = document.getElementById('signupModal');
+        const privacyModal = document.getElementById('privacyModal');
+        const modalCloseBtn = signupModal.querySelector('.close-modal');
         const modalTitle = document.getElementById('modalTitle');
         const modalSubtitle = document.getElementById('modalSubtitle');
         const directionSelect = document.getElementById('modalDirectionSelect');
@@ -538,15 +594,15 @@
             document.getElementById('formSuccess').style.display = 'none';
             document.getElementById('submitBtn').disabled = false;
             document.getElementById('submitBtn').innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
-            modal.style.display = 'flex';
-            modal.setAttribute('aria-hidden', 'false');
+            signupModal.style.display = 'flex';
+            signupModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
             document.getElementById('modalName').focus();
         }
 
-        function closeModal() {
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden', 'true');
+        function closeSignupModal() {
+            signupModal.style.display = 'none';
+            signupModal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
             if (lastFocused) lastFocused.focus();
             modalDateInput.value = '';
@@ -554,18 +610,22 @@
             modalDateTimeInfo.style.display = 'none';
         }
 
-        modalCloseBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        function openPrivacyModal() {
+            privacyModal.style.display = 'flex';
+            privacyModal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closePrivacyModal() {
+            privacyModal.style.display = 'none';
+            privacyModal.setAttribute('aria-hidden', 'true');
+        }
+
+        modalCloseBtn.addEventListener('click', closeSignupModal);
+        signupModal.addEventListener('click', e => { if (e.target === signupModal) closeSignupModal(); });
+        privacyModal.addEventListener('click', e => { if (e.target === privacyModal) closePrivacyModal(); });
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
-        });
-        modal.addEventListener('keydown', function(e) {
-            if (e.key !== 'Tab') return;
-            const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            const first = focusable[0];
-            const last = focusable[focusable.length-1];
-            if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
-            else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+            if (e.key === 'Escape' && signupModal.getAttribute('aria-hidden') === 'false') closeSignupModal();
+            if (e.key === 'Escape' && privacyModal.getAttribute('aria-hidden') === 'false') closePrivacyModal();
         });
 
         document.body.addEventListener('click', e => {
@@ -575,10 +635,27 @@
             const direction = btn.getAttribute('data-open-modal') || '';
             const date = btn.getAttribute('data-date') || '';
             const time = btn.getAttribute('data-time') || '';
+            const available = parseInt(btn.getAttribute('data-available') || '1');
+            if (available <= 0) {
+                alert('К сожалению, все места на это занятие уже заняты.');
+                return;
+            }
             openModal({ direction, date, time });
         });
 
-        // ================== ЗАГРУЗКА РАСПИСАНИЯ ИЗ GOOGLE ТАБЛИЦЫ ==================
+        // ================== МАСКА ТЕЛЕФОНА ==================
+        document.getElementById('modalPhone').addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.substr(0,11);
+            let formatted = '+7 ';
+            if (value.length > 1) formatted += '(' + value.substring(1,4);
+            if (value.length >= 4) formatted += ') ' + value.substring(4,7);
+            if (value.length >= 7) formatted += '-' + value.substring(7,9);
+            if (value.length >= 9) formatted += '-' + value.substring(9,11);
+            this.value = formatted;
+        });
+
+        // ================== ЗАГРУЗКА РАСПИСАНИЯ ==================
         const scheduleLoading = document.getElementById('scheduleLoading');
         const scheduleError = document.getElementById('scheduleError');
         const scheduleList = document.getElementById('scheduleList');
@@ -591,30 +668,18 @@
 
             try {
                 const response = await fetch(APPS_SCRIPT_URL + '?action=schedule');
-
-                if (!response.ok) {
-                    throw new Error('HTTP error: ' + response.status);
-                }
-
+                if (!response.ok) throw new Error('HTTP error: ' + response.status);
                 const data = await response.json();
+                if (Object.keys(data).length === 0) throw new Error('Empty schedule');
                 scheduleCache = data;
-
-                // Проверяем, что данные пришли
-                if (Object.keys(data).length === 0) {
-                    throw new Error('Расписание пустое');
-                }
-
-                // Показываем расписание
                 scheduleLoading.style.display = 'none';
                 scheduleList.style.display = 'flex';
                 renderTabs();
                 renderDay(currentDayKey);
-
             } catch (err) {
-                console.error('Ошибка загрузки расписания:', err);
+                console.error('Schedule load error:', err);
                 scheduleLoading.style.display = 'none';
                 scheduleError.style.display = 'block';
-                // Пробуем отрисовать хотя бы то, что есть в кеше
                 if (scheduleCache && Object.keys(scheduleCache).length > 0) {
                     scheduleError.style.display = 'none';
                     scheduleList.style.display = 'flex';
@@ -623,29 +688,18 @@
         }
 
         function renderTabs() {
-            // Показываем только те дни, которые есть в расписании
             const availableDays = scheduleCache ? Object.keys(scheduleCache) : [];
             if (availableDays.length === 0) return;
-
             tabsContainer.innerHTML = DAYS_ORDER
                 .filter(d => availableDays.includes(d.key))
                 .map(d => `<button class="tab" role="tab" data-day="${d.key}">${d.label}</button>`)
                 .join('');
-
-            // Если текущий день недоступен — берём первый доступный
-            if (!availableDays.includes(currentDayKey)) {
-                currentDayKey = availableDays[0];
-            }
-
+            if (!availableDays.includes(currentDayKey)) currentDayKey = availableDays[0];
             const activeTab = tabsContainer.querySelector(`[data-day="${currentDayKey}"]`);
             if (activeTab) activeTab.classList.add('active');
             else {
-                // Активируем первую вкладку
                 const firstTab = tabsContainer.querySelector('.tab');
-                if (firstTab) {
-                    firstTab.classList.add('active');
-                    currentDayKey = firstTab.dataset.day;
-                }
+                if (firstTab) { firstTab.classList.add('active'); currentDayKey = firstTab.dataset.day; }
             }
         }
 
@@ -682,16 +736,25 @@
                 return;
             }
             const dateStr = getDateFromDayKey(dayKey);
-            scheduleList.innerHTML = classes.map(c => `
-                <div class="schedule-card">
-                    <div class="schedule-info">
-                        <div class="time">${c.time}</div>
-                        <div class="title">${c.title}</div>
-                        <div class="trainer">${c.trainer}</div>
+            scheduleList.innerHTML = classes.map(c => {
+                const available = c.available !== undefined ? c.available : 10; // fallback
+                const isFull = available === 0;
+                const badgeText = isFull ? 'Нет мест' : (available <= 3 ? `Осталось ${available} места` : `${available} мест`);
+                const btnText = isFull ? 'Нет мест' : 'Записаться';
+                const btnDisabled = isFull ? 'disabled' : '';
+                const cardClass = isFull ? 'schedule-card full' : 'schedule-card';
+                return `
+                    <div class="${cardClass}">
+                        <div class="schedule-info">
+                            <div class="time">${c.time}</div>
+                            <div class="title">${c.title}</div>
+                            <div class="trainer">${c.trainer}</div>
+                            <div class="availability-badge ${isFull ? 'full' : 'available'}">${badgeText}</div>
+                        </div>
+                        <button class="btn" data-open-modal="${c.title}" data-date="${dateStr}" data-time="${c.time}" data-available="${available}" ${btnDisabled}>${btnText}</button>
                     </div>
-                    <button class="btn" data-open-modal="${c.title}" data-date="${dateStr}" data-time="${c.time}">Записаться</button>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         tabsContainer.addEventListener('click', e => {
@@ -703,39 +766,34 @@
             renderDay(currentDayKey);
         });
 
-        // Загружаем расписание сразу при старте
-        loadSchedule();
-
-        // ================== REVEAL ANIMATION ==================
-        const reveals = document.querySelectorAll('.reveal');
-        if ('IntersectionObserver' in window) {
-            const obs = new IntersectionObserver(entries => {
-                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-            }, { threshold: 0.15 });
-            reveals.forEach(el => obs.observe(el));
-        } else {
-            reveals.forEach(el => el.classList.add('visible'));
+        // Автообновление
+        function startAutoRefresh() {
+            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+            autoRefreshInterval = setInterval(async () => {
+                const prevCache = scheduleCache ? JSON.stringify(scheduleCache) : null;
+                await loadSchedule();
+                if (prevCache && scheduleCache) {
+                    // Проверяем, не появились ли места
+                    const currentClasses = scheduleCache[currentDayKey] || [];
+                    const prevClasses = JSON.parse(prevCache)[currentDayKey] || [];
+                    const wasFull = prevClasses.every(c => (c.available || 10) === 0);
+                    const isFullNow = currentClasses.every(c => (c.available || 10) === 0);
+                    if (wasFull && !isFullNow) {
+                        showToast('Появились свободные места! 🔔');
+                    }
+                }
+            }, 30000);
         }
 
-        // ================== SCROLL TOP ==================
-        const scrollBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 400); });
-        scrollBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
 
-        // ================== SMOOTH SCROLL ==================
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href === '#') return;
-                const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-                }
-            });
-        });
-
-        // ================== FORM SUBMIT ==================
+        // ================== ОТПРАВКА ФОРМЫ ==================
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
@@ -748,11 +806,13 @@
                 date: document.getElementById('modalDate').value,
                 time: document.getElementById('modalTime').value
             });
-            try { await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: params }); } catch(e){}
+            try {
+                await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: params });
+            } catch(e) {}
             document.getElementById('signupForm').style.display = 'none';
             document.getElementById('formSuccess').style.display = 'block';
             setTimeout(() => {
-                closeModal();
+                closeSignupModal();
                 document.getElementById('signupForm').style.display = 'block';
                 document.getElementById('formSuccess').style.display = 'none';
                 btn.disabled = false;
@@ -760,6 +820,79 @@
             }, 4000);
         });
 
+        // ================== СТАТИЧЕСКИЙ КОНТЕНТ ==================
+        function renderTeam() {
+            const team = [
+                { name: 'Светлана', role: 'Йога, спина', initials: 'СВ' },
+                { name: 'Оксана', role: 'Фитнес', initials: 'ОК' },
+                { name: 'Надежда', role: 'Pole, Exotic', initials: 'НА' },
+                { name: 'Валерия', role: 'Растяжка, ЛФК', initials: 'ВА' },
+                { name: 'Юлия', role: 'Фитнес, Растяжка', initials: 'ЮЛ' },
+                { name: 'Ксения', role: 'Zumba', initials: 'КС' }
+            ];
+            document.getElementById('teamGrid').innerHTML = team.map(m => `
+                <div class="team-member reveal">
+                    <div class="team-photo">${m.initials}</div>
+                    <h4>${m.name}</h4>
+                    <p>${m.role}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderReviews() {
+            const reviews = [
+                { name: 'Анна', text: '«Хожу на растяжку и пилон 3 месяца — вижу прогресс!»', initials: 'АН' },
+                { name: 'Екатерина', text: '«Записалась по акции, теперь постоянный клиент.»', initials: 'ЕК' },
+                { name: 'Мария', text: '«Очень уютная студия, тренеры внимательные.»', initials: 'МА' },
+                { name: 'Ольга', text: '«После родов восстановила форму на йоге для беременных.»', initials: 'ОЛ' }
+            ];
+            document.getElementById('reviewsGrid').innerHTML = reviews.map(r => `
+                <div class="review-card reveal">
+                    <div class="review-header">
+                        <div class="review-avatar">${r.initials}</div>
+                        <div class="review-name">${r.name}</div>
+                    </div>
+                    <div class="review-text">${r.text}</div>
+                </div>
+            `).join('');
+        }
+
+        renderTeam();
+        renderReviews();
+
+        // ================== ОСТАЛЬНОЕ ==================
+        const reveals = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold: 0.15 });
+            reveals.forEach(el => obs.observe(el));
+        } else {
+            reveals.forEach(el => el.classList.add('visible'));
+        }
+
+        const scrollBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => { scrollBtn.classList.toggle('show', window.scrollY > 400); });
+        scrollBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Запуск
+        loadSchedule();
+        startAutoRefresh();
+
+        // Яндекс.Метрика (заглушка)
+        (function(m,e,t,r,i,k,a){ m[i]=m[i]||function(){ (m[i].a=m[i].a||[]).push(arguments) }; m[i].l=1*new Date(); for (var j=0;j<document.scripts.length;j++) { if (document.scripts[j].src===r) return; } k=e.createElement(t),a=e.getElementsByTagName(t)[0]; k.async=1;k.src=r;a.parentNode.insertBefore(k,a) })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym'); ym(00000000, 'init', { clickmap:true, trackLinks:true, accurateTrackBounce:true });
     })();
 </script>
 
