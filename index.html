@@ -33,7 +33,7 @@
     }
     </script>
     <style>
-        /* ... весь CSS без изменений ... */
+        /* ... все стили без изменений ... */
         :root {
             --bg-primary: #F2F3F5;
             --bg-card: #FFFFFF;
@@ -287,9 +287,7 @@
     <section id="directions" aria-labelledby="directions-title" style="background:var(--bg-primary);">
         <div class="container">
             <h2 id="directions-title" class="reveal" style="text-align:center;">Направления тренировок</h2>
-            <div class="directions-grid" id="directionsContainer">
-                <!-- Заполняется динамически -->
-            </div>
+            <div class="directions-grid" id="directionsContainer"></div>
         </div>
     </section>
     <section id="schedule" class="schedule-section" aria-labelledby="schedule-title">
@@ -316,7 +314,7 @@
                     <ul class="price-list">
                         <li>4 занятия <span>3 200 ₽</span></li><li>8 занятий <span>5 500 ₽</span></li><li>12 занятий <span>6 600 ₽</span></li><li>Разовое <span>850 ₽</span></li>
                     </ul>
-                    <button class="btn btn-outline" data-open-modal>Выбрать</button>
+                    <button class="btn btn-outline" data-open-modal data-purpose="subscription">Выбрать</button>
                 </div>
                 <div class="price-card featured reveal">
                     <div class="badge">Популярное</div>
@@ -324,14 +322,14 @@
                     <ul class="price-list">
                         <li>4 занятия <span>3 600 ₽</span></li><li>8 занятий <span>6 300 ₽</span></li><li>12 занятий <span>8 200 ₽</span></li><li>Разовое <span>1 000 ₽</span></li>
                     </ul>
-                    <button class="btn" data-open-modal>Выбрать</button>
+                    <button class="btn" data-open-modal data-purpose="subscription">Выбрать</button>
                 </div>
                 <div class="price-card reveal">
                     <h3>Безлимит</h3>
                     <ul class="price-list">
                         <li>Без пилона / 3 мес <span>16 000 ₽</span></li><li>С пилоном / 3 мес <span>20 000 ₽</span></li><li>Без пилона / 6 мес <span>30 000 ₽</span></li><li>С пилоном / 6 мес <span>39 000 ₽</span></li>
                     </ul>
-                    <button class="btn btn-outline" data-open-modal>Выбрать</button>
+                    <button class="btn btn-outline" data-open-modal data-purpose="subscription">Выбрать</button>
                 </div>
             </div>
         </div>
@@ -410,6 +408,7 @@
         </div>
     </div>
 </footer>
+
 <!-- Модальное окно записи -->
 <div class="modal" id="signupModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
     <div class="modal-content">
@@ -431,6 +430,13 @@
                 <label for="modalDirectionSelect">Направление*</label>
                 <select id="modalDirectionSelect" required></select>
             </div>
+            <!-- Блок выбора даты и времени (только для записей не из расписания) -->
+            <div class="form-group" id="scheduleSelectGroup" style="display:none;">
+                <label for="modalDateSelect">Дата*</label>
+                <select id="modalDateSelect" required></select>
+                <label for="modalTimeSelect" style="margin-top:12px;">Время*</label>
+                <select id="modalTimeSelect" required></select>
+            </div>
             <div class="form-group">
                 <label for="modalPhone">Телефон*</label>
                 <input type="tel" id="modalPhone" placeholder="+7 (999) 000-00-00" required autocomplete="tel">
@@ -444,6 +450,7 @@
             </div>
             <input type="hidden" id="modalDate" name="date">
             <input type="hidden" id="modalTime" name="time">
+            <input type="hidden" id="modalPurpose" name="purpose" value="">
             <button type="submit" class="btn" id="submitBtn" style="width:100%; margin-top:16px;">Отправить заявку</button>
         </form>
     </div>
@@ -461,7 +468,7 @@
     (function() {
         'use strict';
 
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxE2Xs6x4KF35Ibkjmczo2DLg9RoANiUMmlprbO_HjonZbnIAHu5b4qGcAjeZ9Eduv9/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxKZW_GWTGDUeRwhdM2ZT6eR-KUY_WFLy3MpQrrFD9jKL6RQ1jHZLFdip-e_6Q2M-4z/exec';
         const DAYS_ORDER = [
             { key: 'Сегодня', label: 'Сегодня' }, { key: 'Завтра', label: 'Завтра' },
             { key: 'Пн', label: 'Пн' }, { key: 'Вт', label: 'Вт' }, { key: 'Ср', label: 'Ср' },
@@ -488,9 +495,13 @@
         const modalDateTimeInfo = document.getElementById('modalDateTimeInfo');
         const modalDateInput = document.getElementById('modalDate');
         const modalTimeInput = document.getElementById('modalTime');
+        const modalPurposeInput = document.getElementById('modalPurpose');
+        const scheduleSelectGroup = document.getElementById('scheduleSelectGroup');
+        const modalDateSelect = document.getElementById('modalDateSelect');
+        const modalTimeSelect = document.getElementById('modalTimeSelect');
         let lastFocused = null;
 
-        // Справочник для направлений (цена, описание, иконка, уровень)
+        // Direction metadata
         const DIRECTION_META = {
             'Zumba':                 { icon: 'fa-music', level: 'Оздоровительный', desc: 'Латиноамериканские ритмы.', price: 'от 500 ₽' },
             'МФР':                   { icon: 'fa-spa',   level: 'Базовый',          desc: 'Миофасциальный релиз.', price: 'от 500 ₽' },
@@ -506,13 +517,9 @@
         function populateDirectionSelect() {
             const directions = new Set();
             if (scheduleCache) {
-                Object.values(scheduleCache).forEach(dayClasses => {
-                    dayClasses.forEach(c => directions.add(c.title));
-                });
+                Object.values(scheduleCache).forEach(dayClasses => dayClasses.forEach(c => directions.add(c.title)));
             }
-            if (directions.size === 0) {
-                Object.keys(DIRECTION_META).forEach(d => directions.add(d));
-            }
+            if (directions.size === 0) Object.keys(DIRECTION_META).forEach(d => directions.add(d));
             const sorted = Array.from(directions).sort();
             directionSelect.innerHTML = sorted.map(d => `<option value="${d}">${d}</option>`).join('');
         }
@@ -522,13 +529,9 @@
             if (!container) return;
             const directions = new Set();
             if (scheduleCache) {
-                Object.values(scheduleCache).forEach(dayClasses => {
-                    dayClasses.forEach(c => directions.add(c.title));
-                });
+                Object.values(scheduleCache).forEach(dayClasses => dayClasses.forEach(c => directions.add(c.title)));
             }
-            if (directions.size === 0) {
-                Object.keys(DIRECTION_META).forEach(d => directions.add(d));
-            }
+            if (directions.size === 0) Object.keys(DIRECTION_META).forEach(d => directions.add(d));
             const sorted = Array.from(directions).sort();
             container.innerHTML = sorted.map(dir => {
                 const meta = DIRECTION_META[dir] || { icon: 'fa-question', level: 'Базовый', desc: '', price: '' };
@@ -543,32 +546,108 @@
                     </div>
                 `;
             }).join('');
-            // перезапустить reveal для новых элементов
             document.querySelectorAll('#directionsContainer .reveal').forEach(el => {
-                if ('IntersectionObserver' in window) {
-                    observer.observe(el);
-                } else {
-                    el.classList.add('visible');
-                }
+                if ('IntersectionObserver' in window) scheduleObserver.observe(el);
+                else el.classList.add('visible');
             });
         }
 
-        function openModal({ direction = '', date = '', time = '' } = {}) {
-            lastFocused = document.activeElement;
-            modalTitle.textContent = direction ? 'Запись на ' + direction : 'Запишись на пробный урок';
-            modalSubtitle.textContent = date ? _formatDateDisplay(date) + ', ' + time : 'Начни менять свою жизнь прямо сейчас!';
-            modalDateTimeInfo.style.display = (date && time) ? 'block' : 'none';
-            if (date && time) modalDateTimeInfo.textContent = _formatDateDisplay(date) + ' в ' + time;
-            modalDateInput.value = date;
-            modalTimeInput.value = time;
+        // Populate date dropdown for a given direction
+        function populateDateSelect(direction) {
+            if (!scheduleCache || !direction) {
+                modalDateSelect.innerHTML = '<option value="">-- выберите дату --</option>';
+                modalTimeSelect.innerHTML = '<option value="">-- сначала выберите дату --</option>';
+                return;
+            }
+            const dates = new Set();
+            Object.values(scheduleCache).forEach(dayClasses => {
+                dayClasses.forEach(c => {
+                    if (c.title === direction) dates.add(c.date);
+                });
+            });
+            const sortedDates = Array.from(dates).sort();
+            modalDateSelect.innerHTML = '<option value="">-- выберите дату --</option>' +
+                sortedDates.map(d => `<option value="${d}">${_formatDateDisplay(d)}</option>`).join('');
+            modalTimeSelect.innerHTML = '<option value="">-- сначала выберите дату --</option>';
+        }
 
-            if (direction) {
-                const exists = Array.from(directionSelect.options).some(opt => opt.value === direction);
-                if (exists) directionSelect.value = direction;
+        function populateTimeSelect(direction, date) {
+            if (!scheduleCache || !direction || !date) {
+                modalTimeSelect.innerHTML = '<option value="">-- выберите время --</option>';
+                return;
+            }
+            const times = new Set();
+            Object.values(scheduleCache).forEach(dayClasses => {
+                dayClasses.forEach(c => {
+                    if (c.title === direction && c.date === date) times.add(c.time);
+                });
+            });
+            const sortedTimes = Array.from(times).sort();
+            modalTimeSelect.innerHTML = '<option value="">-- выберите время --</option>' +
+                sortedTimes.map(t => `<option value="${t}">${t}</option>`).join('');
+        }
+
+        // Date/time change handlers
+        modalDateSelect.addEventListener('change', () => {
+            const dir = directionSelect.value;
+            const date = modalDateSelect.value;
+            if (date) {
+                populateTimeSelect(dir, date);
+                modalDateInput.value = date;
+            } else {
+                modalTimeSelect.innerHTML = '<option value="">-- сначала выберите дату --</option>';
+                modalDateInput.value = '';
+            }
+            modalTimeInput.value = '';
+        });
+        modalTimeSelect.addEventListener('change', () => {
+            modalTimeInput.value = modalTimeSelect.value;
+        });
+        directionSelect.addEventListener('change', () => {
+            if (scheduleSelectGroup.style.display !== 'none' && !directionSelect.disabled) {
+                populateDateSelect(directionSelect.value);
+                modalTimeInput.value = '';
+                modalDateInput.value = '';
+            }
+        });
+
+        function openModal({ direction = '', date = '', time = '', purpose = '' } = {}) {
+            lastFocused = document.activeElement;
+
+            // Сброс
+            modalPurposeInput.value = purpose || '';
+            const isSchedule = !!(date && time);
+            const isSubscription = purpose === 'subscription';
+
+            modalTitle.textContent = isSubscription ? 'Оформление абонемента' :
+                                    isSchedule ? 'Запись на ' + direction : 'Запишись на пробный урок';
+            modalSubtitle.textContent = isSchedule ? '' : 'Начни менять свою жизнь прямо сейчас!';
+
+            // Управление видимостью
+            if (isSchedule) {
+                scheduleSelectGroup.style.display = 'none';
+                modalDateTimeInfo.style.display = 'block';
+                modalDateTimeInfo.textContent = _formatDateDisplay(date) + ' в ' + time;
+                directionSelect.disabled = true;
+                if (direction) directionSelect.value = direction;
+            } else if (isSubscription) {
+                scheduleSelectGroup.style.display = 'none';
+                modalDateTimeInfo.style.display = 'none';
+                directionSelect.disabled = false;
+                if (direction) directionSelect.value = direction;
                 else directionSelect.selectedIndex = 0;
             } else {
-                directionSelect.selectedIndex = 0;
+                // Обычная запись (из направления или hero)
+                scheduleSelectGroup.style.display = 'block';
+                modalDateTimeInfo.style.display = 'none';
+                directionSelect.disabled = false;
+                if (direction) directionSelect.value = direction;
+                else directionSelect.selectedIndex = 0;
+                populateDateSelect(direction || directionSelect.value);
             }
+
+            modalDateInput.value = date;
+            modalTimeInput.value = time;
 
             document.getElementById('signupForm').style.display = 'block';
             document.getElementById('formSuccess').style.display = 'none';
@@ -613,7 +692,8 @@
             openModal({
                 direction: btn.getAttribute('data-open-modal') || '',
                 date: btn.getAttribute('data-date') || '',
-                time: btn.getAttribute('data-time') || ''
+                time: btn.getAttribute('data-time') || '',
+                purpose: btn.getAttribute('data-purpose') || ''
             });
         });
 
@@ -655,28 +735,19 @@
                 const response = await fetch(APPS_SCRIPT_URL + '?action=schedule');
                 if (!response.ok) throw new Error('HTTP error: ' + response.status);
                 const data = await response.json();
-
-                // Отделяем токен от расписания
-                if (data._token) {
-                    csrfToken = data._token;
-                    delete data._token;
-                }
-                // Проверяем, что остались дни
+                if (data._token) { csrfToken = data._token; delete data._token; }
                 if (Object.keys(data).length === 0) throw new Error('Empty schedule');
-
                 scheduleCache = data;
                 scheduleLoading.style.display = 'none';
                 scheduleList.style.display = 'flex';
-
                 populateDirectionSelect();
-                renderDirections();   // <-- генерация карточек направлений
+                renderDirections();
                 renderTabs();
                 renderDay(currentDayKey);
             } catch (err) {
                 console.error(err);
                 scheduleLoading.style.display = 'none';
                 scheduleError.style.display = 'block';
-                // fallback на кеш, если есть
                 if (scheduleCache && Object.keys(scheduleCache).length > 0) {
                     scheduleError.style.display = 'none';
                     scheduleList.style.display = 'flex';
@@ -705,10 +776,7 @@
             scheduleList.innerHTML = classes.map(c => {
                 const available = (c.available !== undefined) ? Number(c.available) : 10;
                 const isFull = available <= 0;
-                const availLabel = isFull ? 'Нет мест'
-                    : available === 1 ? '🔥 Последнее место!'
-                    : available <= 3  ? `Осталось ${available} места`
-                    : `${available} мест`;
+                const availLabel = isFull ? 'Нет мест' : available === 1 ? '🔥 Последнее место!' : available <= 3 ? `Осталось ${available} места` : `${available} мест`;
                 const badgeClass = isFull ? 'full' : (available <= 3 ? 'low' : 'available');
                 const trainerHtml = c.trainer ? `<div class="trainer">${c.trainer}</div>` : '';
                 return `
@@ -719,14 +787,7 @@
                             ${trainerHtml}
                             <div class="availability-badge ${badgeClass}">${availLabel}</div>
                         </div>
-                        <button class="btn"
-                            data-open-modal="${c.title}"
-                            data-date="${c.date}"
-                            data-time="${c.time}"
-                            data-available="${available}"
-                            ${isFull ? 'disabled' : ''}>
-                            ${isFull ? 'Нет мест' : 'Записаться'}
-                        </button>
+                        <button class="btn" data-open-modal="${c.title}" data-date="${c.date}" data-time="${c.time}" data-available="${available}" ${isFull ? 'disabled' : ''}>${isFull ? 'Нет мест' : 'Записаться'}</button>
                     </div>
                 `;
             }).join('');
@@ -746,11 +807,13 @@
             autoRefreshInterval = setInterval(async () => { await loadSchedule(); }, 120000);
         }
 
+        // Form submit
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
+            const purpose = modalPurposeInput.value;
             const direction = directionSelect.value;
-            if (!direction) {
+            if (!direction && purpose !== 'subscription') {
                 showToast('Пожалуйста, выберите направление', 'error');
                 return;
             }
@@ -761,10 +824,11 @@
             formData.append('name', document.getElementById('modalName').value.trim());
             formData.append('phone', document.getElementById('modalPhone').value);
             formData.append('direction', direction);
-            formData.append('date', document.getElementById('modalDate').value);
-            formData.append('time', document.getElementById('modalTime').value);
+            formData.append('date', modalDateInput.value);
+            formData.append('time', modalTimeInput.value);
             formData.append('action', 'book');
             if (csrfToken) formData.append('token', csrfToken);
+            if (purpose) formData.append('purpose', purpose);
 
             try {
                 const response = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData });
@@ -789,23 +853,14 @@
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
             } finally {
                 setTimeout(() => {
-                    if (btn.disabled) {
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
-                    }
+                    if (btn.disabled) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку'; }
                 }, 3000);
             }
         });
 
-        // Reveal animations
-        const reveals = document.querySelectorAll('.reveal');
-        let observer;
-        if ('IntersectionObserver' in window) {
-            observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
-            reveals.forEach(el => observer.observe(el));
-        } else {
-            reveals.forEach(el => el.classList.add('visible'));
-        }
+        // Reveal observer
+        const scheduleObserver = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => scheduleObserver.observe(el));
 
         // Scroll top
         const scrollBtn = document.getElementById('scrollTop');
@@ -821,7 +876,7 @@
             });
         });
 
-        // Ленивая карта
+        // Lazy map
         const mapSection = document.getElementById('map');
         if ('IntersectionObserver' in window) {
             const mapObserver = new IntersectionObserver((entries, obs) => {
@@ -849,7 +904,6 @@
             map.geoObjects.add(new ymaps.Placemark(coords, { hintContent: 'INFINITY Фитнес-студия', balloonContent: '<strong>INFINITY</strong><br>ул. Пушкинская, 34Б, этаж 3' }, { preset: 'islands#redDotIconWithCaption', iconCaption: 'INFINITY' }));
         }
 
-        // Запуск
         loadSchedule();
         startAutoRefresh();
     })();
