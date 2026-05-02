@@ -521,7 +521,7 @@
     (function() {
         'use strict';
 
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgfr0f8MOBYFoxPz6LdDOCLnrFXM6r4P1GNhaolp6n8pVXtJhFAg9MyzLdJjV13JM/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzG28Vb7swTPszPjbmsyFxHe1utAnSItnqeFBjV39kCaMZEpZmGhatUWnB3WaS-W-za/exec';
         const DAYS_ORDER = [
             { key: 'Сегодня', label: 'Сегодня' }, { key: 'Завтра', label: 'Завтра' },
             { key: 'Пн', label: 'Пн' }, { key: 'Вт', label: 'Вт' }, { key: 'Ср', label: 'Ср' },
@@ -575,7 +575,7 @@
         const modalTimeSelect = document.getElementById('modalTimeSelect');
         let lastFocused = null;
 
-        // Direction metadata
+        // Direction metadata с иконками и описаниями
         const DIRECTION_META = {
             'Zumba':                 { icon: 'fa-music', level: 'Оздоровительный', desc: 'Зажигательные латиноамериканские ритмы для тонуса и настроения.', price: 'от 500 ₽' },
             'МФР':                   { icon: 'fa-spa',   level: 'Базовый',          desc: 'Глубокое расслабление мышц и снятие зажимов.', price: 'от 500 ₽' },
@@ -879,6 +879,7 @@
                 if (!response.ok) throw new Error('HTTP error: ' + response.status);
                 const data = await response.json();
 
+                // Гарантированно сохраняем токен
                 if (data._token) {
                     csrfToken = data._token;
                     delete data._token;
@@ -961,18 +962,18 @@
             autoRefreshInterval = setInterval(async () => { await loadSchedule(); }, 120000);
         }
 
+        // Form submit для занятий
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            const purpose = modalPurposeInput.value;
             const direction = directionSelect.value;
 
             if (!csrfToken) {
-                showToast('Ошибка безопасности. Обновите страницу и попробуйте снова.', 'error');
+                showToast('Ошибка безопасности. Обновите страницу.', 'error');
                 return;
             }
 
-            if (!direction && purpose !== 'subscription') {
+            if (!direction) {
                 showToast('Пожалуйста, выберите направление', 'error');
                 return;
             }
@@ -988,7 +989,6 @@
             formData.append('time', modalTimeInput.value);
             formData.append('action', 'book');
             formData.append('token', csrfToken);
-            if (purpose) formData.append('purpose', purpose);
 
             try {
                 const response = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData });
@@ -1016,7 +1016,7 @@
             }
         });
 
-        // Reveal
+        // Reveal animations
         const scheduleObserver = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
         document.querySelectorAll('.reveal').forEach(el => scheduleObserver.observe(el));
 
