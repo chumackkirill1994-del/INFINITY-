@@ -459,7 +459,7 @@
     <div class="modal-content">
         <button class="close-modal" aria-label="Закрыть">&times;</button>
         <h2 id="subModalTitle">Оформление абонемента</h2>
-        <p id="subModalSubtitle" style="margin-bottom:16px;">Выберите количество занятий и оставьте контакты</p>
+        <p id="subModalSubtitle" style="margin-bottom:16px;">Выберите подходящий вариант и оставьте контакты</p>
         <div id="subFormSuccess" style="display:none;text-align:center;padding:20px 0;">
             <div style="font-size:2.5rem;">✅</div>
             <h3>Заявка принята!</h3>
@@ -474,14 +474,24 @@
                 <label>Тариф</label>
                 <input type="text" id="subTariffDisplay" class="form-control" readonly style="background:#f5f5f5;">
             </div>
-            <div class="form-group">
+            <div class="form-group" id="subQuantityGroup">
                 <label for="subQuantity">Количество занятий*</label>
-                <select id="subQuantity" required>
+                <select id="subQuantity">
                     <option value="">-- выберите --</option>
                     <option value="4 занятия">4 занятия</option>
                     <option value="8 занятий">8 занятий</option>
                     <option value="12 занятий">12 занятий</option>
                     <option value="Разовое">Разовое занятие</option>
+                </select>
+            </div>
+            <div class="form-group" id="subUnlimitedGroup" style="display:none;">
+                <label for="subUnlimitedOption">Вариант*</label>
+                <select id="subUnlimitedOption">
+                    <option value="">-- выберите --</option>
+                    <option value="Без пилона / 3 мес – 16 000 ₽">Без пилона / 3 мес – 16 000 ₽</option>
+                    <option value="С пилоном / 3 мес – 20 000 ₽">С пилоном / 3 мес – 20 000 ₽</option>
+                    <option value="Без пилона / 6 мес – 30 000 ₽">Без пилона / 6 мес – 30 000 ₽</option>
+                    <option value="С пилоном / 6 мес – 39 000 ₽">С пилоном / 6 мес – 39 000 ₽</option>
                 </select>
             </div>
             <div class="form-group">
@@ -565,7 +575,7 @@
         const modalTimeSelect = document.getElementById('modalTimeSelect');
         let lastFocused = null;
 
-        // Direction metadata
+        // Direction metadata (все направления с привлекательными описаниями)
         const DIRECTION_META = {
             'Zumba':                 { level: 'Оздоровительный', desc: 'Зажигательные латиноамериканские ритмы для тонуса и настроения.', price: 'от 500 ₽' },
             'МФР':                   { level: 'Базовый',          desc: 'Глубокое расслабление мышц и снятие зажимов.', price: 'от 500 ₽' },
@@ -577,6 +587,7 @@
             'Pole Dance / Exotic':  { level: 'Базовый',          desc: 'Сила, пластика и уверенность в каждом движении.', price: 'от 500 ₽' },
             'Фитнес':               { level: 'Базовый',          desc: 'Комплексные тренировки для отличной формы.', price: 'от 500 ₽' }
         };
+        const DEFAULT_META = { level: 'Базовый', desc: 'Увлекательная тренировка для всех уровней подготовки.', price: 'от 500 ₽' };
 
         function populateDirectionSelect() {
             const directions = new Set();
@@ -596,7 +607,7 @@
             if (directions.size === 0) Object.keys(DIRECTION_META).forEach(d => directions.add(d));
             const sorted = Array.from(directions).sort();
             container.innerHTML = sorted.map(dir => {
-                const meta = DIRECTION_META[dir] || { level: 'Базовый', desc: '', price: '' };
+                const meta = DIRECTION_META[dir] || DEFAULT_META;
                 return `
                     <div class="direction-card reveal">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E♾️%3C/text%3E%3C/svg%3E" class="direction-icon-img" alt="Логотип Infinity">
@@ -710,7 +721,6 @@
             return dt.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
         }
 
-        // Phone mask helper
         function applyPhoneMask(input) {
             let value = input.value.replace(/\D/g, '');
             if (value.length > 11) value = value.substr(0,11);
@@ -727,7 +737,10 @@
         const subscriptionModal = document.getElementById('subscriptionModal');
         const subTariffInput = document.getElementById('subTariff');
         const subTariffDisplay = document.getElementById('subTariffDisplay');
+        const subQuantityGroup = document.getElementById('subQuantityGroup');
         const subQuantity = document.getElementById('subQuantity');
+        const subUnlimitedGroup = document.getElementById('subUnlimitedGroup');
+        const subUnlimitedOption = document.getElementById('subUnlimitedOption');
         const subPhone = document.getElementById('subPhone');
         let subLastFocused = null;
 
@@ -735,7 +748,19 @@
             subLastFocused = document.activeElement;
             subTariffInput.value = tariff;
             subTariffDisplay.value = tariff;
-            subQuantity.selectedIndex = 0;
+
+            const isUnlimited = (tariff === 'Безлимит');
+            subQuantityGroup.style.display = isUnlimited ? 'none' : 'block';
+            subUnlimitedGroup.style.display = isUnlimited ? 'block' : 'none';
+
+            if (isUnlimited) {
+                subUnlimitedOption.selectedIndex = 0;
+                subQuantity.selectedIndex = 0;
+            } else {
+                subQuantity.selectedIndex = 0;
+                subUnlimitedOption.selectedIndex = 0;
+            }
+
             subPhone.value = '';
             document.getElementById('subName').value = '';
             document.getElementById('subPrivacyAgree').checked = false;
@@ -764,9 +789,17 @@
             e.preventDefault();
             const btn = document.getElementById('subSubmitBtn');
             const tariff = subTariffInput.value;
-            const quantity = subQuantity.value;
-            if (!quantity) { showToast('Выберите количество занятий', 'error'); return; }
-            const direction = `${quantity} ${tariff}`;
+            let direction = '';
+
+            if (tariff === 'Безлимит') {
+                const opt = subUnlimitedOption.value;
+                if (!opt) { showToast('Выберите вариант безлимита', 'error'); return; }
+                direction = opt; // готовое описание
+            } else {
+                const qty = subQuantity.value;
+                if (!qty) { showToast('Выберите количество занятий', 'error'); return; }
+                direction = `${qty} ${tariff}`;
+            }
 
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
@@ -786,9 +819,7 @@
                     document.getElementById('subscriptionForm').style.display = 'none';
                     document.getElementById('subFormSuccess').style.display = 'block';
                     showToast('Заявка принята! Мы свяжемся с вами.');
-                    setTimeout(() => {
-                        closeSubscriptionModal();
-                    }, 2500);
+                    setTimeout(() => closeSubscriptionModal(), 2500);
                 } else {
                     showToast(result.error || 'Ошибка при отправке.', 'error');
                     btn.disabled = false;
@@ -819,7 +850,6 @@
                 }
                 return;
             }
-            // Обычная запись на занятие
             const available = parseInt(btn.getAttribute('data-available') || '1');
             if (available <= 0) {
                 showToast('К сожалению, все места на это занятие уже заняты.', 'error');
@@ -832,7 +862,7 @@
             });
         });
 
-        // Schedule rendering etc. (без изменений)
+        // Schedule etc. (без изменений)
         const scheduleLoading = document.getElementById('scheduleLoading');
         const scheduleError = document.getElementById('scheduleError');
         const scheduleList = document.getElementById('scheduleList');
@@ -984,7 +1014,6 @@
             });
         });
 
-        // Lazy map
         const mapSection = document.getElementById('map');
         if ('IntersectionObserver' in window) {
             const mapObserver = new IntersectionObserver((entries, obs) => {
