@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- Микроразметка LocalBusiness -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -237,8 +238,14 @@
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #27ae60; color: white; padding: 12px 24px; border-radius: 40px; z-index: 9999; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: slideUp 0.3s ease; display: flex; align-items: center; gap: 8px; max-width: 90vw; text-align: center; }
-        @keyframes slideUp { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        .toast {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); color: white; padding: 12px 24px;
+            border-radius: 40px; z-index: 9999; font-weight: 600; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 4.7s forwards; max-width: 90vw; text-align: center;
+            display: flex; align-items: center; gap: 8px;
+        }
+        @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        @keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
     </style>
 </head>
 <body>
@@ -304,12 +311,11 @@
             <h2 id="interior-title" class="reveal" style="text-align:center;">Интерьер студии</h2>
             <p class="reveal" style="text-align:center; margin-bottom:24px;">Просторный зал, раздевалки, зона отдыха.</p>
             <div class="gallery-grid">
-                <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал для групповых занятий" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="hal_2.webp" alt="Пилон и фотозона" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="hal_3.webp" alt="Pole Dance тренировка" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="hal_4.webp" alt="Акробатические занятия" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="razdevalka.webp" alt="Раздевалка" loading="lazy"></div>
-                <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал INFINITY" loading="lazy"></div>
+                <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал для групповых занятий" loading="lazy" width="400" height="300"></div>
+                <div class="gallery-item reveal"><img src="hal_2.webp" alt="Пилон и фотозона" loading="lazy" width="400" height="300"></div>
+                <div class="gallery-item reveal"><img src="hal_3.webp" alt="Pole Dance тренировка" loading="lazy" width="400" height="300"></div>
+                <div class="gallery-item reveal"><img src="hal_4.webp" alt="Акробатические занятия" loading="lazy" width="400" height="300"></div>
+                <div class="gallery-item reveal"><img src="razdevalka.webp" alt="Раздевалка" loading="lazy" width="400" height="300"></div>
             </div>
         </div>
     </section>
@@ -317,15 +323,8 @@
     <section id="directions" aria-labelledby="directions-title" style="background:var(--bg-primary);">
         <div class="container">
             <h2 id="directions-title" class="reveal" style="text-align:center;">Направления тренировок</h2>
-            <div class="directions-grid">
-                <div class="direction-card reveal"><i class="fas fa-music direction-icon"></i><div class="direction-title">Zumba</div><span class="direction-level">Оздоровительный</span><div class="direction-desc">Латиноамериканские ритмы.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Zumba">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-spa direction-icon"></i><div class="direction-title">МФР</div><span class="direction-level">Базовый</span><div class="direction-desc">Миофасциальный релиз.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="МФР">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-person-walking direction-icon"></i><div class="direction-title">Растяжка</div><span class="direction-level">Базовый</span><div class="direction-desc">Гибкость и дыхание.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Растяжка">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-female direction-icon"></i><div class="direction-title">Йога для беременных</div><span class="direction-level">Базовый</span><div class="direction-desc">Деликатные занятия.</div><div class="direction-price">900 ₽</div><button class="btn" data-open-modal="Йога для беременных">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-hands direction-icon"></i><div class="direction-title">Йогатерапия</div><span class="direction-level">Базовый</span><div class="direction-desc">Восстановление после травм.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Йогатерапия">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-dumbbell direction-icon"></i><div class="direction-title">Body Sculpt</div><span class="direction-level">Базовый</span><div class="direction-desc">Улучшение форм тела.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Body Sculpt">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-spine direction-icon"></i><div class="direction-title">Здоровая спина</div><span class="direction-level">Базовый</span><div class="direction-desc">Укрепление мышц спины.</div><div class="direction-price">от 500 ₽</div><button class="btn" data-open-modal="Здоровая спина">Записаться</button></div>
-                <div class="direction-card reveal"><i class="fas fa-fan direction-icon"></i><div class="direction-title">Pole Dance / Exotic</div><span class="direction-level">Базовый</span><div class="direction-desc">Сила, грация, уверенность.</div><div class="direction-price">от 1 000 ₽</div><button class="btn" data-open-modal="Pole Dance">Записаться</button></div>
+            <div class="directions-grid" id="directionsContainer">
+                <!-- Карточки направлений будут синхронизированы с таблицей автоматически -->
             </div>
         </div>
     </section>
@@ -475,23 +474,11 @@
             </div>
             <div class="form-group">
                 <label for="modalDirectionSelect">Направление*</label>
-                <select id="modalDirectionSelect">
-                    <option value="Body Sculpt">Body Sculpt</option>
-                    <option value="Pole Dance / Exotic">Pole Dance / Exotic</option>
-                    <option value="Растяжка">Растяжка</option>
-                    <option value="Йогатерапия">Йогатерапия</option>
-                    <option value="Йога для беременных">Йога для беременных</option>
-                    <option value="Zumba">Zumba</option>
-                    <option value="МФР">МФР</option>
-                    <option value="Здоровая спина">Здоровая спина</option>
-                    <option value="Фитнес">Фитнес</option>
-                </select>
-                <!-- Точное направление из расписания (приоритет над select) -->
-                <input type="hidden" id="modalDirectionExact">
+                <select id="modalDirectionSelect" required></select>
             </div>
             <div class="form-group">
                 <label for="modalPhone">Телефон*</label>
-                <input type="tel" id="modalPhone" placeholder="+7 999 000-00-00" required autocomplete="tel">
+                <input type="tel" id="modalPhone" placeholder="+7 (999) 000-00-00" required autocomplete="tel">
             </div>
             <div style="display:none;" aria-hidden="true">
                 <input type="text" name="website" tabindex="-1" autocomplete="off">
@@ -517,23 +504,20 @@
 
 <button class="scroll-top" id="scrollTop" aria-label="Наверх"><i class="fas fa-arrow-up"></i></button>
 
-<!-- API Яндекс.Карт -->
-<script src="https://api-maps.yandex.ru/2.1/?apikey=YOUR_API_KEY&lang=ru_RU"></script>
-
+<!-- Загрузка Яндекс.Карт будет ленивой через Intersection Observer -->
 <script>
     (function() {
         'use strict';
 
-        // ⚠️ Замените URL после деплоя Apps Script:
-        // Расширения → Apps Script → Развернуть → Новое развёртывание → Веб-приложение
-        // Доступ: «Все» (анонимные)
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOuicWGrfEoa_eheBuMRBOoljg6vzFS1KjeMnvSoNgh1DtuH4BuCk9yinRik8SVCHf/exec';
+        // ⚠️ Замените URL после деплоя Apps Script
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxFuMZL6h0nkmgXfyj_snvzsxc8U89YwLJhJ6rCIaEUtqNCSzBW3s7XgKiWdHy_YON9/exec';
         const DAYS_ORDER = [
             { key: 'Сегодня', label: 'Сегодня' }, { key: 'Завтра', label: 'Завтра' },
             { key: 'Пн', label: 'Пн' }, { key: 'Вт', label: 'Вт' }, { key: 'Ср', label: 'Ср' },
             { key: 'Чт', label: 'Чт' }, { key: 'Пт', label: 'Пт' }, { key: 'Сб', label: 'Сб' }, { key: 'Вс', label: 'Вс' }
         ];
         let scheduleCache = null, currentDayKey = 'Сегодня', autoRefreshInterval;
+        let csrfToken = ''; // будет заполнен после загрузки расписания
 
         // Mobile menu
         const mobileToggle = document.getElementById('mobileToggle');
@@ -556,29 +540,40 @@
         const modalTimeInput = document.getElementById('modalTime');
         let lastFocused = null;
 
+        // Динамическое заполнение селекта направлений – вызывается после загрузки расписания
+        function populateDirectionSelect() {
+            const directions = new Set();
+            if (scheduleCache) {
+                Object.values(scheduleCache).forEach(dayClasses => {
+                    dayClasses.forEach(c => directions.add(c.title));
+                });
+            }
+            // запасной список на случай, если расписания нет
+            if (directions.size === 0) {
+                ['Zumba','МФР','Растяжка','Йога для беременных','Йогатерапия','Body Sculpt','Здоровая спина','Pole Dance / Exotic','Фитнес'].forEach(d => directions.add(d));
+            }
+            const sorted = Array.from(directions).sort();
+            directionSelect.innerHTML = sorted.map(d => `<option value="${d}">${d}</option>`).join('');
+        }
+
         function openModal({ direction = '', date = '', time = '' } = {}) {
             lastFocused = document.activeElement;
             modalTitle.textContent = direction ? 'Запись на ' + direction : 'Запишись на пробный урок';
             modalSubtitle.textContent = date ? _formatDateDisplay(date) + ', ' + time : 'Начни менять свою жизнь прямо сейчас!';
             modalDateTimeInfo.style.display = (date && time) ? 'block' : 'none';
             if (date && time) modalDateTimeInfo.textContent = _formatDateDisplay(date) + ' в ' + time;
-            modalDateInput.value = date;       // dd.MM.yyyy — машинный формат
+            modalDateInput.value = date;
             modalTimeInput.value = time;
 
-            // Точное направление из расписания (чтобы совпало с листом Sheets)
-            const modalDirectionExact = document.getElementById('modalDirectionExact');
+            // Установка направления в селекте
             if (direction) {
-                modalDirectionExact.value = direction;
-                // Пробуем выставить и в select (для UI)
-                let found = false;
-                for (let i = 0; i < directionSelect.options.length; i++) {
-                    if (directionSelect.options[i].value.toLowerCase() === direction.toLowerCase()) {
-                        directionSelect.selectedIndex = i; found = true; break;
-                    }
+                const exists = Array.from(directionSelect.options).some(opt => opt.value === direction);
+                if (exists) {
+                    directionSelect.value = direction;
+                } else {
+                    directionSelect.selectedIndex = 0;
                 }
-                if (!found) directionSelect.selectedIndex = 0;
             } else {
-                modalDirectionExact.value = '';
                 directionSelect.selectedIndex = 0;
             }
 
@@ -592,13 +587,13 @@
             document.getElementById('modalName').focus();
         }
 
-        // Форматирование даты "02.05.2025" → "пятница, 2 мая"
         function _formatDateDisplay(ddmmyyyy) {
             if (!ddmmyyyy || !/^\d{2}\.\d{2}\.\d{4}$/.test(ddmmyyyy)) return ddmmyyyy;
             const [d, m, y] = ddmmyyyy.split('.').map(Number);
             const dt = new Date(y, m - 1, d);
             return dt.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
         }
+
         function closeSignupModal() {
             signupModal.style.display = 'none'; signupModal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = ''; if (lastFocused) lastFocused.focus();
@@ -612,13 +607,22 @@
             if (e.key === 'Escape' && signupModal.getAttribute('aria-hidden') === 'false') closeSignupModal();
             if (e.key === 'Escape' && privacyModal.getAttribute('aria-hidden') === 'false') closePrivacyModal();
         });
+
+        // Обработчик кнопок "Записаться" и "Выбрать" с data-open-modal
         document.body.addEventListener('click', e => {
             const btn = e.target.closest('[data-open-modal]');
             if (!btn) return;
             e.preventDefault();
             const available = parseInt(btn.getAttribute('data-available') || '1');
-            if (available <= 0) { alert('К сожалению, все места на это занятие уже заняты.'); return; }
-            openModal({ direction: btn.getAttribute('data-open-modal') || '', date: btn.getAttribute('data-date') || '', time: btn.getAttribute('data-time') || '' });
+            if (available <= 0) {
+                showToast('К сожалению, все места на это занятие уже заняты.', 'error');
+                return;
+            }
+            openModal({
+                direction: btn.getAttribute('data-open-modal') || '',
+                date: btn.getAttribute('data-date') || '',
+                time: btn.getAttribute('data-time') || ''
+            });
         });
 
         // Phone mask
@@ -632,6 +636,19 @@
             if (value.length >= 9) formatted += '-' + value.substring(9,11);
             this.value = formatted;
         });
+
+        // Toast notifications
+        function showToast(msg, type = 'success') {
+            const existing = document.getElementById('_toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.id = '_toast';
+            toast.className = 'toast';
+            toast.style.background = type === 'error' ? '#e74c3c' : '#27ae60';
+            toast.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${msg}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
 
         // Schedule
         const scheduleLoading = document.getElementById('scheduleLoading');
@@ -647,10 +664,12 @@
                 const response = await fetch(APPS_SCRIPT_URL + '?action=schedule');
                 if (!response.ok) throw new Error('HTTP error: ' + response.status);
                 const data = await response.json();
-                if (Object.keys(data).length === 0) throw new Error('Empty schedule');
-                scheduleCache = data;
+                if (Object.keys(data.week).length === 0 && !data._token) throw new Error('Empty schedule');
+                scheduleCache = data.week || data; // адаптация под структуру ответа
+                csrfToken = data._token || '';
                 scheduleLoading.style.display = 'none';
                 scheduleList.style.display = 'flex';
+                populateDirectionSelect();
                 renderTabs();
                 renderDay(currentDayKey);
             } catch (err) {
@@ -675,21 +694,6 @@
             else { const firstTab = tabsContainer.querySelector('.tab'); if (firstTab) { firstTab.classList.add('active'); currentDayKey = firstTab.dataset.day; } }
         }
 
-        function getDateFromDayKey(dayKey) {
-            const now = new Date();
-            const dayMap = { 'Вс': 0, 'Пн': 1, 'Вт': 2, 'Ср': 3, 'Чт': 4, 'Пт': 5, 'Сб': 6 };
-            if (dayKey === 'Сегодня') return formatDate(now);
-            if (dayKey === 'Завтра') { const tomorrow = new Date(now); tomorrow.setDate(now.getDate() + 1); return formatDate(tomorrow); }
-            if (dayMap.hasOwnProperty(dayKey)) {
-                const targetDay = dayMap[dayKey], currentDay = now.getDay();
-                let diff = targetDay - currentDay; if (diff <= 0) diff += 7;
-                const targetDate = new Date(now); targetDate.setDate(now.getDate() + diff);
-                return formatDate(targetDate);
-            }
-            return '';
-        }
-        function formatDate(date) { return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', weekday: 'short' }); }
-
         function renderDay(dayKey) {
             if (!scheduleCache) return;
             const classes = scheduleCache[dayKey] || [];
@@ -706,7 +710,6 @@
                     : `${available} мест`;
                 const badgeClass = isFull ? 'full' : (available <= 3 ? 'low' : 'available');
                 const trainerHtml = c.trainer ? `<div class="trainer">${c.trainer}</div>` : '';
-                // data-date содержит машинный формат dd.MM.yyyy (из API) — идёт в форму
                 return `
                     <div class="schedule-card${isFull ? ' full' : ''}">
                         <div class="schedule-info">
@@ -739,68 +742,62 @@
 
         function startAutoRefresh() {
             if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-            autoRefreshInterval = setInterval(async () => { await loadSchedule(); }, 30000);
+            autoRefreshInterval = setInterval(async () => { await loadSchedule(); }, 120000); // 2 минуты
         }
 
+        // Form submit
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const direction = directionSelect.value;
+            if (!direction) {
+                showToast('Пожалуйста, выберите направление', 'error');
+                return;
+            }
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
 
-    // Направление: сначала берём точное из расписания, потом из select
-    const exactDirection = document.getElementById('modalDirectionExact').value.trim();
-    const directionValue = exactDirection || directionSelect.value;
+            const formData = new URLSearchParams();
+            formData.append('name', document.getElementById('modalName').value.trim());
+            formData.append('phone', document.getElementById('modalPhone').value);
+            formData.append('direction', direction);
+            formData.append('date', document.getElementById('modalDate').value);
+            formData.append('time', document.getElementById('modalTime').value);
+            formData.append('action', 'book');
+            if (csrfToken) formData.append('token', csrfToken);
 
-    const formData = new URLSearchParams();
-    formData.append('name',      document.getElementById('modalName').value.trim());
-    formData.append('phone',     document.getElementById('modalPhone').value);
-    formData.append('direction', directionValue);
-    formData.append('date',      document.getElementById('modalDate').value);   // dd.MM.yyyy
-    formData.append('time',      document.getElementById('modalTime').value);   // HH:mm
-    formData.append('action',    'book');
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData });
+                const result = await response.json();
 
-    try {
-        const response = await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            body: formData
+                if (result.success) {
+                    document.getElementById('signupForm').style.display = 'none';
+                    document.getElementById('formSuccess').style.display = 'block';
+                    showToast('Заявка принята! Мы скоро свяжемся с вами.');
+                    setTimeout(() => {
+                        closeSignupModal();
+                        loadSchedule();
+                    }, 2500);
+                } else {
+                    showToast(result.error || 'Ошибка при записи. Попробуйте позже.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+                }
+            } catch(err) {
+                console.error('Ошибка:', err);
+                showToast('Нет соединения с сервером. Проверьте интернет.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+            } finally {
+                // Дополнительная блокировка от повторной отправки
+                setTimeout(() => {
+                    if (btn.disabled) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+                    }
+                }, 3000);
+            }
         });
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        const result = await response.json();
-
-        if (result.success) {
-            document.getElementById('signupForm').style.display = 'none';
-            document.getElementById('formSuccess').style.display = 'block';
-            setTimeout(() => {
-                closeSignupModal();
-                loadSchedule();   // обновляем расписание — счётчик мест уменьшился
-            }, 2500);
-        } else {
-            // Показываем человеческую ошибку вместо alert()
-            _showToast(result.error || 'Ошибка при записи. Попробуйте позже.', 'error');
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
-        }
-    } catch(err) {
-        console.error('Ошибка запроса:', err);
-        _showToast('Нет соединения с сервером. Проверьте интернет и попробуйте снова.', 'error');
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
-    }
-});
-
-        // Тост-уведомления
-        function _showToast(msg, type) {
-            const existing = document.getElementById('_toast');
-            if (existing) existing.remove();
-            const toast = document.createElement('div');
-            toast.id = '_toast';
-            toast.className = 'toast';
-            toast.style.background = type === 'error' ? '#e74c3c' : '#27ae60';
-            toast.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${msg}`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 5000);
-        }
 
         // Reveal animations
         const reveals = document.querySelectorAll('.reveal');
@@ -824,19 +821,42 @@
             });
         });
 
+        // Ленивая загрузка карты
+        const mapSection = document.getElementById('map');
+        if ('IntersectionObserver' in window) {
+            const mapObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        observer.unobserve(mapSection);
+                        // Загружаем API Яндекс.Карт динамически
+                        const script = document.createElement('script');
+                        script.src = 'https://api-maps.yandex.ru/2.1/?apikey=YOUR_REAL_API_KEY&lang=ru_RU';
+                        script.onload = () => {
+                            ymaps.ready(initMap);
+                        };
+                        document.head.appendChild(script);
+                    }
+                });
+            }, { threshold: 0.1 });
+            mapObserver.observe(mapSection);
+        } else {
+            // Fallback для старых браузеров
+            const script = document.createElement('script');
+            script.src = 'https://api-maps.yandex.ru/2.1/?apikey=YOUR_REAL_API_KEY&lang=ru_RU';
+            script.onload = () => ymaps.ready(initMap);
+            document.head.appendChild(script);
+        }
+
+        function initMap() {
+            const coords = [59.804423, 30.380969];
+            const map = new ymaps.Map("yandexMap", { center: coords, zoom: 17, controls: ['zoomControl'] });
+            map.geoObjects.add(new ymaps.Placemark(coords, { hintContent: 'INFINITY Фитнес-студия', balloonContent: '<strong>INFINITY</strong><br>ул. Пушкинская, 34Б, этаж 3' }, { preset: 'islands#redDotIconWithCaption', iconCaption: 'INFINITY' }));
+        }
+
         // Init
         loadSchedule();
         startAutoRefresh();
     })();
-</script>
-
-<script>
-    function initMap() {
-        const coords = [59.804423, 30.380969];
-        const map = new ymaps.Map("yandexMap", { center: coords, zoom: 17, controls: ['zoomControl'] });
-        map.geoObjects.add(new ymaps.Placemark(coords, { hintContent: 'INFINITY Фитнес-студия', balloonContent: '<strong>INFINITY</strong><br>ул. Пушкинская, 34Б, этаж 3' }, { preset: 'islands#redDotIconWithCaption', iconCaption: 'INFINITY' }));
-    }
-    ymaps.ready(initMap);
 </script>
 
 </body>
