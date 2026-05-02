@@ -168,6 +168,7 @@
         .trainer { font-weight: 400; font-size: 0.85rem; color: var(--text-secondary); }
         .availability-badge { font-size: 0.8rem; font-weight: 600; margin-top: 4px; }
         .availability-badge.available { color: #27ae60; }
+        .availability-badge.low { color: #e67e22; font-weight: 700; }
         .availability-badge.full { color: #e74c3c; }
         .schedule-card .btn { flex-shrink: 0; }
         @media (max-width: 500px) { .schedule-card { flex-direction: column; align-items: flex-start; } .schedule-card .btn { width: 100%; justify-content: center; } }
@@ -236,7 +237,7 @@
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #27ae60; color: white; padding: 12px 24px; border-radius: 40px; z-index: 9999; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: slideUp 0.3s ease; }
+        .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #27ae60; color: white; padding: 12px 24px; border-radius: 40px; z-index: 9999; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: slideUp 0.3s ease; display: flex; align-items: center; gap: 8px; max-width: 90vw; text-align: center; }
         @keyframes slideUp { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
     </style>
 </head>
@@ -475,8 +476,18 @@
             <div class="form-group">
                 <label for="modalDirectionSelect">Направление*</label>
                 <select id="modalDirectionSelect">
-                    <option>Body sculpt</option><option>Pole dance</option><option>Exotic</option><option>Растяжка</option><option>Йога</option><option>Zumba</option><option>МФР</option><option>Йога для беременных</option><option>Фитнес</option><option>Здоровая спина</option>
+                    <option value="Body Sculpt">Body Sculpt</option>
+                    <option value="Pole Dance / Exotic">Pole Dance / Exotic</option>
+                    <option value="Растяжка">Растяжка</option>
+                    <option value="Йогатерапия">Йогатерапия</option>
+                    <option value="Йога для беременных">Йога для беременных</option>
+                    <option value="Zumba">Zumba</option>
+                    <option value="МФР">МФР</option>
+                    <option value="Здоровая спина">Здоровая спина</option>
+                    <option value="Фитнес">Фитнес</option>
                 </select>
+                <!-- Точное направление из расписания (приоритет над select) -->
+                <input type="hidden" id="modalDirectionExact">
             </div>
             <div class="form-group">
                 <label for="modalPhone">Телефон*</label>
@@ -513,7 +524,10 @@
     (function() {
         'use strict';
 
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgfr0f8MOBYFoxPz6LdDOCLnrFXM6r4P1GNhaolp6n8pVXtJhFAg9MyzLdJjV13JM/exec';
+        // ⚠️ Замените URL после деплоя Apps Script:
+        // Расширения → Apps Script → Развернуть → Новое развёртывание → Веб-приложение
+        // Доступ: «Все» (анонимные)
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh010D4Yt1ZtFk3LADDi91yzTuPM_PwHUgyeWC_mPPpkBE1fHV9NbsqxIgdM-syyGa/exec';
         const DAYS_ORDER = [
             { key: 'Сегодня', label: 'Сегодня' }, { key: 'Завтра', label: 'Завтра' },
             { key: 'Пн', label: 'Пн' }, { key: 'Вт', label: 'Вт' }, { key: 'Ср', label: 'Ср' },
@@ -545,16 +559,29 @@
         function openModal({ direction = '', date = '', time = '' } = {}) {
             lastFocused = document.activeElement;
             modalTitle.textContent = direction ? 'Запись на ' + direction : 'Запишись на пробный урок';
-            modalSubtitle.textContent = date ? date + ', ' + time : 'Начни менять свою жизнь прямо сейчас!';
+            modalSubtitle.textContent = date ? _formatDateDisplay(date) + ', ' + time : 'Начни менять свою жизнь прямо сейчас!';
             modalDateTimeInfo.style.display = (date && time) ? 'block' : 'none';
-            if (date && time) modalDateTimeInfo.textContent = date + ' в ' + time;
-            modalDateInput.value = date;
+            if (date && time) modalDateTimeInfo.textContent = _formatDateDisplay(date) + ' в ' + time;
+            modalDateInput.value = date;       // dd.MM.yyyy — машинный формат
             modalTimeInput.value = time;
+
+            // Точное направление из расписания (чтобы совпало с листом Sheets)
+            const modalDirectionExact = document.getElementById('modalDirectionExact');
             if (direction) {
+                modalDirectionExact.value = direction;
+                // Пробуем выставить и в select (для UI)
+                let found = false;
                 for (let i = 0; i < directionSelect.options.length; i++) {
-                    if (directionSelect.options[i].text.toLowerCase().includes(direction.toLowerCase())) { directionSelect.selectedIndex = i; break; }
+                    if (directionSelect.options[i].value.toLowerCase() === direction.toLowerCase()) {
+                        directionSelect.selectedIndex = i; found = true; break;
+                    }
                 }
-            } else directionSelect.selectedIndex = 0;
+                if (!found) directionSelect.selectedIndex = 0;
+            } else {
+                modalDirectionExact.value = '';
+                directionSelect.selectedIndex = 0;
+            }
+
             document.getElementById('signupForm').style.display = 'block';
             document.getElementById('formSuccess').style.display = 'none';
             document.getElementById('submitBtn').disabled = false;
@@ -563,6 +590,14 @@
             signupModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
             document.getElementById('modalName').focus();
+        }
+
+        // Форматирование даты "02.05.2025" → "пятница, 2 мая"
+        function _formatDateDisplay(ddmmyyyy) {
+            if (!ddmmyyyy || !/^\d{2}\.\d{2}\.\d{4}$/.test(ddmmyyyy)) return ddmmyyyy;
+            const [d, m, y] = ddmmyyyy.split('.').map(Number);
+            const dt = new Date(y, m - 1, d);
+            return dt.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
         }
         function closeSignupModal() {
             signupModal.style.display = 'none'; signupModal.setAttribute('aria-hidden', 'true');
@@ -662,19 +697,32 @@
                 scheduleList.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:24px;">В этот день занятий нет</p>';
                 return;
             }
-            const dateStr = getDateFromDayKey(dayKey);
             scheduleList.innerHTML = classes.map(c => {
-                const available = c.available !== undefined ? c.available : 10;
-                const isFull = available === 0;
+                const available = (c.available !== undefined) ? Number(c.available) : 10;
+                const isFull = available <= 0;
+                const availLabel = isFull ? 'Нет мест'
+                    : available === 1 ? '🔥 Последнее место!'
+                    : available <= 3  ? `Осталось ${available} места`
+                    : `${available} мест`;
+                const badgeClass = isFull ? 'full' : (available <= 3 ? 'low' : 'available');
+                const trainerHtml = c.trainer ? `<div class="trainer">${c.trainer}</div>` : '';
+                // data-date содержит машинный формат dd.MM.yyyy (из API) — идёт в форму
                 return `
                     <div class="schedule-card${isFull ? ' full' : ''}">
                         <div class="schedule-info">
                             <div class="time">${c.time}</div>
                             <div class="title">${c.title}</div>
-                            <div class="trainer">${c.trainer}</div>
-                            <div class="availability-badge ${isFull ? 'full' : 'available'}">${isFull ? 'Нет мест' : (available <= 3 ? 'Осталось ' + available + ' места' : available + ' мест')}</div>
+                            ${trainerHtml}
+                            <div class="availability-badge ${badgeClass}">${availLabel}</div>
                         </div>
-                        <button class="btn" data-open-modal="${c.title}" data-date="${dateStr}" data-time="${c.time}" data-available="${available}"${isFull ? ' disabled' : ''}>${isFull ? 'Нет мест' : 'Записаться'}</button>
+                        <button class="btn"
+                            data-open-modal="${c.title}"
+                            data-date="${c.date}"
+                            data-time="${c.time}"
+                            data-available="${available}"
+                            ${isFull ? 'disabled' : ''}>
+                            ${isFull ? 'Нет мест' : 'Записаться'}
+                        </button>
                     </div>
                 `;
             }).join('');
@@ -694,49 +742,65 @@
             autoRefreshInterval = setInterval(async () => { await loadSchedule(); }, 30000);
         }
 
-        // Form submit
-document.getElementById('signupForm').addEventListener('submit', async function(e) {
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
-    
+
+    // Направление: сначала берём точное из расписания, потом из select
+    const exactDirection = document.getElementById('modalDirectionExact').value.trim();
+    const directionValue = exactDirection || directionSelect.value;
+
     const formData = new URLSearchParams();
-    formData.append('name', document.getElementById('modalName').value);
-    formData.append('phone', document.getElementById('modalPhone').value);
-    formData.append('direction', directionSelect.value);
-    formData.append('date', document.getElementById('modalDate').value);
-    formData.append('time', document.getElementById('modalTime').value);
-    formData.append('action', 'book');
-    
+    formData.append('name',      document.getElementById('modalName').value.trim());
+    formData.append('phone',     document.getElementById('modalPhone').value);
+    formData.append('direction', directionValue);
+    formData.append('date',      document.getElementById('modalDate').value);   // dd.MM.yyyy
+    formData.append('time',      document.getElementById('modalTime').value);   // HH:mm
+    formData.append('action',    'book');
+
     try {
-        const response = await fetch(APPS_SCRIPT_URL, { 
-            method: 'POST', 
-            body: formData 
+        const response = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            body: formData
         });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
         const result = await response.json();
-        
+
         if (result.success) {
             document.getElementById('signupForm').style.display = 'none';
             document.getElementById('formSuccess').style.display = 'block';
-            
-            // Перезагружаем расписание через 2 секунды
             setTimeout(() => {
                 closeSignupModal();
-                loadSchedule();
-            }, 2000);
+                loadSchedule();   // обновляем расписание — счётчик мест уменьшился
+            }, 2500);
         } else {
-            alert(result.error || 'Ошибка при записи. Попробуйте позже.');
+            // Показываем человеческую ошибку вместо alert()
+            _showToast(result.error || 'Ошибка при записи. Попробуйте позже.', 'error');
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
         }
     } catch(err) {
-        console.error('Ошибка:', err);
-        alert('Произошла ошибка. Пожалуйста, проверьте подключение к интернету.');
+        console.error('Ошибка запроса:', err);
+        _showToast('Нет соединения с сервером. Проверьте интернет и попробуйте снова.', 'error');
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
     }
 });
+
+        // Тост-уведомления
+        function _showToast(msg, type) {
+            const existing = document.getElementById('_toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.id = '_toast';
+            toast.className = 'toast';
+            toast.style.background = type === 'error' ? '#e74c3c' : '#27ae60';
+            toast.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${msg}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
 
         // Reveal animations
         const reveals = document.querySelectorAll('.reveal');
