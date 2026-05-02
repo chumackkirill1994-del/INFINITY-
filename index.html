@@ -33,7 +33,6 @@
     }
     </script>
     <style>
-        /* ... все стили без изменений ... */
         :root {
             --bg-primary: #F2F3F5;
             --bg-card: #FFFFFF;
@@ -124,7 +123,7 @@
         .directions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); margin-top: var(--spacing-md); }
         .direction-card { background: var(--bg-card); border-radius: var(--radius); padding: var(--spacing-lg) var(--spacing-md); box-shadow: var(--shadow); transition: var(--transition); display: flex; flex-direction: column; height: 100%; border: 1px solid transparent; }
         .direction-card:hover { border-color: var(--accent-warm); }
-        .direction-icon { font-size: 2.2rem; color: var(--accent-primary); margin-bottom: var(--spacing-sm); }
+        .direction-icon-img { width: 60px; height: 60px; margin-bottom: var(--spacing-sm); object-fit: contain; }
         .direction-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
         .direction-level { display: inline-block; background: var(--accent-warm); padding: 4px 12px; border-radius: 40px; font-size: 0.7rem; font-weight: 700; margin-bottom: var(--spacing-sm); align-self: flex-start; }
         .direction-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: var(--spacing-md); flex: 1; }
@@ -314,7 +313,7 @@
                     <ul class="price-list">
                         <li>4 занятия <span>3 200 ₽</span></li><li>8 занятий <span>5 500 ₽</span></li><li>12 занятий <span>6 600 ₽</span></li><li>Разовое <span>850 ₽</span></li>
                     </ul>
-                    <button class="btn btn-outline" data-open-modal data-purpose="subscription">Выбрать</button>
+                    <button class="btn btn-outline" data-open-modal data-purpose="subscription" data-tariff="Без пилона">Выбрать</button>
                 </div>
                 <div class="price-card featured reveal">
                     <div class="badge">Популярное</div>
@@ -322,14 +321,14 @@
                     <ul class="price-list">
                         <li>4 занятия <span>3 600 ₽</span></li><li>8 занятий <span>6 300 ₽</span></li><li>12 занятий <span>8 200 ₽</span></li><li>Разовое <span>1 000 ₽</span></li>
                     </ul>
-                    <button class="btn" data-open-modal data-purpose="subscription">Выбрать</button>
+                    <button class="btn" data-open-modal data-purpose="subscription" data-tariff="С пилоном">Выбрать</button>
                 </div>
                 <div class="price-card reveal">
                     <h3>Безлимит</h3>
                     <ul class="price-list">
                         <li>Без пилона / 3 мес <span>16 000 ₽</span></li><li>С пилоном / 3 мес <span>20 000 ₽</span></li><li>Без пилона / 6 мес <span>30 000 ₽</span></li><li>С пилоном / 6 мес <span>39 000 ₽</span></li>
                     </ul>
-                    <button class="btn btn-outline" data-open-modal data-purpose="subscription">Выбрать</button>
+                    <button class="btn btn-outline" data-open-modal data-purpose="subscription" data-tariff="Безлимит">Выбрать</button>
                 </div>
             </div>
         </div>
@@ -409,7 +408,7 @@
     </div>
 </footer>
 
-<!-- Модальное окно записи -->
+<!-- Модальное окно записи на занятие -->
 <div class="modal" id="signupModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
     <div class="modal-content">
         <button class="close-modal" aria-label="Закрыть">&times;</button>
@@ -430,7 +429,6 @@
                 <label for="modalDirectionSelect">Направление*</label>
                 <select id="modalDirectionSelect" required></select>
             </div>
-            <!-- Блок выбора даты и времени (только для записей не из расписания) -->
             <div class="form-group" id="scheduleSelectGroup" style="display:none;">
                 <label for="modalDateSelect">Дата*</label>
                 <select id="modalDateSelect" required></select>
@@ -455,6 +453,51 @@
         </form>
     </div>
 </div>
+
+<!-- Модальное окно покупки абонемента -->
+<div class="modal" id="subscriptionModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="subModalTitle">
+    <div class="modal-content">
+        <button class="close-modal" aria-label="Закрыть">&times;</button>
+        <h2 id="subModalTitle">Оформление абонемента</h2>
+        <p id="subModalSubtitle" style="margin-bottom:16px;">Выберите количество занятий и оставьте контакты</p>
+        <div id="subFormSuccess" style="display:none;text-align:center;padding:20px 0;">
+            <div style="font-size:2.5rem;">✅</div>
+            <h3>Заявка принята!</h3>
+            <p>Мы свяжемся с вами для уточнения деталей.</p>
+        </div>
+        <form id="subscriptionForm">
+            <div class="form-group">
+                <label for="subName">Имя*</label>
+                <input type="text" id="subName" placeholder="Имя" required autocomplete="name">
+            </div>
+            <div class="form-group">
+                <label>Тариф</label>
+                <input type="text" id="subTariffDisplay" class="form-control" readonly style="background:#f5f5f5;">
+            </div>
+            <div class="form-group">
+                <label for="subQuantity">Количество занятий*</label>
+                <select id="subQuantity" required>
+                    <option value="">-- выберите --</option>
+                    <option value="4 занятия">4 занятия</option>
+                    <option value="8 занятий">8 занятий</option>
+                    <option value="12 занятий">12 занятий</option>
+                    <option value="Разовое">Разовое занятие</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="subPhone">Телефон*</label>
+                <input type="tel" id="subPhone" placeholder="+7 (999) 000-00-00" required autocomplete="tel">
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="subPrivacyAgree" required>
+                <label for="subPrivacyAgree">Я согласен с <button type="button" class="privacy-link" onclick="openPrivacyModal()">политикой конфиденциальности</button></label>
+            </div>
+            <input type="hidden" id="subTariff" name="tariff">
+            <button type="submit" class="btn" id="subSubmitBtn" style="width:100%; margin-top:16px;">Отправить заявку</button>
+        </form>
+    </div>
+</div>
+
 <div class="modal" id="privacyModal" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-content">
         <button class="close-modal" onclick="closePrivacyModal()">&times;</button>
@@ -486,9 +529,30 @@
         closeMenuBtn.addEventListener('click', closeMenu);
         mobileMenu.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => { if (mobileMenu.classList.contains('active')) closeMenu(); }));
 
-        // Modals
-        const signupModal = document.getElementById('signupModal');
+        // Common modals
         const privacyModal = document.getElementById('privacyModal');
+        function openPrivacyModal() { privacyModal.style.display = 'flex'; privacyModal.setAttribute('aria-hidden', 'false'); }
+        function closePrivacyModal() { privacyModal.style.display = 'none'; privacyModal.setAttribute('aria-hidden', 'true'); }
+        privacyModal.addEventListener('click', e => { if (e.target === privacyModal) closePrivacyModal(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && privacyModal.getAttribute('aria-hidden') === 'false') closePrivacyModal();
+        });
+
+        // Toast
+        function showToast(msg, type = 'success') {
+            const existing = document.getElementById('_toast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.id = '_toast';
+            toast.className = 'toast';
+            toast.style.background = type === 'error' ? '#e74c3c' : '#27ae60';
+            toast.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${msg}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        // ----- SIGNUP MODAL (занятия) -----
+        const signupModal = document.getElementById('signupModal');
         const modalTitle = document.getElementById('modalTitle');
         const modalSubtitle = document.getElementById('modalSubtitle');
         const directionSelect = document.getElementById('modalDirectionSelect');
@@ -503,15 +567,15 @@
 
         // Direction metadata
         const DIRECTION_META = {
-            'Zumba':                 { icon: 'fa-music', level: 'Оздоровительный', desc: 'Латиноамериканские ритмы.', price: 'от 500 ₽' },
-            'МФР':                   { icon: 'fa-spa',   level: 'Базовый',          desc: 'Миофасциальный релиз.', price: 'от 500 ₽' },
-            'Растяжка':             { icon: 'fa-person-walking', level: 'Базовый', desc: 'Гибкость и дыхание.', price: 'от 500 ₽' },
-            'Йога для беременных':  { icon: 'fa-female', level: 'Базовый',          desc: 'Деликатные занятия.', price: '900 ₽' },
-            'Йогатерапия':          { icon: 'fa-hands',  level: 'Базовый',          desc: 'Восстановление после травм.', price: 'от 500 ₽' },
-            'Body Sculpt':          { icon: 'fa-dumbbell', level: 'Базовый',        desc: 'Улучшение форм тела.', price: 'от 500 ₽' },
-            'Здоровая спина':       { icon: 'fa-spine',  level: 'Базовый',          desc: 'Укрепление мышц спины.', price: 'от 500 ₽' },
-            'Pole Dance / Exotic':  { icon: 'fa-fan',    level: 'Базовый',          desc: 'Сила, грация, уверенность.', price: 'от 1 000 ₽' },
-            'Фитнес':               { icon: 'fa-dumbbell', level: 'Базовый',        desc: 'Общая физическая подготовка.', price: 'от 500 ₽' }
+            'Zumba':                 { level: 'Оздоровительный', desc: 'Зажигательные латиноамериканские ритмы для тонуса и настроения.', price: 'от 500 ₽' },
+            'МФР':                   { level: 'Базовый',          desc: 'Глубокое расслабление мышц и снятие зажимов.', price: 'от 500 ₽' },
+            'Растяжка':             { level: 'Базовый',          desc: 'Гибкость, лёгкость и свобода движений.', price: 'от 500 ₽' },
+            'Йога для беременных':  { level: 'Базовый',          desc: 'Безопасные практики для комфортной беременности.', price: 'от 500 ₽' },
+            'Йогатерапия':          { level: 'Базовый',          desc: 'Восстановление после травм и укрепление здоровья.', price: 'от 500 ₽' },
+            'Body Sculpt':          { level: 'Базовый',          desc: 'Скульптурирование тела и мышечный тонус.', price: 'от 500 ₽' },
+            'Здоровая спина':       { level: 'Базовый',          desc: 'Укрепление позвоночника и коррекция осанки.', price: 'от 500 ₽' },
+            'Pole Dance / Exotic':  { level: 'Базовый',          desc: 'Сила, пластика и уверенность в каждом движении.', price: 'от 500 ₽' },
+            'Фитнес':               { level: 'Базовый',          desc: 'Комплексные тренировки для отличной формы.', price: 'от 500 ₽' }
         };
 
         function populateDirectionSelect() {
@@ -528,16 +592,14 @@
             const container = document.getElementById('directionsContainer');
             if (!container) return;
             const directions = new Set();
-            if (scheduleCache) {
-                Object.values(scheduleCache).forEach(dayClasses => dayClasses.forEach(c => directions.add(c.title)));
-            }
+            if (scheduleCache) Object.values(scheduleCache).forEach(dayClasses => dayClasses.forEach(c => directions.add(c.title)));
             if (directions.size === 0) Object.keys(DIRECTION_META).forEach(d => directions.add(d));
             const sorted = Array.from(directions).sort();
             container.innerHTML = sorted.map(dir => {
-                const meta = DIRECTION_META[dir] || { icon: 'fa-question', level: 'Базовый', desc: '', price: '' };
+                const meta = DIRECTION_META[dir] || { level: 'Базовый', desc: '', price: '' };
                 return `
                     <div class="direction-card reveal">
-                        <i class="fas ${meta.icon} direction-icon"></i>
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E♾️%3C/text%3E%3C/svg%3E" class="direction-icon-img" alt="Логотип Infinity">
                         <div class="direction-title">${dir}</div>
                         <span class="direction-level">${meta.level}</span>
                         <div class="direction-desc">${meta.desc}</div>
@@ -546,13 +608,9 @@
                     </div>
                 `;
             }).join('');
-            document.querySelectorAll('#directionsContainer .reveal').forEach(el => {
-                if ('IntersectionObserver' in window) scheduleObserver.observe(el);
-                else el.classList.add('visible');
-            });
+            document.querySelectorAll('#directionsContainer .reveal').forEach(el => scheduleObserver.observe(el));
         }
 
-        // Populate date dropdown for a given direction
         function populateDateSelect(direction) {
             if (!scheduleCache || !direction) {
                 modalDateSelect.innerHTML = '<option value="">-- выберите дату --</option>';
@@ -561,13 +619,10 @@
             }
             const dates = new Set();
             Object.values(scheduleCache).forEach(dayClasses => {
-                dayClasses.forEach(c => {
-                    if (c.title === direction) dates.add(c.date);
-                });
+                dayClasses.forEach(c => { if (c.title === direction) dates.add(c.date); });
             });
             const sortedDates = Array.from(dates).sort();
-            modalDateSelect.innerHTML = '<option value="">-- выберите дату --</option>' +
-                sortedDates.map(d => `<option value="${d}">${_formatDateDisplay(d)}</option>`).join('');
+            modalDateSelect.innerHTML = '<option value="">-- выберите дату --</option>' + sortedDates.map(d => `<option value="${d}">${_formatDateDisplay(d)}</option>`).join('');
             modalTimeSelect.innerHTML = '<option value="">-- сначала выберите дату --</option>';
         }
 
@@ -578,16 +633,12 @@
             }
             const times = new Set();
             Object.values(scheduleCache).forEach(dayClasses => {
-                dayClasses.forEach(c => {
-                    if (c.title === direction && c.date === date) times.add(c.time);
-                });
+                dayClasses.forEach(c => { if (c.title === direction && c.date === date) times.add(c.time); });
             });
             const sortedTimes = Array.from(times).sort();
-            modalTimeSelect.innerHTML = '<option value="">-- выберите время --</option>' +
-                sortedTimes.map(t => `<option value="${t}">${t}</option>`).join('');
+            modalTimeSelect.innerHTML = '<option value="">-- выберите время --</option>' + sortedTimes.map(t => `<option value="${t}">${t}</option>`).join('');
         }
 
-        // Date/time change handlers
         modalDateSelect.addEventListener('change', () => {
             const dir = directionSelect.value;
             const date = modalDateSelect.value;
@@ -611,33 +662,20 @@
             }
         });
 
-        function openModal({ direction = '', date = '', time = '', purpose = '' } = {}) {
+        function openSignupModal({ direction = '', date = '', time = '' } = {}) {
             lastFocused = document.activeElement;
-
-            // Сброс
-            modalPurposeInput.value = purpose || '';
             const isSchedule = !!(date && time);
-            const isSubscription = purpose === 'subscription';
-
-            modalTitle.textContent = isSubscription ? 'Оформление абонемента' :
-                                    isSchedule ? 'Запись на ' + direction : 'Запишись на пробный урок';
+            modalTitle.textContent = isSchedule ? 'Запись на ' + direction : 'Запишись на пробный урок';
             modalSubtitle.textContent = isSchedule ? '' : 'Начни менять свою жизнь прямо сейчас!';
+            modalPurposeInput.value = '';
 
-            // Управление видимостью
             if (isSchedule) {
                 scheduleSelectGroup.style.display = 'none';
                 modalDateTimeInfo.style.display = 'block';
                 modalDateTimeInfo.textContent = _formatDateDisplay(date) + ' в ' + time;
                 directionSelect.disabled = true;
                 if (direction) directionSelect.value = direction;
-            } else if (isSubscription) {
-                scheduleSelectGroup.style.display = 'none';
-                modalDateTimeInfo.style.display = 'none';
-                directionSelect.disabled = false;
-                if (direction) directionSelect.value = direction;
-                else directionSelect.selectedIndex = 0;
             } else {
-                // Обычная запись (из направления или hero)
                 scheduleSelectGroup.style.display = 'block';
                 modalDateTimeInfo.style.display = 'none';
                 directionSelect.disabled = false;
@@ -645,7 +683,6 @@
                 else directionSelect.selectedIndex = 0;
                 populateDateSelect(direction || directionSelect.value);
             }
-
             modalDateInput.value = date;
             modalTimeInput.value = time;
 
@@ -659,6 +696,13 @@
             document.getElementById('modalName').focus();
         }
 
+        function closeSignupModal() {
+            signupModal.style.display = 'none'; signupModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = ''; if (lastFocused) lastFocused.focus();
+        }
+        document.querySelector('#signupModal .close-modal').addEventListener('click', closeSignupModal);
+        signupModal.addEventListener('click', e => { if (e.target === signupModal) closeSignupModal(); });
+
         function _formatDateDisplay(ddmmyyyy) {
             if (!ddmmyyyy || !/^\d{2}\.\d{2}\.\d{4}$/.test(ddmmyyyy)) return ddmmyyyy;
             const [d, m, y] = ddmmyyyy.split('.').map(Number);
@@ -666,62 +710,129 @@
             return dt.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
         }
 
-        function closeSignupModal() {
-            signupModal.style.display = 'none'; signupModal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = ''; if (lastFocused) lastFocused.focus();
-        }
-        function openPrivacyModal() { privacyModal.style.display = 'flex'; privacyModal.setAttribute('aria-hidden', 'false'); }
-        function closePrivacyModal() { privacyModal.style.display = 'none'; privacyModal.setAttribute('aria-hidden', 'true'); }
-        document.querySelector('#signupModal .close-modal').addEventListener('click', closeSignupModal);
-        signupModal.addEventListener('click', e => { if (e.target === signupModal) closeSignupModal(); });
-        privacyModal.addEventListener('click', e => { if (e.target === privacyModal) closePrivacyModal(); });
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && signupModal.getAttribute('aria-hidden') === 'false') closeSignupModal();
-            if (e.key === 'Escape' && privacyModal.getAttribute('aria-hidden') === 'false') closePrivacyModal();
-        });
-
-        document.body.addEventListener('click', e => {
-            const btn = e.target.closest('[data-open-modal]');
-            if (!btn) return;
-            e.preventDefault();
-            const available = parseInt(btn.getAttribute('data-available') || '1');
-            if (available <= 0) {
-                showToast('К сожалению, все места на это занятие уже заняты.', 'error');
-                return;
-            }
-            openModal({
-                direction: btn.getAttribute('data-open-modal') || '',
-                date: btn.getAttribute('data-date') || '',
-                time: btn.getAttribute('data-time') || '',
-                purpose: btn.getAttribute('data-purpose') || ''
-            });
-        });
-
-        // Phone mask
-        document.getElementById('modalPhone').addEventListener('input', function(e) {
-            let value = this.value.replace(/\D/g, '');
+        // Phone mask helper
+        function applyPhoneMask(input) {
+            let value = input.value.replace(/\D/g, '');
             if (value.length > 11) value = value.substr(0,11);
             let formatted = '+7 ';
             if (value.length > 1) formatted += '(' + value.substring(1,4);
             if (value.length >= 4) formatted += ') ' + value.substring(4,7);
             if (value.length >= 7) formatted += '-' + value.substring(7,9);
             if (value.length >= 9) formatted += '-' + value.substring(9,11);
-            this.value = formatted;
-        });
+            input.value = formatted;
+        }
+        document.getElementById('modalPhone').addEventListener('input', function(e) { applyPhoneMask(this); });
 
-        function showToast(msg, type = 'success') {
-            const existing = document.getElementById('_toast');
-            if (existing) existing.remove();
-            const toast = document.createElement('div');
-            toast.id = '_toast';
-            toast.className = 'toast';
-            toast.style.background = type === 'error' ? '#e74c3c' : '#27ae60';
-            toast.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${msg}`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 5000);
+        // ----- SUBSCRIPTION MODAL (абонементы) -----
+        const subscriptionModal = document.getElementById('subscriptionModal');
+        const subTariffInput = document.getElementById('subTariff');
+        const subTariffDisplay = document.getElementById('subTariffDisplay');
+        const subQuantity = document.getElementById('subQuantity');
+        const subPhone = document.getElementById('subPhone');
+        let subLastFocused = null;
+
+        function openSubscriptionModal(tariff) {
+            subLastFocused = document.activeElement;
+            subTariffInput.value = tariff;
+            subTariffDisplay.value = tariff;
+            subQuantity.selectedIndex = 0;
+            subPhone.value = '';
+            document.getElementById('subName').value = '';
+            document.getElementById('subPrivacyAgree').checked = false;
+            document.getElementById('subscriptionForm').style.display = 'block';
+            document.getElementById('subFormSuccess').style.display = 'none';
+            document.getElementById('subSubmitBtn').disabled = false;
+            document.getElementById('subSubmitBtn').innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+            subscriptionModal.style.display = 'flex';
+            subscriptionModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('subName').focus();
         }
 
-        // Schedule
+        function closeSubscriptionModal() {
+            subscriptionModal.style.display = 'none';
+            subscriptionModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (subLastFocused) subLastFocused.focus();
+        }
+        document.querySelector('#subscriptionModal .close-modal').addEventListener('click', closeSubscriptionModal);
+        subscriptionModal.addEventListener('click', e => { if (e.target === subscriptionModal) closeSubscriptionModal(); });
+
+        document.getElementById('subPhone').addEventListener('input', function(e) { applyPhoneMask(this); });
+
+        document.getElementById('subscriptionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('subSubmitBtn');
+            const tariff = subTariffInput.value;
+            const quantity = subQuantity.value;
+            if (!quantity) { showToast('Выберите количество занятий', 'error'); return; }
+            const direction = `${quantity} ${tariff}`;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
+
+            const formData = new URLSearchParams();
+            formData.append('name', document.getElementById('subName').value.trim());
+            formData.append('phone', subPhone.value);
+            formData.append('direction', direction);
+            formData.append('action', 'book');
+            formData.append('purpose', 'subscription');
+            if (csrfToken) formData.append('token', csrfToken);
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData });
+                const result = await response.json();
+                if (result.success) {
+                    document.getElementById('subscriptionForm').style.display = 'none';
+                    document.getElementById('subFormSuccess').style.display = 'block';
+                    showToast('Заявка принята! Мы свяжемся с вами.');
+                    setTimeout(() => {
+                        closeSubscriptionModal();
+                    }, 2500);
+                } else {
+                    showToast(result.error || 'Ошибка при отправке.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+                }
+            } catch(err) {
+                console.error(err);
+                showToast('Нет соединения с сервером.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
+            } finally {
+                setTimeout(() => { if (btn.disabled) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку'; } }, 3000);
+            }
+        });
+
+        // ----- CLICK HANDLER -----
+        document.body.addEventListener('click', e => {
+            const btn = e.target.closest('[data-open-modal]');
+            if (!btn) return;
+            e.preventDefault();
+            const purpose = btn.getAttribute('data-purpose');
+            if (purpose === 'subscription') {
+                const tariff = btn.getAttribute('data-tariff') || '';
+                if (tariff) {
+                    openSubscriptionModal(tariff);
+                } else {
+                    showToast('Не указан тариф', 'error');
+                }
+                return;
+            }
+            // Обычная запись на занятие
+            const available = parseInt(btn.getAttribute('data-available') || '1');
+            if (available <= 0) {
+                showToast('К сожалению, все места на это занятие уже заняты.', 'error');
+                return;
+            }
+            openSignupModal({
+                direction: btn.getAttribute('data-open-modal') || '',
+                date: btn.getAttribute('data-date') || '',
+                time: btn.getAttribute('data-time') || ''
+            });
+        });
+
+        // Schedule rendering etc. (без изменений)
         const scheduleLoading = document.getElementById('scheduleLoading');
         const scheduleError = document.getElementById('scheduleError');
         const scheduleList = document.getElementById('scheduleList');
@@ -807,7 +918,6 @@
             autoRefreshInterval = setInterval(async () => { await loadSchedule(); }, 120000);
         }
 
-        // Form submit
         document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
@@ -842,23 +952,21 @@
                         loadSchedule();
                     }, 2500);
                 } else {
-                    showToast(result.error || 'Ошибка при записи. Попробуйте позже.', 'error');
+                    showToast(result.error || 'Ошибка при записи.', 'error');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
                 }
             } catch(err) {
-                console.error('Ошибка:', err);
-                showToast('Нет соединения с сервером. Проверьте интернет.', 'error');
+                console.error(err);
+                showToast('Нет соединения с сервером.', 'error');
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку';
             } finally {
-                setTimeout(() => {
-                    if (btn.disabled) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку'; }
-                }, 3000);
+                setTimeout(() => { if (btn.disabled) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> Отправить заявку'; } }, 3000);
             }
         });
 
-        // Reveal observer
+        // Reveal
         const scheduleObserver = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
         document.querySelectorAll('.reveal').forEach(el => scheduleObserver.observe(el));
 
