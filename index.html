@@ -33,7 +33,6 @@
     }
     </script>
     <style>
-        /* весь CSS без изменений */
         :root {
             --bg-primary: #F2F3F5;
             --bg-card: #FFFFFF;
@@ -219,7 +218,6 @@
     </style>
 </head>
 <body>
-    <!-- header, hero, features, interior – без изменений -->
     <header>
         <div class="container header-inner">
             <div class="logo"><i class="fas fa-infinity" aria-hidden="true"></i> INFINITY</div>
@@ -274,14 +272,14 @@
         </section>
         <section id="interior" aria-labelledby="interior-title" style="background:#fff;">
             <div class="container">
-                <h2 id="interior-title" class="reveal" style="text-align:center;">Интерьер студии</h2>
-                <p class="reveal" style="text-align:center; margin-bottom:24px;">Просторный зал, раздевалки, зона отдыха.</p>
+                <h2 id="interior-title">Интерьер студии</h2>
+                <p style="text-align:center; margin-bottom:24px;">Просторный зал, раздевалки, зона отдыха.</p>
                 <div class="gallery-grid">
-                    <div class="gallery-item reveal"><img src="hal_1.webp" alt="Зал для групповых занятий" loading="lazy" width="400" height="300"></div>
-                    <div class="gallery-item reveal"><img src="hal_2.webp" alt="Пилон и фотозона" loading="lazy" width="400" height="300"></div>
-                    <div class="gallery-item reveal"><img src="hal_3.webp" alt="Pole Dance тренировка" loading="lazy" width="400" height="300"></div>
-                    <div class="gallery-item reveal"><img src="hal_4.webp" alt="Акробатические занятия" loading="lazy" width="400" height="300"></div>
-                    <div class="gallery-item reveal"><img src="razdevalka.webp" alt="Раздевалка" loading="lazy" width="400" height="300"></div>
+                    <div class="gallery-item"><img src="hal_1.webp" alt="Зал для групповых занятий" loading="lazy" width="400" height="300"></div>
+                    <div class="gallery-item"><img src="hal_2.webp" alt="Пилон и фотозона" loading="lazy" width="400" height="300"></div>
+                    <div class="gallery-item"><img src="hal_3.webp" alt="Pole Dance тренировка" loading="lazy" width="400" height="300"></div>
+                    <div class="gallery-item"><img src="hal_4.webp" alt="Акробатические занятия" loading="lazy" width="400" height="300"></div>
+                    <div class="gallery-item"><img src="razdevalka.webp" alt="Раздевалка" loading="lazy" width="400" height="300"></div>
                 </div>
             </div>
         </section>
@@ -308,16 +306,16 @@
         </section>
         <section id="prices" aria-labelledby="prices-title" style="background:var(--bg-primary);">
             <div class="container">
-                <h2 id="prices-title" class="reveal" style="text-align:center;">Тарифы</h2>
+                <h2 id="prices-title" style="text-align:center;">Тарифы</h2>
                 <div class="price-grid">
-                    <div class="price-card reveal">
+                    <div class="price-card">
                         <h3>«Без Пилона»</h3>
                         <ul class="price-list">
                             <li>4 занятия <span>3 200 ₽</span></li><li>8 занятий <span>5 500 ₽</span></li><li>12 занятий <span>6 600 ₽</span></li><li>Разовое <span>850 ₽</span></li>
                         </ul>
                         <button class="btn btn-outline" data-open-modal data-purpose="subscription" data-tariff="Без пилона">Выбрать</button>
                     </div>
-                    <div class="price-card featured reveal">
+                    <div class="price-card featured">
                         <div class="badge">Популярное</div>
                         <h3 style="margin-top:16px;">«С Пилоном»</h3>
                         <ul class="price-list">
@@ -325,7 +323,7 @@
                         </ul>
                         <button class="btn" data-open-modal data-purpose="subscription" data-tariff="С пилоном">Выбрать</button>
                     </div>
-                    <div class="price-card reveal">
+                    <div class="price-card">
                         <h3>Безлимит</h3>
                         <ul class="price-list">
                             <li>Без пилона / 3 мес <span>16 000 ₽</span></li><li>С пилоном / 3 мес <span>20 000 ₽</span></li><li>Без пилона / 6 мес <span>30 000 ₽</span></li><li>С пилоном / 6 мес <span>39 000 ₽</span></li>
@@ -337,32 +335,32 @@
         </section>
         <section id="team" aria-labelledby="team-title" style="background:#fff;">
             <div class="container">
-                <h2 id="team-title" class="reveal" style="text-align:center;">Команда Infinity</h2>
+                <h2 id="team-title" style="text-align:center;">Команда Infinity</h2>
                 <div class="team-grid">
-                    <div class="team-member reveal"><div class="team-photo">СВ</div><h4>Светлана</h4><p>Йога, спина</p></div>
-                    <div class="team-member reveal"><div class="team-photo">ОК</div><h4>Оксана</h4><p>Фитнес</p></div>
-                    <div class="team-member reveal"><div class="team-photo">НА</div><h4>Надежда</h4><p>Pole, Exotic</p></div>
-                    <div class="team-member reveal"><div class="team-photo">ВА</div><h4>Валерия</h4><p>Растяжка, ЛФК</p></div>
-                    <div class="team-member reveal"><div class="team-photo">ЮЛ</div><h4>Юлия</h4><p>Фитнес, Растяжка</p></div>
-                    <div class="team-member reveal"><div class="team-photo">КС</div><h4>Ксения</h4><p>Zumba</p></div>
+                    <div class="team-member"><div class="team-photo">СВ</div><h4>Светлана</h4><p>Йога, спина</p></div>
+                    <div class="team-member"><div class="team-photo">ОК</div><h4>Оксана</h4><p>Фитнес</p></div>
+                    <div class="team-member"><div class="team-photo">НА</div><h4>Надежда</h4><p>Pole, Exotic</p></div>
+                    <div class="team-member"><div class="team-photo">ВА</div><h4>Валерия</h4><p>Растяжка, ЛФК</p></div>
+                    <div class="team-member"><div class="team-photo">ЮЛ</div><h4>Юлия</h4><p>Фитнес, Растяжка</p></div>
+                    <div class="team-member"><div class="team-photo">КС</div><h4>Ксения</h4><p>Zumba</p></div>
                 </div>
             </div>
         </section>
         <section id="reviews" aria-labelledby="reviews-title" style="background:var(--bg-primary);">
             <div class="container">
-                <h2 id="reviews-title" class="reveal" style="text-align:center;">Отзывы</h2>
+                <h2 id="reviews-title" style="text-align:center;">Отзывы</h2>
                 <div class="reviews-grid">
-                    <div class="review-card reveal"><div class="review-header"><div class="review-avatar">АН</div><div class="review-name">Анна</div></div><div class="review-text">«Хожу на растяжку и пилон 3 месяца — вижу прогресс!»</div></div>
-                    <div class="review-card reveal"><div class="review-header"><div class="review-avatar">ЕК</div><div class="review-name">Екатерина</div></div><div class="review-text">«Записалась по акции, теперь постоянный клиент.»</div></div>
-                    <div class="review-card reveal"><div class="review-header"><div class="review-avatar">МА</div><div class="review-name">Мария</div></div><div class="review-text">«Уютная студия, внимательные тренеры.»</div></div>
-                    <div class="review-card reveal"><div class="review-header"><div class="review-avatar">ОЛ</div><div class="review-name">Ольга</div></div><div class="review-text">«После родов восстановила форму на йоге.»</div></div>
+                    <div class="review-card"><div class="review-header"><div class="review-avatar">АН</div><div class="review-name">Анна</div></div><div class="review-text">«Хожу на растяжку и пилон 3 месяца — вижу прогресс!»</div></div>
+                    <div class="review-card"><div class="review-header"><div class="review-avatar">ЕК</div><div class="review-name">Екатерина</div></div><div class="review-text">«Записалась по акции, теперь постоянный клиент.»</div></div>
+                    <div class="review-card"><div class="review-header"><div class="review-avatar">МА</div><div class="review-name">Мария</div></div><div class="review-text">«Уютная студия, внимательные тренеры.»</div></div>
+                    <div class="review-card"><div class="review-header"><div class="review-avatar">ОЛ</div><div class="review-name">Ольга</div></div><div class="review-text">«После родов восстановила форму на йоге.»</div></div>
                 </div>
             </div>
         </section>
         <section id="map" aria-labelledby="map-title" style="background:#fff;">
             <div class="container">
-                <h2 id="map-title" class="reveal" style="text-align:center;">Как нас найти</h2>
-                <div class="address-block reveal">
+                <h2 id="map-title" style="text-align:center;">Как нас найти</h2>
+                <div class="address-block">
                     <p><i class="fas fa-map-marker-alt"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
                     <p><i class="fas fa-clock"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
                     <p><i class="fas fa-phone"></i> +7 (969) 732-48-41</p>
@@ -372,7 +370,7 @@
                         <a href="viber://chat?number=%2B79697324841" style="color:#7360F2;"><i class="fab fa-viber fa-2x"></i></a>
                     </p>
                 </div>
-                <div class="map-container reveal"><div id="yandexMap"></div></div>
+                <div class="map-container"><div id="yandexMap"></div></div>
             </div>
         </section>
     </main>
@@ -380,10 +378,37 @@
         <button class="btn" data-open-modal>Записаться на занятие</button>
     </div>
     <footer>
-        <!-- без изменений -->
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>INFINITY</h3>
+                    <p>Шушары, ул. Пушкинская, 34Б</p>
+                    <p>+7 (969) 732-48-41</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="VK"><i class="fab fa-vk"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3>Навигация</h3>
+                    <a href="#" style="color:#ccc;display:block;margin-bottom:8px;">Главная</a>
+                    <a href="#directions" style="color:#ccc;display:block;">Направления</a>
+                </div>
+                <div>
+                    <h3>Режим работы</h3>
+                    <p>Пн-Пт: 09:00-22:00</p>
+                    <p>Сб-Вс: 10:00-20:00</p>
+                </div>
+            </div>
+            <div style="text-align:center; margin-top:20px; font-size:0.8rem; color:#aaa;">
+                <button class="privacy-link" onclick="openPrivacyModal()">Политика конфиденциальности</button>
+            </div>
+        </div>
     </footer>
 
-    <!-- Модальные окна -->
+    <!-- Модальные окна без изменений -->
     <div class="modal" id="signupModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
         <div class="modal-content">
             <button class="close-modal" aria-label="Закрыть">&times;</button>
@@ -430,10 +455,64 @@
     </div>
 
     <div class="modal" id="subscriptionModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="subModalTitle">
-        <!-- без изменений -->
+        <div class="modal-content">
+            <button class="close-modal" aria-label="Закрыть">&times;</button>
+            <h2 id="subModalTitle">Оформление абонемента</h2>
+            <p id="subModalSubtitle" style="margin-bottom:16px;">Выберите подходящий вариант и оставьте контакты</p>
+            <div id="subFormSuccess" style="display:none;text-align:center;padding:20px 0;">
+                <div style="font-size:2.5rem;">✅</div>
+                <h3>Заявка принята!</h3>
+                <p>Мы свяжемся с вами для уточнения деталей.</p>
+            </div>
+            <form id="subscriptionForm">
+                <div class="form-group">
+                    <label for="subName">Имя*</label>
+                    <input type="text" id="subName" placeholder="Имя" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label>Тариф</label>
+                    <input type="text" id="subTariffDisplay" class="form-control" readonly style="background:#f5f5f5;">
+                </div>
+                <div class="form-group" id="subQuantityGroup">
+                    <label for="subQuantity">Количество занятий*</label>
+                    <select id="subQuantity">
+                        <option value="">-- выберите --</option>
+                        <option value="4 занятия">4 занятия</option>
+                        <option value="8 занятий">8 занятий</option>
+                        <option value="12 занятий">12 занятий</option>
+                        <option value="Разовое">Разовое занятие</option>
+                    </select>
+                </div>
+                <div class="form-group" id="subUnlimitedGroup" style="display:none;">
+                    <label for="subUnlimitedOption">Вариант*</label>
+                    <select id="subUnlimitedOption">
+                        <option value="">-- выберите --</option>
+                        <option value="Без пилона / 3 мес – 16 000 ₽">Без пилона / 3 мес – 16 000 ₽</option>
+                        <option value="С пилоном / 3 мес – 20 000 ₽">С пилоном / 3 мес – 20 000 ₽</option>
+                        <option value="Без пилона / 6 мес – 30 000 ₽">Без пилона / 6 мес – 30 000 ₽</option>
+                        <option value="С пилоном / 6 мес – 39 000 ₽">С пилоном / 6 мес – 39 000 ₽</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="subPhone">Телефон*</label>
+                    <input type="tel" id="subPhone" placeholder="+7 (999) 000-00-00" required autocomplete="tel">
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="subPrivacyAgree" required>
+                    <label for="subPrivacyAgree">Я согласен с <button type="button" class="privacy-link" onclick="openPrivacyModal()">политикой конфиденциальности</button></label>
+                </div>
+                <input type="hidden" id="subTariff" name="tariff">
+                <button type="submit" class="btn" id="subSubmitBtn" style="width:100%; margin-top:16px;">Отправить заявку</button>
+            </form>
+        </div>
     </div>
+
     <div class="modal" id="privacyModal" role="dialog" aria-modal="true" aria-hidden="true">
-        <!-- без изменений -->
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePrivacyModal()">&times;</button>
+            <h2>Политика конфиденциальности</h2>
+            <p>Мы собираем только те данные, которые необходимы для записи на занятие: имя, телефон, направление. Данные не передаются третьим лицам и используются исключительно для связи с вами. Вы можете запросить удаление данных, позвонив нам.</p>
+        </div>
     </div>
     <button class="scroll-top" id="scrollTop" aria-label="Наверх"><i class="fas fa-arrow-up"></i></button>
 
@@ -495,7 +574,6 @@
             const modalTimeSelect = document.getElementById('modalTimeSelect');
             let lastFocused = null;
 
-            // Direction metadata
             const DIRECTION_META = {
                 'Zumba': { icon: 'fa-music', level: 'Оздоровительный', desc: 'Зажигательные латиноамериканские ритмы для тонуса и настроения.', price: 'от 500 ₽' },
                 'МФР': { icon: 'fa-spa', level: 'Базовый', desc: 'Глубокое расслабление мышц и снятие зажимов.', price: 'от 500 ₽' },
@@ -539,7 +617,14 @@
                         </div>
                     `;
                 }).join('');
-                document.querySelectorAll('#directionsContainer .reveal').forEach(el => scheduleObserver.observe(el));
+                // активируем reveal для новых карточек
+                document.querySelectorAll('#directionsContainer .reveal').forEach(el => {
+                    if (typeof scheduleObserver !== 'undefined' && scheduleObserver) {
+                        scheduleObserver.observe(el);
+                    } else {
+                        el.classList.add('visible');
+                    }
+                });
             }
 
             function populateDateSelect(direction) {
@@ -600,14 +685,12 @@
                 modalSubtitle.textContent = isSchedule ? '' : 'Начни менять свою жизнь прямо сейчас!';
                 modalPurposeInput.value = '';
 
-                // Управление required для полей даты/времени
                 if (isSchedule) {
                     scheduleSelectGroup.style.display = 'none';
                     modalDateTimeInfo.style.display = 'block';
                     modalDateTimeInfo.textContent = _formatDateDisplay(date) + ' в ' + time;
                     directionSelect.disabled = true;
                     directionSelect.removeAttribute('required');
-                    // Убираем required с скрытых полей, иначе форма не отправится
                     modalDateSelect.removeAttribute('required');
                     modalTimeSelect.removeAttribute('required');
                     if (direction) directionSelect.value = direction;
@@ -616,7 +699,6 @@
                     modalDateTimeInfo.style.display = 'none';
                     directionSelect.disabled = false;
                     directionSelect.setAttribute('required', '');
-                    // Добавляем required для обычной записи
                     modalDateSelect.setAttribute('required', '');
                     modalTimeSelect.setAttribute('required', '');
                     if (direction) directionSelect.value = direction;
@@ -663,7 +745,7 @@
             }
             document.getElementById('modalPhone').addEventListener('input', function(e) { applyPhoneMask(this); });
 
-            // Subscription modal (без изменений)
+            // Subscription modal
             const subscriptionModal = document.getElementById('subscriptionModal');
             const subTariffInput = document.getElementById('subTariff');
             const subTariffDisplay = document.getElementById('subTariffDisplay');
