@@ -123,7 +123,7 @@
         .directions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); margin-top: var(--spacing-md); }
         .direction-card { background: var(--bg-card); border-radius: var(--radius); padding: var(--spacing-lg) var(--spacing-md); box-shadow: var(--shadow); transition: var(--transition); display: flex; flex-direction: column; height: 100%; border: 1px solid transparent; }
         .direction-card:hover { border-color: var(--accent-warm); }
-        .direction-icon-img { width: 60px; height: 60px; margin-bottom: var(--spacing-sm); object-fit: contain; }
+        .direction-icon { font-size: 2.2rem; color: var(--accent-primary); margin-bottom: var(--spacing-sm); }
         .direction-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
         .direction-level { display: inline-block; background: var(--accent-warm); padding: 4px 12px; border-radius: 40px; font-size: 0.7rem; font-weight: 700; margin-bottom: var(--spacing-sm); align-self: flex-start; }
         .direction-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: var(--spacing-md); flex: 1; }
@@ -521,7 +521,7 @@
     (function() {
         'use strict';
 
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4QQJ_OpT76Ik2E34By2rYo6XxTvSXlOjV-sT0OeiyIOSTy6yeFmnBK25Xdt4A759Z/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgfr0f8MOBYFoxPz6LdDOCLnrFXM6r4P1GNhaolp6n8pVXtJhFAg9MyzLdJjV13JM/exec';
         const DAYS_ORDER = [
             { key: 'Сегодня', label: 'Сегодня' }, { key: 'Завтра', label: 'Завтра' },
             { key: 'Пн', label: 'Пн' }, { key: 'Вт', label: 'Вт' }, { key: 'Ср', label: 'Ср' },
@@ -575,19 +575,19 @@
         const modalTimeSelect = document.getElementById('modalTimeSelect');
         let lastFocused = null;
 
-        // Direction metadata (все направления с привлекательными описаниями)
+        // Direction metadata
         const DIRECTION_META = {
-            'Zumba':                 { level: 'Оздоровительный', desc: 'Зажигательные латиноамериканские ритмы для тонуса и настроения.', price: 'от 500 ₽' },
-            'МФР':                   { level: 'Базовый',          desc: 'Глубокое расслабление мышц и снятие зажимов.', price: 'от 500 ₽' },
-            'Растяжка':             { level: 'Базовый',          desc: 'Гибкость, лёгкость и свобода движений.', price: 'от 500 ₽' },
-            'Йога для беременных':  { level: 'Базовый',          desc: 'Безопасные практики для комфортной беременности.', price: 'от 500 ₽' },
-            'Йогатерапия':          { level: 'Базовый',          desc: 'Восстановление после травм и укрепление здоровья.', price: 'от 500 ₽' },
-            'Body Sculpt':          { level: 'Базовый',          desc: 'Скульптурирование тела и мышечный тонус.', price: 'от 500 ₽' },
-            'Здоровая спина':       { level: 'Базовый',          desc: 'Укрепление позвоночника и коррекция осанки.', price: 'от 500 ₽' },
-            'Pole Dance / Exotic':  { level: 'Базовый',          desc: 'Сила, пластика и уверенность в каждом движении.', price: 'от 500 ₽' },
-            'Фитнес':               { level: 'Базовый',          desc: 'Комплексные тренировки для отличной формы.', price: 'от 500 ₽' }
+            'Zumba':                 { icon: 'fa-music', level: 'Оздоровительный', desc: 'Зажигательные латиноамериканские ритмы для тонуса и настроения.', price: 'от 500 ₽' },
+            'МФР':                   { icon: 'fa-spa',   level: 'Базовый',          desc: 'Глубокое расслабление мышц и снятие зажимов.', price: 'от 500 ₽' },
+            'Растяжка':             { icon: 'fa-person-walking', level: 'Базовый', desc: 'Гибкость, лёгкость и свобода движений.', price: 'от 500 ₽' },
+            'Йога для беременных':  { icon: 'fa-female', level: 'Базовый',          desc: 'Безопасные практики для комфортной беременности.', price: '900 ₽' },
+            'Йогатерапия':          { icon: 'fa-hands',  level: 'Базовый',          desc: 'Восстановление после травм и укрепление здоровья.', price: 'от 500 ₽' },
+            'Body Sculpt':          { icon: 'fa-dumbbell', level: 'Базовый',        desc: 'Скульптурирование тела и мышечный тонус.', price: 'от 500 ₽' },
+            'Здоровая спина':       { icon: 'fa-spine',  level: 'Базовый',          desc: 'Укрепление позвоночника и коррекция осанки.', price: 'от 500 ₽' },
+            'Pole Dance / Exotic':  { icon: 'fa-fan',    level: 'Базовый',          desc: 'Сила, пластика и уверенность в каждом движении.', price: 'от 1 000 ₽' },
+            'Фитнес':               { icon: 'fa-dumbbell', level: 'Базовый',        desc: 'Комплексные тренировки для отличной формы.', price: 'от 500 ₽' }
         };
-        const DEFAULT_META = { level: 'Базовый', desc: 'Увлекательная тренировка для всех уровней подготовки.', price: 'от 500 ₽' };
+        const DEFAULT_META = { icon: 'fa-heartbeat', level: 'Базовый', desc: 'Увлекательная тренировка для всех уровней подготовки.', price: 'от 500 ₽' };
 
         function populateDirectionSelect() {
             const directions = new Set();
@@ -610,7 +610,7 @@
                 const meta = DIRECTION_META[dir] || DEFAULT_META;
                 return `
                     <div class="direction-card reveal">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E♾️%3C/text%3E%3C/svg%3E" class="direction-icon-img" alt="Логотип Infinity">
+                        <i class="fas ${meta.icon} direction-icon"></i>
                         <div class="direction-title">${dir}</div>
                         <span class="direction-level">${meta.level}</span>
                         <div class="direction-desc">${meta.desc}</div>
@@ -685,11 +685,13 @@
                 modalDateTimeInfo.style.display = 'block';
                 modalDateTimeInfo.textContent = _formatDateDisplay(date) + ' в ' + time;
                 directionSelect.disabled = true;
+                directionSelect.removeAttribute('required');
                 if (direction) directionSelect.value = direction;
             } else {
                 scheduleSelectGroup.style.display = 'block';
                 modalDateTimeInfo.style.display = 'none';
                 directionSelect.disabled = false;
+                directionSelect.setAttribute('required', '');
                 if (direction) directionSelect.value = direction;
                 else directionSelect.selectedIndex = 0;
                 populateDateSelect(direction || directionSelect.value);
@@ -794,7 +796,7 @@
             if (tariff === 'Безлимит') {
                 const opt = subUnlimitedOption.value;
                 if (!opt) { showToast('Выберите вариант безлимита', 'error'); return; }
-                direction = opt; // готовое описание
+                direction = opt;
             } else {
                 const qty = subQuantity.value;
                 if (!qty) { showToast('Выберите количество занятий', 'error'); return; }
@@ -862,7 +864,7 @@
             });
         });
 
-        // Schedule etc. (без изменений)
+        // Schedule
         const scheduleLoading = document.getElementById('scheduleLoading');
         const scheduleError = document.getElementById('scheduleError');
         const scheduleList = document.getElementById('scheduleList');
@@ -876,8 +878,19 @@
                 const response = await fetch(APPS_SCRIPT_URL + '?action=schedule');
                 if (!response.ok) throw new Error('HTTP error: ' + response.status);
                 const data = await response.json();
-                if (data._token) { csrfToken = data._token; delete data._token; }
-                if (Object.keys(data).length === 0) throw new Error('Empty schedule');
+
+                if (data._token) {
+                    csrfToken = data._token;
+                    delete data._token;
+                } else {
+                    csrfToken = 'fallback_' + Date.now();
+                    console.warn('Получен ответ без токена');
+                }
+
+                if (Object.keys(data).length === 0) {
+                    console.warn('Расписание пустое');
+                }
+
                 scheduleCache = data;
                 scheduleLoading.style.display = 'none';
                 scheduleList.style.display = 'flex';
@@ -953,10 +966,17 @@
             const btn = document.getElementById('submitBtn');
             const purpose = modalPurposeInput.value;
             const direction = directionSelect.value;
+
+            if (!csrfToken) {
+                showToast('Ошибка безопасности. Обновите страницу и попробуйте снова.', 'error');
+                return;
+            }
+
             if (!direction && purpose !== 'subscription') {
                 showToast('Пожалуйста, выберите направление', 'error');
                 return;
             }
+
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправляем...';
 
@@ -967,7 +987,7 @@
             formData.append('date', modalDateInput.value);
             formData.append('time', modalTimeInput.value);
             formData.append('action', 'book');
-            if (csrfToken) formData.append('token', csrfToken);
+            formData.append('token', csrfToken);
             if (purpose) formData.append('purpose', purpose);
 
             try {
@@ -1014,6 +1034,7 @@
             });
         });
 
+        // Lazy map
         const mapSection = document.getElementById('map');
         if ('IntersectionObserver' in window) {
             const mapObserver = new IntersectionObserver((entries, obs) => {
