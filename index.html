@@ -215,6 +215,28 @@
         }
         @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
         @keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
+    .review-date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.review-stars {
+    color: #f39c12;
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.review-text {
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.review-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
     </style>
 </head>
 <body>
@@ -347,16 +369,73 @@
             </div>
         </section>
         <section id="reviews" aria-labelledby="reviews-title" style="background:var(--bg-primary);">
-            <div class="container">
-                <h2 id="reviews-title" style="text-align:center;">Отзывы</h2>
-                <div class="reviews-grid">
-                    <div class="review-card"><div class="review-header"><div class="review-avatar">АН</div><div class="review-name">Анна</div></div><div class="review-text">«Хожу на растяжку и пилон 3 месяца — вижу прогресс!»</div></div>
-                    <div class="review-card"><div class="review-header"><div class="review-avatar">ЕК</div><div class="review-name">Екатерина</div></div><div class="review-text">«Записалась по акции, теперь постоянный клиент.»</div></div>
-                    <div class="review-card"><div class="review-header"><div class="review-avatar">МА</div><div class="review-name">Мария</div></div><div class="review-text">«Уютная студия, внимательные тренеры.»</div></div>
-                    <div class="review-card"><div class="review-header"><div class="review-avatar">ОЛ</div><div class="review-name">Ольга</div></div><div class="review-text">«После родов восстановила форму на йоге.»</div></div>
+    <div class="container">
+        <h2 id="reviews-title" style="text-align:center;">Отзывы</h2>
+        <p style="text-align:center; margin-bottom:24px; color:var(--text-secondary);">Что говорят о нас наши клиенты</p>
+        <div class="reviews-grid">
+            
+                 <!-- Светлана Яковлева -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">
+                        <img src="svetlana.webp" alt="Светлана Яковлева" loading="lazy">
+                    </div>
+                    <div>
+                        <div class="review-name">Светлана Яковлева</div>
+                        <div class="review-date">13 апреля 2025</div>
+                    </div>
                 </div>
+                <div class="review-stars">⭐⭐⭐⭐</div>
+                <div class="review-text">«Студию Инфинити я знаю много лет. Это настоящее место силы и грации! Сейчас студия переехала, это по настоящему полный восторг! 🎉 Огромный зал! Новые пилоны, отличная раздевалка! Но самое главное — это прежний тренерский состав»</div>
             </div>
-        </section>
+            
+            <!-- Алёна Круглова -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">
+                        <img src="alena.webp" alt="Алёна Круглова" loading="lazy">
+                    </div>
+                    <div>
+                        <div class="review-name">Алёна Круглова</div>
+                        <div class="review-date">24 февраля 2025</div>
+                    </div>
+                </div>
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <div class="review-text">«Честно! думала уже возраст, и быть мне несгибаемым Буратино в приятной обстановке проходят тренировки, с шутками и с женской энергетикой. Уже так втянулась в тренировки, что и цифры на весах поползли вниз»</div>
+            </div>
+            
+            <!-- Женя Т. -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">
+                        <img src="zhenya.webp" alt="Женя Т." loading="lazy">
+                    </div>
+                    <div>
+                        <div class="review-name">Женя Т.</div>
+                        <div class="review-date">6 февраля 2024</div>
+                    </div>
+                </div>
+                <div class="review-stars">⭐⭐⭐⭐</div>
+                <div class="review-text">«Очень душевная студия с замечательными тренерами и индивидуальным подходом к каждому ученику! Занимаюсь уже девятый год и не променяю ни на какой фитнес-хаус) Удобные абонементы, которые можно тратить на любое направление! Рекомендую! Кстати, единственная студия с пилонами в Шушарах»</div>
+            </div>
+            
+                         <!-- Ольга Канашкина -->
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="review-avatar">
+                        <img src="olga.webp" alt="Ольга Канашкина" loading="lazy">
+                    </div>
+                    <div>
+                        <div class="review-name">Ольга Канашкина</div>
+                        <div class="review-date">28 сентября 2022</div>
+                    </div>
+                </div>
+                <div class="review-stars">⭐⭐⭐⭐</div>
+                <div class="review-text">«Небольшая студия с прекрасными тренерами!»</div>
+            </div>
+        </div>
+    </div>
+</section>
         <section id="map" aria-labelledby="map-title" style="background:#fff;">
             <div class="container">
                 <h2 id="map-title" style="text-align:center;">Как нас найти</h2>
