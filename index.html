@@ -106,10 +106,14 @@
         .close-menu { position: absolute; top: var(--spacing-md); right: var(--spacing-md); font-size: 24px; background: none; border: none; cursor: pointer; color: var(--text-primary); }
         @media (max-width: 900px) { nav ul, .header-right .btn { display: none; } .mobile-toggle { display: block; } }
         @media (max-width: 480px) { .header-phone span { display: none; } .header-phone i { font-size: 20px; } }
-        .hero {
-            background: linear-gradient(125deg, rgba(242,243,245,0.9) 0%, rgba(226,216,200,0.6) 100%), url('https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1600');
-            background-size: cover; background-position: center 30%; background-attachment: fixed; text-align: center; padding: 140px 0;
-        }
+       .hero {
+    background: linear-gradient(125deg, rgba(242,243,245,0.9) 0%, rgba(226,216,200,0.6) 100%), url('hero.webp');
+    background-size: cover;
+    background-position: center 30%;
+    background-attachment: fixed;
+    text-align: center;
+    padding: 140px 0;
+}
         @media (max-width: 768px) { .hero { background-attachment: scroll; padding: 100px 0 70px; } }
         .hero h1 { margin-bottom: var(--spacing-md); animation: fadeUp 0.6s ease-out; }
         .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto var(--spacing-lg); animation: fadeUp 0.6s 0.1s both; }
@@ -439,16 +443,18 @@
         <section id="map" aria-labelledby="map-title" style="background:#fff;">
             <div class="container">
                 <h2 id="map-title" style="text-align:center;">Как нас найти</h2>
-                <div class="address-block">
-                    <p><i class="fas fa-map-marker-alt"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
-                    <p><i class="fas fa-clock"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
-                    <p><i class="fas fa-phone"></i> +7 (969) 732-48-41</p>
-                    <p>
-                        <a href="https://wa.me/79697324841" target="_blank" rel="noopener" style="margin-right:10px; color:#25D366;"><i class="fab fa-whatsapp fa-2x"></i></a>
-                        <a href="https://t.me/infinityfitness" target="_blank" rel="noopener" style="margin-right:10px; color:#0088cc;"><i class="fab fa-telegram fa-2x"></i></a>
-                        <a href="viber://chat?number=%2B79697324841" style="color:#7360F2;"><i class="fab fa-viber fa-2x"></i></a>
-                    </p>
-                </div>
+               <div class="address-block">
+    <p><i class="fas fa-map-marker-alt"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
+    <p><i class="fas fa-clock"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
+    <p><i class="fas fa-phone"></i> +7 (969) 732-48-41</p>
+    <p>
+        <a href="https://t.me/infinityfitness" target="_blank" rel="noopener" style="margin-right:10px; color:#0088cc;"><i class="fab fa-telegram fa-2x"></i></a>
+        <a href="https://wa.me/79112649580" target="_blank" rel="noopener" style="margin-right:10px; color:#25D366;"><i class="fab fa-whatsapp fa-2x"></i></a>
+        <a href="https://vk.com/infinityshushari" target="_blank" rel="noopener" style="margin-right:10px; color:#0077FF;"><i class="fab fa-vk fa-2x"></i></a>
+        <a href="#" target="_blank" rel="noopener" style="color:#FF6B00;" aria-label="MAX"><i class="fas fa-comment-dots fa-2x"></i></a>
+    </p>
+    <p style="margin-top:8px;">Telegram / WhatsApp / MAX: +7 (911) 264-95-80</p>
+</div>
                 <div class="map-container"><div id="yandexMap"></div></div>
             </div>
         </section>
@@ -457,35 +463,34 @@
         <button class="btn" data-open-modal>Записаться на занятие</button>
     </div>
     <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <h3>INFINITY</h3>
-                    <p>Шушары, ул. Пушкинская, 34Б</p>
-                    <p>+7 (969) 732-48-41</p>
-                    <div class="social-icons">
-                        <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="VK"><i class="fab fa-vk"></i></a>
-                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div>
-                    <h3>Навигация</h3>
-                    <a href="#" style="color:#ccc;display:block;margin-bottom:8px;">Главная</a>
-                    <a href="#directions" style="color:#ccc;display:block;">Направления</a>
-                </div>
-                <div>
-                    <h3>Режим работы</h3>
-                    <p>Пн-Пт: 09:00-22:00</p>
-                    <p>Сб-Вс: 10:00-20:00</p>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h3>INFINITY</h3>
+                <p>Шушары, ул. Пушкинская, 34Б</p>
+                <p>+7 (969) 732-48-41</p>
+                <div class="social-icons">
+                    <a href="https://t.me/infinityfitness" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="https://vk.com/infinityshushari" target="_blank" aria-label="VK"><i class="fab fa-vk"></i></a>
+                    <a href="https://wa.me/79112649580" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
-            <div style="text-align:center; margin-top:20px; font-size:0.8rem; color:#aaa;">
-                <button class="privacy-link" onclick="openPrivacyModal()">Политика конфиденциальности</button>
+            <div>
+                <h3>Навигация</h3>
+                <a href="#" style="color:#ccc;display:block;margin-bottom:8px;">Главная</a>
+                <a href="#directions" style="color:#ccc;display:block;">Направления</a>
+            </div>
+            <div>
+                <h3>Режим работы</h3>
+                <p>Пн-Пт: 09:00-22:00</p>
+                <p>Сб-Вс: 10:00-20:00</p>
             </div>
         </div>
-    </footer>
+        <div style="text-align:center; margin-top:20px; font-size:0.8rem; color:#aaa;">
+            <button class="privacy-link" onclick="openPrivacyModal()">Политика конфиденциальности</button>
+        </div>
+    </div>
+</footer>
 
     <!-- Модальные окна без изменений -->
     <div class="modal" id="signupModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
@@ -654,15 +659,18 @@
             let lastFocused = null;
 
             const DIRECTION_META = {
-    'Zumba':                 { icon: 'fa-music', level: 'Оздоровительный', desc: 'Эстетика движения под латиноамериканские ритмы — кардио, которое ощущается как танец.', price: 'от 500 ₽' },
-    'МФР':                   { icon: 'fa-spa',   level: 'Базовый',          desc: 'Глубокое расслабление мышц и фасций — reset для тела в спокойном ритме.', price: 'от 500 ₽' },
-    'Растяжка':             { icon: 'fa-person-walking', level: 'Базовый', desc: 'Спокойная работа с гибкостью и подвижностью суставов — без боли и гонки за результатом.', price: 'от 500 ₽' },
-    'Йога для беременных':  { icon: 'fa-female', level: 'Базовый',          desc: 'Бережная йога для будущих мам — комфорт, дыхание и забота о себе.', price: 'от 500 ₽' },
-    'Йогатерапия':          { icon: 'fa-hands',  level: 'Базовый',          desc: 'Восстанавливающая йога под персональные особенности вашего тела.', price: 'от 500 ₽' },
-    'Body Sculpt':          { icon: 'fa-dumbbell', level: 'Базовый',        desc: 'Спокойная силовая работа над рельефом — точность, а не скорость.', price: 'от 500 ₽' },
-    'Здоровая спина':       { icon: 'fa-spine',  level: 'Базовый',          desc: 'Восстановление спины и осанки — бережное укрепление глубоких мышц.', price: 'от 500 ₽' },
-    'Pole Dance / Exotic':  { icon: 'fa-fan',    level: 'Базовый',          desc: 'Эстетика силы и женственности — пилон как искусство движения.', price: 'от 500 ₽' },
-    'Фитнес':               { icon: 'fa-dumbbell', level: 'Базовый',        desc: 'Комплексное развитие тела — без спешки и перегрузок.', price: 'от 500 ₽' }
+    'Йогатерапия':                  { icon: 'fa-hands',          level: 'Базовый',          desc: 'Восстанавливающая йога под персональные особенности вашего тела.', price: 'от 500 ₽' },
+    'Индив':                        { icon: 'fa-user',           level: 'Базовый',          desc: 'Индивидуальные занятия с тренером — программа, собранная точно под вас.', price: 'по запросу' },
+    'Гимнастика для детей 3-9 лет': { icon: 'fa-child',         level: 'Начальный',       desc: 'Развивающая гимнастика для маленьких — забота об осанке и радость движения.', price: 'от 500 ₽' },
+    'Pole Sport/Пилон':            { icon: 'fa-fan',            level: 'Базовый',          desc: 'Спортивная дисциплина на пилоне — сила, выносливость и координация.', price: 'от 1 000 ₽' },
+    'Zumba':                        { icon: 'fa-music',          level: 'Оздоровительный', desc: 'Эстетика движения под латиноамериканские ритмы — кардио, которое ощущается как танец.', price: 'от 500 ₽' },
+    'Йога':                         { icon: 'fa-spa',            level: 'Базовый',          desc: 'Классическая йога в спокойном темпе — баланс тела и дыхания.', price: 'от 500 ₽' },
+    'Йога для беременных':          { icon: 'fa-female',         level: 'Базовый',          desc: 'Бережная йога для будущих мам — комфорт, дыхание и забота о себе.', price: '900 ₽' },
+    'Фитнес':                       { icon: 'fa-dumbbell',       level: 'Базовый',          desc: 'Комплексное развитие тела — без спешки и перегрузок.', price: 'от 500 ₽' },
+    'Растяжка':                     { icon: 'fa-person-walking', level: 'Базовый',          desc: 'Спокойная работа с гибкостью и подвижностью суставов — без боли и гонки.', price: 'от 500 ₽' },
+    'Адаптивная растяжка+ ЛФК':     { icon: 'fa-heartbeat',      level: 'Базовый',          desc: 'Мягкая растяжка с элементами лечебной физкультуры — восстановление и профилактика.', price: 'от 500 ₽' },
+    'Exotic PD':                    { icon: 'fa-fan',            level: 'Базовый',          desc: 'Экзотический пилон — пластика, грация и женственность.', price: 'от 1 000 ₽' },
+    'Здоровая спина + МФР':         { icon: 'fa-spine',          level: 'Базовый',          desc: 'Комплекс для спины: укрепление глубоких мышц и миофасциальное расслабление.', price: 'от 500 ₽' }
 };
             const DEFAULT_META = { icon: 'fa-spa', level: 'Базовый', desc: 'Увлекательная тренировка для всех уровней подготовки.', price: 'от 500 ₽' };
 
