@@ -27,7 +27,7 @@
         "addressRegion": "Санкт-Петербург",
         "addressCountry": "RU"
       },
-      "telephone": "+79697324841",
+      "telephone": "+79112649580",
       "openingHours": "Пн-Пт 09:00-22:00, Сб-Вс 10:00-20:00",
       "priceRange": "500₽ - 20000₽"
     }
@@ -106,14 +106,14 @@
         .close-menu { position: absolute; top: var(--spacing-md); right: var(--spacing-md); font-size: 24px; background: none; border: none; cursor: pointer; color: var(--text-primary); }
         @media (max-width: 900px) { nav ul, .header-right .btn { display: none; } .mobile-toggle { display: block; } }
         @media (max-width: 480px) { .header-phone span { display: none; } .header-phone i { font-size: 20px; } }
-       .hero {
-    background: linear-gradient(125deg, rgba(242,243,245,0.9) 0%, rgba(226,216,200,0.6) 100%), url('hero.webp');
-    background-size: cover;
-    background-position: center 30%;
-    background-attachment: fixed;
-    text-align: center;
-    padding: 140px 0;
-}
+        .hero {
+            background: linear-gradient(125deg, rgba(242,243,245,0.9) 0%, rgba(226,216,200,0.6) 100%), url('hero.webp');
+            background-size: cover;
+            background-position: center 30%;
+            background-attachment: fixed;
+            text-align: center;
+            padding: 140px 0;
+        }
         @media (max-width: 768px) { .hero { background-attachment: scroll; padding: 100px 0 70px; } }
         .hero h1 { margin-bottom: var(--spacing-md); animation: fadeUp 0.6s ease-out; }
         .hero p { font-size: 1.1rem; max-width: 600px; margin: 0 auto var(--spacing-lg); animation: fadeUp 0.6s 0.1s both; }
@@ -219,28 +219,25 @@
         }
         @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
         @keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
-    .review-date {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    margin-top: 2px;
-}
-
-.review-stars {
-    color: #f39c12;
-    font-size: 0.9rem;
-    margin-bottom: var(--spacing-xs);
-}
-
-.review-text {
-    font-style: italic;
-    line-height: 1.5;
-}
-
-.review-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+        .review-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .review-stars {
+            color: #f39c12;
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        .review-text {
+            font-style: italic;
+            line-height: 1.5;
+        }
+        .review-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -259,7 +256,7 @@
                 </ul>
             </nav>
             <div class="header-right">
-                <a href="tel:+79697324841" class="header-phone" aria-label="Позвонить +7 969 732 48 41"><i class="fas fa-phone-alt"></i> <span>+7 (969) 732-48-41</span></a>
+                <a href="tel:+79112649580" class="header-phone" aria-label="Позвонить +7 911 264 95 80"><i class="fas fa-phone-alt"></i> <span>+7 (911) 264-95-80</span></a>
                 <button class="btn" data-open-modal>Записаться</button>
             </div>
             <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Открыть меню"><i class="fas fa-bars"></i></button>
@@ -274,7 +271,7 @@
         <a href="#team">Команда</a>
         <a href="#reviews">Отзывы</a>
         <a href="#map">Контакты</a>
-        <a href="tel:+79697324841">+7 (969) 732-48-41</a>
+        <a href="tel:+79112649580">+7 (911) 264-95-80</a>
         <button class="btn" data-open-modal style="width:80%;">Записаться</button>
     </div>
     <main>
@@ -325,7 +322,7 @@
                 </div>
                 <div class="schedule-error reveal" id="scheduleError" style="display:none;">
                     <i class="fas fa-exclamation-triangle"></i>
-                    <p>Не удалось загрузить расписание. Пожалуйста, позвоните нам: <a href="tel:+79697324841">+7 (969) 732-48-41</a></p>
+                    <p>Не удалось загрузить расписание. Пожалуйста, позвоните нам: <a href="tel:+79112649580">+7 (911) 264-95-80</a></p>
                 </div>
                 <div class="schedule-list reveal" id="scheduleList" aria-live="polite" style="display:none;"></div>
             </div>
@@ -373,90 +370,86 @@
             </div>
         </section>
         <section id="reviews" aria-labelledby="reviews-title" style="background:var(--bg-primary);">
-    <div class="container">
-        <h2 id="reviews-title" style="text-align:center;">Отзывы</h2>
-        <p style="text-align:center; margin-bottom:24px; color:var(--text-secondary);">Что говорят о нас наши клиенты</p>
-        <div class="reviews-grid">
-            
-                 <!-- Светлана Яковлева -->
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">
-                        <img src="svetlana.webp" alt="Светлана Яковлева" loading="lazy">
+            <div class="container">
+                <h2 id="reviews-title" style="text-align:center;">Отзывы</h2>
+                <p style="text-align:center; margin-bottom:24px; color:var(--text-secondary);">Что говорят о нас наши клиенты</p>
+                <div class="reviews-grid">
+                    <!-- Светлана Яковлева -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">
+                                <img src="svetlana.webp" alt="Светлана Яковлева" loading="lazy">
+                            </div>
+                            <div>
+                                <div class="review-name">Светлана Яковлева</div>
+                                <div class="review-date">13 апреля 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">⭐⭐⭐⭐</div>
+                        <div class="review-text">«Студию Инфинити я знаю много лет. Это настоящее место силы и грации! Сейчас студия переехала, это по настоящему полный восторг! 🎉 Огромный зал! Новые пилоны, отличная раздевалка! Но самое главное — это прежний тренерский состав»</div>
                     </div>
-                    <div>
-                        <div class="review-name">Светлана Яковлева</div>
-                        <div class="review-date">13 апреля 2025</div>
+                    <!-- Алёна Круглова -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">
+                                <img src="alena.webp" alt="Алёна Круглова" loading="lazy">
+                            </div>
+                            <div>
+                                <div class="review-name">Алёна Круглова</div>
+                                <div class="review-date">24 февраля 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                        <div class="review-text">«Честно! думала уже возраст, и быть мне несгибаемым Буратино в приятной обстановке проходят тренировки, с шутками и с женской энергетикой. Уже так втянулась в тренировки, что и цифры на весах поползли вниз»</div>
+                    </div>
+                    <!-- Женя Т. -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">
+                                <img src="zhenya.webp" alt="Женя Т." loading="lazy">
+                            </div>
+                            <div>
+                                <div class="review-name">Женя Т.</div>
+                                <div class="review-date">6 февраля 2024</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">⭐⭐⭐⭐</div>
+                        <div class="review-text">«Очень душевная студия с замечательными тренерами и индивидуальным подходом к каждому ученику! Занимаюсь уже девятый год и не променяю ни на какой фитнес-хаус) Удобные абонементы, которые можно тратить на любое направление! Рекомендую! Кстати, единственная студия с пилонами в Шушарах»</div>
+                    </div>
+                    <!-- Ольга Канашкина -->
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">
+                                <img src="olga.webp" alt="Ольга Канашкина" loading="lazy">
+                            </div>
+                            <div>
+                                <div class="review-name">Ольга Канашкина</div>
+                                <div class="review-date">28 сентября 2022</div>
+                            </div>
+                        </div>
+                        <div class="review-stars">⭐⭐⭐⭐</div>
+                        <div class="review-text">«Небольшая студия с прекрасными тренерами!»</div>
                     </div>
                 </div>
-                <div class="review-stars">⭐⭐⭐⭐</div>
-                <div class="review-text">«Студию Инфинити я знаю много лет. Это настоящее место силы и грации! Сейчас студия переехала, это по настоящему полный восторг! 🎉 Огромный зал! Новые пилоны, отличная раздевалка! Но самое главное — это прежний тренерский состав»</div>
             </div>
-            
-            <!-- Алёна Круглова -->
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">
-                        <img src="alena.webp" alt="Алёна Круглова" loading="lazy">
-                    </div>
-                    <div>
-                        <div class="review-name">Алёна Круглова</div>
-                        <div class="review-date">24 февраля 2025</div>
-                    </div>
-                </div>
-                <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                <div class="review-text">«Честно! думала уже возраст, и быть мне несгибаемым Буратино в приятной обстановке проходят тренировки, с шутками и с женской энергетикой. Уже так втянулась в тренировки, что и цифры на весах поползли вниз»</div>
-            </div>
-            
-            <!-- Женя Т. -->
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">
-                        <img src="zhenya.webp" alt="Женя Т." loading="lazy">
-                    </div>
-                    <div>
-                        <div class="review-name">Женя Т.</div>
-                        <div class="review-date">6 февраля 2024</div>
-                    </div>
-                </div>
-                <div class="review-stars">⭐⭐⭐⭐</div>
-                <div class="review-text">«Очень душевная студия с замечательными тренерами и индивидуальным подходом к каждому ученику! Занимаюсь уже девятый год и не променяю ни на какой фитнес-хаус) Удобные абонементы, которые можно тратить на любое направление! Рекомендую! Кстати, единственная студия с пилонами в Шушарах»</div>
-            </div>
-            
-                         <!-- Ольга Канашкина -->
-            <div class="review-card">
-                <div class="review-header">
-                    <div class="review-avatar">
-                        <img src="olga.webp" alt="Ольга Канашкина" loading="lazy">
-                    </div>
-                    <div>
-                        <div class="review-name">Ольга Канашкина</div>
-                        <div class="review-date">28 сентября 2022</div>
-                    </div>
-                </div>
-                <div class="review-stars">⭐⭐⭐⭐</div>
-                <div class="review-text">«Небольшая студия с прекрасными тренерами!»</div>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
         <section id="map" aria-labelledby="map-title" style="background:#fff;">
             <div class="container">
                 <h2 id="map-title" style="text-align:center;">Как нас найти</h2>
-               <div class="address-block">
-    <p><i class="fas fa-map-marker-alt"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
-    <p><i class="fas fa-clock"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
-    <p><i class="fas fa-phone"></i> +7 (969) 732-48-41</p>
-    <p>
-        <a href="https://t.me/+79112649580" target="_blank" rel="noopener" style="margin-right:10px; color:#0088cc;"><i class="fab fa-telegram fa-2x"></i></a>
-        <a href="https://vk.com/infinityshushari" target="_blank" rel="noopener" style="margin-right:10px; color:#0077FF;"><i class="fab fa-vk fa-2x"></i></a>
-        <a href="https://api.whatsapp.com/send?phone=+7 (911) 264-95-80&text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%20%D0%92%D0%B0%D0%BC%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C" target="_blank" rel="noopener" style="color:#25D366;"><i class="fab fa-whatsapp fa-2x"></i></a>
-    </p>
-    <p style="margin-top:8px;">
-        <a href="https://t.me/+79112649580" style="color:#0088cc;">Telegram</a> / 
-        <a href="https://api.whatsapp.com/send?phone=+7 (911) 264-95-80&text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%20%D0%92%D0%B0%D0%BC%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C" style="color:#25D366;">WhatsApp</a>: +7 (911) 264-95-80
-    </p>
-</div>
+                <div class="address-block">
+                    <p><i class="fas fa-map-marker-alt"></i> Шушары, ул. Пушкинская, 34Б, этаж 3</p>
+                    <p><i class="fas fa-clock"></i> Пн-Пт: 09:00 - 22:00 | Сб-Вс: 10:00 - 20:00</p>
+                    <p><i class="fas fa-phone"></i> +7 (911) 264-95-80</p>
+                    <p>
+                        <a href="https://t.me/+79112649580" target="_blank" rel="noopener" style="margin-right:10px; color:#0088cc;"><i class="fab fa-telegram fa-2x"></i></a>
+                        <a href="https://vk.com/infinityshushari" target="_blank" rel="noopener" style="margin-right:10px; color:#0077FF;"><i class="fab fa-vk fa-2x"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=+7 (911) 264-95-80&text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%20%D0%92%D0%B0%D0%BC%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C" target="_blank" rel="noopener" style="color:#25D366;"><i class="fab fa-whatsapp fa-2x"></i></a>
+                    </p>
+                    <p style="margin-top:8px;">
+                        <a href="https://t.me/+79112649580" style="color:#0088cc;">Telegram</a> / 
+                        <a href="https://api.whatsapp.com/send?phone=+7 (911) 264-95-80&text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%20%D0%92%D0%B0%D0%BC%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C" style="color:#25D366;">WhatsApp</a>: +7 (911) 264-95-80
+                    </p>
+                </div>
                 <div class="map-container"><div id="yandexMap"></div></div>
             </div>
         </section>
@@ -464,37 +457,37 @@
     <div class="mobile-cta">
         <button class="btn" data-open-modal>Записаться на занятие</button>
     </div>
- <footer>
-    <div class="container">
-        <div class="footer-grid">
-            <div>
-                <h3>INFINITY</h3>
-                <p>Шушары, ул. Пушкинская, 34Б</p>
-                <p>+7 (969) 732-48-41</p>
-                <div class="social-icons">
-                    <a href="https://t.me/+79112649580" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-                    <a href="https://vk.com/infinityshushari" target="_blank" aria-label="VK"><i class="fab fa-vk"></i></a>
-                    <a href="https://api.whatsapp.com/send?phone=+7 (911) 264-95-80&text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%20%D0%92%D0%B0%D0%BC%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>INFINITY</h3>
+                    <p>Шушары, ул. Пушкинская, 34Б</p>
+                    <p>+7 (911) 264-95-80</p>
+                    <div class="social-icons">
+                        <a href="https://t.me/+79112649580" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="https://vk.com/infinityshushari" target="_blank" aria-label="VK"><i class="fab fa-vk"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=+7 (911) 264-95-80&text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%20%D0%92%D0%B0%D0%BC%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3>Навигация</h3>
+                    <a href="#" style="color:#ccc;display:block;margin-bottom:8px;">Главная</a>
+                    <a href="#directions" style="color:#ccc;display:block;">Направления</a>
+                </div>
+                <div>
+                    <h3>Режим работы</h3>
+                    <p>Пн-Пт: 09:00-22:00</p>
+                    <p>Сб-Вс: 10:00-20:00</p>
                 </div>
             </div>
-            <div>
-                <h3>Навигация</h3>
-                <a href="#" style="color:#ccc;display:block;margin-bottom:8px;">Главная</a>
-                <a href="#directions" style="color:#ccc;display:block;">Направления</a>
-            </div>
-            <div>
-                <h3>Режим работы</h3>
-                <p>Пн-Пт: 09:00-22:00</p>
-                <p>Сб-Вс: 10:00-20:00</p>
+            <div style="text-align:center; margin-top:20px; font-size:0.8rem; color:#aaa;">
+                <button class="privacy-link" onclick="openPrivacyModal()">Политика конфиденциальности</button>
             </div>
         </div>
-        <div style="text-align:center; margin-top:20px; font-size:0.8rem; color:#aaa;">
-            <button class="privacy-link" onclick="openPrivacyModal()">Политика конфиденциальности</button>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-    <!-- Модальные окна без изменений -->
+    <!-- Модальные окна -->
     <div class="modal" id="signupModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
         <div class="modal-content">
             <button class="close-modal" aria-label="Закрыть">&times;</button>
@@ -661,19 +654,19 @@
             let lastFocused = null;
 
             const DIRECTION_META = {
-    'Йогатерапия':                  { icon: 'fa-hands',          level: 'Базовый',          desc: 'Восстанавливающая йога под персональные особенности вашего тела.', price: 'от 500 ₽' },
-    'Индив':                        { icon: 'fa-user',           level: 'Базовый',          desc: 'Индивидуальные занятия с тренером — программа, собранная точно под вас.', price: 'по запросу' },
-    'Гимнастика для детей 3-9 лет': { icon: 'fa-child',         level: 'Начальный',       desc: 'Развивающая гимнастика для маленьких — забота об осанке и радость движения.', price: 'от 500 ₽' },
-    'Pole Sport/Пилон':            { icon: 'fa-fan',            level: 'Базовый',          desc: 'Спортивная дисциплина на пилоне — сила, выносливость и координация.', price: 'от 1 000 ₽' },
-    'Zumba':                        { icon: 'fa-music',          level: 'Оздоровительный', desc: 'Эстетика движения под латиноамериканские ритмы — кардио, которое ощущается как танец.', price: 'от 500 ₽' },
-    'Йога':                         { icon: 'fa-spa',            level: 'Базовый',          desc: 'Классическая йога в спокойном темпе — баланс тела и дыхания.', price: 'от 500 ₽' },
-    'Йога для беременных':          { icon: 'fa-female',         level: 'Базовый',          desc: 'Бережная йога для будущих мам — комфорт, дыхание и забота о себе.', price: '900 ₽' },
-    'Фитнес':                       { icon: 'fa-dumbbell',       level: 'Базовый',          desc: 'Комплексное развитие тела — без спешки и перегрузок.', price: 'от 500 ₽' },
-    'Растяжка':                     { icon: 'fa-person-walking', level: 'Базовый',          desc: 'Спокойная работа с гибкостью и подвижностью суставов — без боли и гонки.', price: 'от 500 ₽' },
-    'Адаптивная растяжка+ ЛФК':     { icon: 'fa-heartbeat',      level: 'Базовый',          desc: 'Мягкая растяжка с элементами лечебной физкультуры — восстановление и профилактика.', price: 'от 500 ₽' },
-    'Exotic PD':                    { icon: 'fa-fan',            level: 'Базовый',          desc: 'Экзотический пилон — пластика, грация и женственность.', price: 'от 1 000 ₽' },
-    'Здоровая спина + МФР':         { icon: 'fa-spine',          level: 'Базовый',          desc: 'Комплекс для спины: укрепление глубоких мышц и миофасциальное расслабление.', price: 'от 500 ₽' }
-};
+                'Йогатерапия':                  { icon: 'fa-hands',          level: 'Базовый',          desc: 'Восстанавливающая йога под персональные особенности вашего тела.', price: 'от 500 ₽' },
+                'Индив':                        { icon: 'fa-user',           level: 'Базовый',          desc: 'Индивидуальные занятия с тренером — программа, собранная точно под вас.', price: 'по запросу' },
+                'Гимнастика для детей 3-9 лет': { icon: 'fa-child',         level: 'Начальный',       desc: 'Развивающая гимнастика для маленьких — забота об осанке и радость движения.', price: 'от 500 ₽' },
+                'Pole Sport/Пилон':            { icon: 'fa-fan',            level: 'Базовый',          desc: 'Спортивная дисциплина на пилоне — сила, выносливость и координация.', price: 'от 1 000 ₽' },
+                'Zumba':                        { icon: 'fa-music',          level: 'Оздоровительный', desc: 'Эстетика движения под латиноамериканские ритмы — кардио, которое ощущается как танец.', price: 'от 500 ₽' },
+                'Йога':                         { icon: 'fa-spa',            level: 'Базовый',          desc: 'Классическая йога в спокойном темпе — баланс тела и дыхания.', price: 'от 500 ₽' },
+                'Йога для беременных':          { icon: 'fa-female',         level: 'Базовый',          desc: 'Бережная йога для будущих мам — комфорт, дыхание и забота о себе.', price: '900 ₽' },
+                'Фитнес':                       { icon: 'fa-dumbbell',       level: 'Базовый',          desc: 'Комплексное развитие тела — без спешки и перегрузок.', price: 'от 500 ₽' },
+                'Растяжка':                     { icon: 'fa-person-walking', level: 'Базовый',          desc: 'Спокойная работа с гибкостью и подвижностью суставов — без боли и гонки.', price: 'от 500 ₽' },
+                'Адаптивная растяжка+ ЛФК':     { icon: 'fa-heartbeat',      level: 'Базовый',          desc: 'Мягкая растяжка с элементами лечебной физкультуры — восстановление и профилактика.', price: 'от 500 ₽' },
+                'Exotic PD':                    { icon: 'fa-fan',            level: 'Базовый',          desc: 'Экзотический пилон — пластика, грация и женственность.', price: 'от 1 000 ₽' },
+                'Здоровая спина + МФР':         { icon: 'fa-spine',          level: 'Базовый',          desc: 'Комплекс для спины: укрепление глубоких мышц и миофасциальное расслабление.', price: 'от 500 ₽' }
+            };
             const DEFAULT_META = { icon: 'fa-spa', level: 'Базовый', desc: 'Увлекательная тренировка для всех уровней подготовки.', price: 'от 500 ₽' };
 
             function populateDirectionSelect() {
@@ -706,7 +699,6 @@
                         </div>
                     `;
                 }).join('');
-                // активируем reveal для новых карточек
                 document.querySelectorAll('#directionsContainer .reveal').forEach(el => {
                     if (typeof scheduleObserver !== 'undefined' && scheduleObserver) {
                         scheduleObserver.observe(el);
